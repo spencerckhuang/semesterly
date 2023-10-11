@@ -147,15 +147,21 @@ const SearchBar = () => {
   }, [handleKeyDown]);
 
   const onClickOut = () => {
-    setShowDropdown(false);
+    if (showDropdown) {
+      console.log("clicked out of searchbar.tsx")
+      setShowDropdown(false);
+    }
+    
   };
 
   const hideDropdownAndMaybeSetSemester = (semesterIndex: number) => {
     setShowDropdown(false);
+    console.log("hidedropdownandmaybesetsemester called")
     dispatch(maybeSetSemester(semesterIndex));
   };
 
   const toggleDropdown = () => {
+    console.log("toggledropdown called")
     setShowDropdown(!showDropdown);
   };
 
@@ -259,6 +265,7 @@ const SearchBar = () => {
             })}
             onChange={(e) => setSearchTerm(e.target.value)}
             onFocus={() => {
+              console.log("onfocus called in <input> called")
               setInputFocused(true);
               setShowDropdown(false);
             }}
