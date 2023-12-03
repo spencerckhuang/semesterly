@@ -253,6 +253,7 @@ const CourseModalBody = (props: CourseModalBodyProps) => {
     props.course.description === ""
       ? "No description available"
       : props.course.description.split(courseRegex).map((t, i) => {
+          
           if (matchedCoursesDescription === null) {
             return t;
           }
@@ -260,6 +261,7 @@ const CourseModalBody = (props: CourseModalBodyProps) => {
             matchedCoursesDescription.indexOf(t) !== -1 &&
             Object.keys(props.course.regexed_courses).indexOf(t) !== -1
           ) {
+            console.log(`${t}, ${i}`)
             return (
               <SlotHoverTip
                 key={t}
@@ -282,10 +284,24 @@ const CourseModalBody = (props: CourseModalBodyProps) => {
     prerequisites === "" || prerequisites === null
       ? "None"
       : prerequisites.split(courseRegex).map((t, i) => {
+          console.log(`t: |${t}|, i: |${i}|`)
           if (
             matchedCoursesPrerequisites === null ||
             matchedCoursesPrerequisites.indexOf(t) === -1
           ) {
+            if (
+              t === ") OR ( "
+            ) {
+              console.log("newline should be here");
+              t = ')\nOR\n('
+              console.log(t);
+            } else if (
+              t === ") AND ( "
+            ) {
+              console.log("newline should be here");
+              return `)\nAND\n( `
+            }
+
             return t;
           }
           if (
