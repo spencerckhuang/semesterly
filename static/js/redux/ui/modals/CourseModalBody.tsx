@@ -289,6 +289,7 @@ const CourseModalBody = (props: CourseModalBodyProps) => {
             matchedCoursesPrerequisites === null ||
             matchedCoursesPrerequisites.indexOf(t) === -1
           ) {
+            // * Getting good and accurate spacing needs to go beyond this -- basically need to make a mini-interpreter of sorts to decode the prerequisites language...
             if (
               t === ") OR ( "
             ) {
@@ -305,6 +306,52 @@ const CourseModalBody = (props: CourseModalBodyProps) => {
                   )<br />AND<br />(
                 </>
               );
+            } else if (
+              t === " AND ("
+            ) {
+              return (
+                <>
+                  <br />AND<br />(
+                </>
+              );
+            } else if (
+              t === " OR ("
+            ) {
+              return (
+                <>
+                  <br />OR<br />(
+                </>
+              );
+            } else if (
+              t.includes("Students may receive credit for only one of")
+            ) {
+              const studentsIndex = t.indexOf("Students")
+              const preStudentsText = t.substring(0, studentsIndex)
+
+              return (
+                <>
+                  {preStudentsText.length !== 0 && preStudentsText}Students may only receive credit for only one of:<br />
+                </>
+              )
+              
+            } else if (
+              t.includes(".")
+            ) {
+              const periodIndex = t.indexOf(".")
+              let nextChar = t.length;
+              for (let j = periodIndex + 1; j < t.length; j++) {
+                if (t.charAt(j) !== " ") {
+                  nextChar = j;
+                  break;
+                }
+              }
+
+              return (
+                <>
+                  {t.substring(0, periodIndex + 1)}<br /><br />{t.substring(nextChar, t.length)}
+                </>
+              )
+
             }
 
             return t;
@@ -313,6 +360,7 @@ const CourseModalBody = (props: CourseModalBodyProps) => {
             matchedCoursesPrerequisites.indexOf(t) !== -1 &&
             Object.keys(props.course.regexed_courses).indexOf(t) !== -1
           ) {
+            console.log("Making SlotHoverTip:")
             return (
               <SlotHoverTip
                 key={t}
@@ -323,6 +371,10 @@ const CourseModalBody = (props: CourseModalBodyProps) => {
               />
             );
           }
+
+          // ! Ideally at this point we don't return the token, since it cant be found elsewhere
+          // ! Issue is that other tokens *do* get through, causing unnecessary commas, ORs, or ANDs
+          console.log("Did not match with any categorizations above")
           return (
             <span className="textItem" key={t}>
               {t}
@@ -484,7 +536,7 @@ const CourseModalBody = (props: CourseModalBodyProps) => {
   return (
     <div className="modal-body">
       <div className="cf">
-        <div className="col-3-16">
+        <div className="col-4-16">
           <div className="credits">
             <h3>{numCredits}</h3>
             <h4>{creditsSuffix}</h4>
@@ -528,7 +580,7 @@ const CourseModalBody = (props: CourseModalBodyProps) => {
             <EvaluationList evalInfo={evalInfo} />
           </div>
         </div>
-        <div id="modal-section-lists" className="col-5-16 cf">
+        <div id="modal-section-lists" className="col-4-16 cf">
           {!isComparingTimetables && sectionGrid}
           {similarCourses}
         </div>
