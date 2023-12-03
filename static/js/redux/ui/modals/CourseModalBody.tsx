@@ -292,14 +292,19 @@ const CourseModalBody = (props: CourseModalBodyProps) => {
             if (
               t === ") OR ( "
             ) {
-              console.log("newline should be here");
-              t = ')\nOR\n('
-              console.log(t);
+              return (
+                <>
+                  )<br />OR<br />(
+                </>
+              );
             } else if (
               t === ") AND ( "
             ) {
-              console.log("newline should be here");
-              return `)\nAND\n( `
+              return (
+                <>
+                  )<br />AND<br />(
+                </>
+              );
             }
 
             return t;
