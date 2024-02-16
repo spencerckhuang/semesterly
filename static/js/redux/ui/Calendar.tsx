@@ -274,9 +274,9 @@ const Calendar = (props: CalendarProps) => {
 
   const addNewTimetableButton = (
     <div className="cal-btn-wrapper">
-      <Tooltip title={<Typography fontSize={12}>New Timetable</Typography>}>
+      <Tooltip title={<Typography fontSize={12}>Add Custom Event</Typography>}>
         <button
-          onClick={() => props.handleCreateNewTimetable()}
+          onClick={() => customEventModeButtonClicked()}
           className="save-timetable add-button"
           data-tip
           data-for="add-btn-tooltip"
@@ -289,10 +289,10 @@ const Calendar = (props: CalendarProps) => {
 
   const toggleCustomEventModeButton = (
     <div className="cal-btn-wrapper">
-      <Tooltip title={<Typography fontSize={12}>Add Custom Event</Typography>}>
+      <Tooltip title={<Typography fontSize={12}>New Timetable</Typography>}>
         <button
           className="save-timetable"
-          onMouseDown={() => customEventModeButtonClicked()}
+          onMouseDown={() => props.handleCreateNewTimetable()}
           data-tip
           data-for="save-btn-tooltip"
         >

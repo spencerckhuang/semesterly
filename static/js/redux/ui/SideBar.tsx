@@ -253,6 +253,7 @@ const SideBar = () => {
             <div className="tip" />
             <h4>{`${semester.name} ${semester.year}`}</h4>
             {savedTimetables}
+            {"Hello world"}
           </div>
         </ClickOutHandler>
       </div>
