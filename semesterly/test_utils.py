@@ -211,13 +211,14 @@ class SeleniumTestCase(StaticLiveServerTestCase):
             root (bool, optional): The root element to search from, root of DOM if None
         """
         try:
-            print(f'Locator: {locator}')
+            print(f"Locator: {locator}, Root: {root}")
             WebDriverWait(root if root else self.driver, self.TIMEOUT).until(
                 EC.invisibility_of_element_located(locator)
             )
+            print("Process done!")
         except TimeoutException:
             raise RuntimeError(
-                'Failed to assert invisibility of element "%s" by %s' % locator[::-1]
+                'Failed to assert invisibility of element "%s" by %s due to TimeoutException' % locator[::-1]
             )
 
     def clear_tutorial(self):
@@ -545,6 +546,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         course = Course.objects.get(code=url_match.group(1))
         self.find((By.CLASS_NAME, "fa-plus"), root=modal_header).click()
         self.assert_loader_completes()
+        time.sleep(3)
         self.assert_invisibility((By.CLASS_NAME, "course-modal"))
         self.assert_slot_presence(n_slots, n_master_slots)
         return course
