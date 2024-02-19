@@ -211,6 +211,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
             root (bool, optional): The root element to search from, root of DOM if None
         """
         try:
+            print(f'Locator: {locator}')
             WebDriverWait(root if root else self.driver, self.TIMEOUT).until(
                 EC.invisibility_of_element_located(locator)
             )
