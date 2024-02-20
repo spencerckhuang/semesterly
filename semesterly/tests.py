@@ -171,7 +171,7 @@ class EndToEndTest(SeleniumTestCase):
             self.search_course("AS.110.106", 1)
             self.open_course_modal_from_search(0)
             course2 = self.add_course_from_course_modal(n_slots=8, n_master_slots=2)
-            self.search_course("AS.110.415", 1)
+            self.search_course("EN.553.171", 1)
             self.open_course_modal_from_search(0)
             self.add_course_from_course_modal(n_slots=11, n_master_slots=3)
             self.open_course_modal_from_slot(2)
