@@ -218,7 +218,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
             print("Process done!")
         except TimeoutException:
             raise RuntimeError(
-                'Failed to assert invisibility of element "%s" by %s due to TimeoutException' % locator[::-1]
+                'Failed to assert invisibility of element "%s" by %s due to TimeoutException'
+                % locator[::-1]
             )
 
     def clear_tutorial(self):
@@ -546,7 +547,14 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         course = Course.objects.get(code=url_match.group(1))
         self.find((By.CLASS_NAME, "fa-plus"), root=modal_header).click()
         self.assert_loader_completes()
-        time.sleep(3)
+
+        try:
+            WebDriverWait(self.driver, self.TIMEOUT).until_not(
+                EC.presence_of_element_located((By.CLASS_NAME, "course-modal"))
+            )
+        except TimeoutException:
+            print("FAILED BEFORE ASSERT_INVISIBILITY")
+
         self.assert_invisibility((By.CLASS_NAME, "course-modal"))
         self.assert_slot_presence(n_slots, n_master_slots)
         return course
