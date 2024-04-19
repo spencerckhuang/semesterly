@@ -862,9 +862,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         """
         if finish_saving:
             self.assert_invisibility((By.CLASS_NAME, "unsaved"))
-        self.find(
-            By.XPATH, "//span[contains(@clas, 'tip-down')]"
-        ).click().find(
+        self.find(By.XPATH, "//span[contains(@clas, 'tip-down')]").click().find(
             By.XPATH,
             "//button[contains(@class,'save-timetable') and contains(@class,'add-button')]",
         ).click()
