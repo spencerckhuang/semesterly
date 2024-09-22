@@ -124,11 +124,7 @@ const Semesterly = () => {
     alertNewTimetable,
   ]);
 
-  const toLocalDate = (): string => {
-    if (!(dataLastUpdated && dataLastUpdated.length && dataLastUpdated !== "null")) {
-      return "";
-    }
-
+  const toLocalDate = () => {
     // DataLastUpdated Input example-  2021-05-02 14:42 UTC
     // Params: How the backend sends a timestamp
     // dateString: of the form yyyy-mm-dd hh:mm
@@ -221,7 +217,9 @@ const Semesterly = () => {
           <footer className="timetable-footer navbar no-print">
             <p className="data-last-updated no-print">
               Data last updated:{" "}
-              {toLocalDate()}
+              {dataLastUpdated && dataLastUpdated.length && dataLastUpdated !== "null"
+                ? toLocalDate()
+                : null}
             </p>
             <ul className="nav nav-pills no-print">
               <li className="footer-button" role="presentation">
