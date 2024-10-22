@@ -12,6 +12,7 @@
 
 import logging
 import re
+import sys
 
 from parsing.library.base_parser import BaseParser
 from parsing.library.utils import dict_filter_by_dict
@@ -33,6 +34,7 @@ class Parser(BaseParser):
 
     API_URL = "https://sis.jhu.edu/api/classes/"
     DAY_MAP = {"m": "M", "t": "T", "w": "W", "th": "R", "f": "F", "sa": "S", "s": "U"}
+    TEMP_KEY = "BSlHkImy4Xt3itCTh4XAzVWG3t6yYz1Z"
 
     def __new__(cls, *args, **kwargs):
         """Set static variables within closure.
@@ -52,12 +54,16 @@ class Parser(BaseParser):
 
     def _get_schools(self):
         self.schools = self.requester.get(
-            Parser.API_URL + "/codes/schools", params={"key": Parser.KEY}
+            Parser.API_URL + "/codes/schools", params={"key": Parser.TEMP_KEY}
         )
 
     def _get_courses(self, school):
-        url = "{}/{}/{}".format(Parser.API_URL, school["Name"], self.semester)
-        return self.requester.get(url, params={"key": Parser.KEY})
+        if "Name" in school:
+            school_name = school["Name"]
+            url = "{}/{}/{}".format(Parser.API_URL, school_name, self.semester)
+            return self.requester.get(url, params={"key": Parser.TEMP_KEY})
+        else:
+            print (school, file=sys.stderr)
 
     def _get_section(self, course):
         return self.requester.get(self._get_section_url(course))
@@ -71,7 +77,7 @@ class Parser(BaseParser):
             + "/"
             + self.semester
             + "?key="
-            + Parser.KEY
+            + Parser.TEMP_KEY
         )
 
     def _parse_schools(self):
@@ -80,12 +86,13 @@ class Parser(BaseParser):
 
     def _parse_school(self, school):
         courses = self._get_courses(school)
-        for course in courses:
-            section = self._get_section(course)
-            if len(section) == 0:
-                logging.warn(self._get_section_url(course))
-                continue
-            self._load_ingestor(school["Name"], course, section)
+        if (courses is not None):
+            for course in courses:
+                section = self._get_section(course)
+                if len(section) == 0:
+                    logging.warn(self._get_section_url(course))
+                    continue
+                self._load_ingestor(school["Name"], course, section)
 
     def _compute_size_enrollment(self, course):
         try:
@@ -232,6 +239,7 @@ class Parser(BaseParser):
 
         # Default to hardcoded current year.
         years = {
+            "2025",
             "2024",
             "2023",
             "2022",
