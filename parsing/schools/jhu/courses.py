@@ -232,6 +232,7 @@ class Parser(BaseParser):
 
         # Default to hardcoded current year.
         years = {
+            "2025",
             "2024",
             "2023",
             "2022",
