@@ -29,5 +29,4 @@ spec:
   tls:
   - hosts:
     - semesterly-prod.az.sis.jhu.edu
-    - jhu.semesterly-prod.az.sis.jhu.edu
     secretName: semesterly-az
