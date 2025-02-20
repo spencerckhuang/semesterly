@@ -70,6 +70,7 @@ export interface Section {
   semester: Semester;
   waitlist: number;
   waitlist_size: number;
+  course_id?: number;
 }
 
 /**
@@ -164,6 +165,15 @@ export interface Course {
   writing_intensive: string;
   sub_school: string;
   slots?: Slot[];
+}
+
+/**
+ * The display mode of course prerequisites.
+ */
+export enum PrereqModeStatus {
+  ORIGINAL = "original",
+  NAME = "name",
+  CODE = "code",
 }
 
 /**

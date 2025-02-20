@@ -127,14 +127,14 @@ const Slot = (props: SlotProps) => {
     }
     return {
       "@media print": {
-        boxShadow: `inset 0 0 0 1000px ${props.colorData[props.colourId].background}`,
-        backgroundColor: `${props.colorData[props.colourId].background}`,
+        boxShadow: `inset 0 0 0 1000px ${props.colorData[props.colourId]?.background}`,
+        backgroundColor: `${props.colorData[props.colourId]?.background}`,
       },
       top,
       bottom: -bottom,
       right: "0%",
-      backgroundColor: props.colorData[props.colourId].background,
-      color: props.colorData[props.colourId].font,
+      backgroundColor: props.colorData[props.colourId]?.background,
+      color: props.colorData[props.colourId]?.font,
       width: `${slotWidthPercentage}%`,
       left: `${pushLeft}%`,
       zIndex: 10 * props.depth_level,
@@ -226,7 +226,7 @@ const Slot = (props: SlotProps) => {
         {shortCourseDatesPanel}
         <div
           className="slot-bar"
-          style={{ backgroundColor: props.colorData[props.colourId].border }}
+          style={{ backgroundColor: props.colorData[props.colourId]?.border }}
         />
         {!isComparingTimetables && removeButton}
         {!isComparingTimetables && lockButton}

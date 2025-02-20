@@ -10,7 +10,9 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
+from datetime import datetime
 from django.db import models
+from django.core.exceptions import ValidationError
 
 from timetable.models import Semester
 
@@ -51,3 +53,54 @@ class DataUpdate(models.Model):
     update_type = models.CharField(
         max_length=1, choices=UPDATE_TYPE, default=MISCELLANEOUS
     )
+
+
+class DataUpdateSettings(models.Model):
+    """
+    Stores the settings for the data update used by the ingestion process.
+
+    Attributes:
+        year (IntegerField): the year of the update
+        term (CharField): the term of the update
+        active (BooleanField): whether to perform the update
+    """
+
+    SPRING = "Spring"
+    FALL = "Fall"
+    TERM_CHOICES = [
+        (SPRING, "Spring"),
+        (FALL, "Fall"),
+    ]
+
+    term = models.CharField(
+        max_length=10,
+        choices=TERM_CHOICES,
+        default=FALL,
+        help_text="Select either Spring or Fall term",
+    )
+
+    year = models.IntegerField()
+    active = models.BooleanField(default=True)
+
+    def save(self, *args, **kwargs):
+        if not self.pk and DataUpdateSettings.objects.exists():
+            # If trying to create a new object while one exists, update the existing one
+            return DataUpdateSettings.objects.first()
+        return super().save(*args, **kwargs)
+
+    @classmethod
+    def load(cls):
+        exists = cls.objects.exists()
+        if not exists:
+            cls.objects.create(year=datetime.now().year, term="Spring", active=True)
+
+        return cls.objects.first()
+
+    def clean(self):
+        super().clean()
+        if self.term not in [self.SPRING, self.FALL]:
+            raise ValidationError({"term": "Term must be either Spring or Fall"})
+
+    class Meta:
+        verbose_name = "Data Update Settings"
+        verbose_name_plural = "Data Update Settings"

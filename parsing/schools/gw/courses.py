@@ -155,9 +155,11 @@ class Parser(BaseParser):
                                     "waitlist": safe_cast(
                                         info[14].text, int, default=-1
                                     ),
-                                    "areas": "; ".join(info[22].text.split(" and "))
-                                    if len(info) == 23
-                                    else "",  # FIXME - hacky fix
+                                    "areas": (
+                                        "; ".join(info[22].text.split(" and "))
+                                        if len(info) == 23
+                                        else ""
+                                    ),  # FIXME - hacky fix
                                 }
                             )
 

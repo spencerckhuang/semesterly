@@ -1,12 +1,12 @@
 h1 {
-	margin-left:10px;
+  margin-left: 10px;
 }
 .school-timetables {
-	padding:25px;
-	margin-bottom:20px;
+  padding: 25px;
+  margin-bottom: 20px;
 }
 
 #chart-wrapper {
-	width: 80%;
-	margin: 0 auto;
+  width: 80%;
+  margin: 0 auto;
 }

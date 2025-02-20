@@ -12,7 +12,7 @@
 
 import logging
 import re
-
+from datetime import datetime
 from parsing.library.base_parser import BaseParser
 from parsing.library.utils import dict_filter_by_dict
 from semesterly.settings import get_secret
@@ -230,20 +230,10 @@ class Parser(BaseParser):
         """Start parse."""
         self.verbosity = verbosity
 
-        # Default to hardcoded current year.
-        years = {
-            "2025",
-            "2024",
-            "2023",
-            "2022",
-            "2021",
-            "2020",
-            "2019",
-            "2018",
-            "2017",
-            "2016",
-            "2015",
-        }
+        # Get the last 10 years
+        current_year = datetime.now().year
+        years = {str(year) for year in range(current_year - 10, current_year + 1)}
+
         terms = {"Spring", "Fall", "Summer", "Intersession"}
 
         years_and_terms = dict_filter_by_dict(

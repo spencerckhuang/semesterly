@@ -78,9 +78,11 @@ class Validator:
         Validator.load_schemas()
 
         self.kind_to_validation_function = {
-            kind: getattr(self, "validate_" + kind)
-            if hasattr(self, "validate_" + kind)
-            else lambda *_, **__: None
+            kind: (
+                getattr(self, "validate_" + kind)
+                if hasattr(self, "validate_" + kind)
+                else lambda *_, **__: None
+            )
             for kind in Validator.KINDS
         }
 

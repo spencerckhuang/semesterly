@@ -1,7 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { alertConflict, alertTimeTableExists } from "../../actions/initActions";
 import { Timetable } from "../../constants/commonTypes";
-import TimetableExistsAlert from "../../ui/alerts/timetable_exists_alert";
+
+/* eslint no-shadow: "off" */
+
+export enum AlertCoursePlanType {
+  EMPTY = 0,
+  EXCEEDS_LIMIT = 1,
+  NO_FEASIBLE_SCHEDULE = 2,
+  UNKNOWN = 3,
+}
 
 interface AlertsSliceState {
   alertConflict: boolean;
@@ -14,6 +22,8 @@ interface AlertsSliceState {
   totalFriendsCount: number;
   desiredSemester: number;
   timetableToDelete: null | Timetable;
+  alertCoursePlan: boolean;
+  alertCoursePlanType: number;
 }
 
 const initialState: AlertsSliceState = {
@@ -27,6 +37,8 @@ const initialState: AlertsSliceState = {
   totalFriendsCount: 0,
   desiredSemester: 0,
   timetableToDelete: null,
+  alertCoursePlan: false,
+  alertCoursePlanType: 0,
 };
 
 const alertsSlice = createSlice({
@@ -78,6 +90,18 @@ const alertsSlice = createSlice({
       state.mostFriendsCount = action.payload.mostFriendsCount;
       state.mostFriendsClassId = action.payload.mostFriendsClassId;
       state.totalFriendsCount = action.payload.totalFriendsCount;
+    },
+
+    // New reducer for empty schedule alert
+    alertCoursePlan: (
+      state,
+      action: PayloadAction<{ alertType: AlertCoursePlanType }>
+    ) => {
+      state.alertCoursePlan = true;
+      state.alertCoursePlanType = action.payload.alertType;
+    },
+    dismissAlertCoursePlan: (state) => {
+      state.alertCoursePlan = false;
     },
   },
   extraReducers: (builder) => {

@@ -13,7 +13,6 @@ Example usage:
     > timetable/fixtures/jhu_fall_2022.json
 """
 
-
 from __future__ import print_function
 
 import json

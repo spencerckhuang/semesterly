@@ -59,8 +59,67 @@ exports[`CourseModalBody correctly renders 1`] = `
           >
             Prerequisites
           </h3>
+          <div
+            class="prerequisites-radio-group light"
+          >
+            <div
+              class="prerequisites-radio-btn light"
+            >
+              Original
+            </div>
+            <div
+              class="prerequisites-radio-btn active light"
+            >
+              Name
+            </div>
+            <div
+              class="prerequisites-radio-btn light"
+            >
+              Code
+            </div>
+          </div>
           <p>
-            ECO100Y1(67%)/(ECO101H1(63%), ECO102H1(63%))/ECO105Y1(80%); MAT133Y1/(MAT135H1, MAT136H1)/MAT137Y1/MAT157Y1
+            <div
+              style="margin-left: 0px;"
+            >
+              ECO100Y1
+              <div
+                style="margin-left: 10px;"
+              >
+                67%
+              </div>
+              /
+              <div
+                style="margin-left: 10px;"
+              >
+                ECO101H1
+                <div
+                  style="margin-left: 20px;"
+                >
+                  63%
+                </div>
+                , ECO102H1
+                <div
+                  style="margin-left: 20px;"
+                >
+                  63%
+                </div>
+                
+              </div>
+              /ECO105Y1
+              <div
+                style="margin-left: 10px;"
+              >
+                80%
+              </div>
+              ; MAT133Y1/
+              <div
+                style="margin-left: 10px;"
+              >
+                MAT135H1, MAT136H1
+              </div>
+              /MAT137Y1/MAT157Y1
+            </div>
           </p>
         </div>
         <div

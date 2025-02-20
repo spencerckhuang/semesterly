@@ -12,22 +12,35 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 */
 
-import PropTypes from "prop-types";
 import React from "react";
 import { useAppSelector } from "../hooks";
 import { selectSlotColorData } from "../state/slices/themeSlice";
+
+interface SlotHoverTipProps {
+  mode?: "code" | "name";
+  num: number;
+  code: string;
+  name: string;
+  getShareLinkFromModal: (code: string) => string;
+}
 
 /**
  * This component appears in the CourseModalBody and is used to link to other courses
  * for pre-requisites and co-requisites. When hovered over, the underlined course code
  * also displays the course name, and clicking on it will link to that course.
  */
-const SlotHoverTip = ({ num, code, name, getShareLinkFromModal }) => {
+const SlotHoverTip = ({
+  mode = "name",
+  num,
+  code,
+  name,
+  getShareLinkFromModal,
+}: SlotHoverTipProps) => {
   const colorData = useAppSelector(selectSlotColorData);
   const maxColourIndex = colorData.length - 1;
   return (
     <a href={getShareLinkFromModal(code)} className="course-link" key={num}>
-      <span>{name}</span>
+      <span>{mode === "name" ? name : code}</span>
       <span
         className="course-link-tip"
         style={{
@@ -47,13 +60,6 @@ const SlotHoverTip = ({ num, code, name, getShareLinkFromModal }) => {
       </span>
     </a>
   );
-};
-
-SlotHoverTip.propTypes = {
-  num: PropTypes.number.isRequired,
-  code: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  getShareLinkFromModal: PropTypes.func.isRequired,
 };
 
 export default SlotHoverTip;

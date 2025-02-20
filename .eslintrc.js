@@ -39,6 +39,7 @@ module.exports = {
     "import/first": 0,
     // disable for redux toolkit
     "no-param-reassign": 0,
+    "no-shadow": "off",
     "import/extensions": [
       "error",
       "ignorePackages",

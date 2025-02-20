@@ -3,22 +3,22 @@
   border: 40px solid transparent;
   border-radius: 5px;
   filter: saturate(3);
-  height: .1px;
+  height: 0.1px;
   margin: 10% auto 50px;
   width: 50%;
 
   &::before {
-    animation: loader 2s ease-in infinite reverse, spin .8s linear infinite reverse;
+    animation: loader 2s ease-in infinite reverse, spin 0.8s linear infinite reverse;
     border: 40px solid transparent;
     border-radius: 5px;
     content: "";
     display: block;
-    filter: saturate(.3);
-    height: .1;
+    filter: saturate(0.3);
+    height: 0.1;
     margin-left: -40px;
     margin-top: -40px;
     position: absolute;
-    width: .1;
+    width: 0.1;
     z-index: -1;
   }
 
@@ -64,10 +64,10 @@
 }
 @keyframes spin {
   0% {
-    transform: rotate(0deg)
+    transform: rotate(0deg);
   }
 
   100% {
-    transform: rotate(-360deg)
+    transform: rotate(-360deg);
   }
 }

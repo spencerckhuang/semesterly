@@ -22,6 +22,7 @@ import DeleteTimetableAlert from "./alerts/delete_timetable_alert";
 import TimetableExistsAlertContainer from "./alerts/timetable_exists_alert_container";
 import ChangeSemesterAlertContainer from "./alerts/change_semester_alert_container";
 import NewTimetableAlertContainer from "./alerts/new_timetable_alert_container";
+import OptimizeScheduleAlertContainer from "./alerts/optimize_schedule_alert_container";
 import TopBar from "./TopBar";
 import SignupModal from "./modals/SignupModal";
 import TutorialModal from "./modals/TutorialModal";
@@ -59,7 +60,10 @@ const Semesterly = () => {
     (state) => state.alerts.alertDeleteTimetable
   );
 
+  const alertCoursePlan = useAppSelector((state) => state.alerts.alertCoursePlan);
+
   const alertNewTimetable = useAppSelector((state) => state.alerts.alertNewTimetable);
+
   const alertTimetableExists = useAppSelector(
     (state) => state.alerts.alertTimetableExists
   );
@@ -113,6 +117,8 @@ const Semesterly = () => {
       showAlert(<ChangeSemesterAlertContainer />, "info", 15000);
     } else if (alertNewTimetable) {
       showAlert(<NewTimetableAlertContainer />, "info", 12000);
+    } else if (alertCoursePlan) {
+      showAlert(<OptimizeScheduleAlertContainer />, "info", 12000);
     } else {
       alertBoxRef.current?.removeAll();
     }
@@ -122,6 +128,7 @@ const Semesterly = () => {
     alertTimetableExists,
     alertChangeSemester,
     alertNewTimetable,
+    alertCoursePlan,
   ]);
 
   const toLocalDate = (): string => {

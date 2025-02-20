@@ -32,7 +32,7 @@
   &::before,
   &::after {
     line-height: 1;
-    margin-top: -.5em;
+    margin-top: -0.5em;
     position: absolute;
     top: 50%;
     transition: inherit;
@@ -55,7 +55,7 @@
 }
 
 .switch-input:checked ~ .switch-label {
-  background: #E1B42B;
+  background: #e1b42b;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 0 3px rgba(0, 0, 0, 0.2);
 }
 
@@ -99,7 +99,7 @@
 // Transition
 .switch-label,
 .switch-handle {
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
 
 // Switch Light
@@ -118,7 +118,7 @@
     }
 
     &::after {
-      color: #9370DB;
+      color: #9370db;
     }
   }
 
@@ -137,63 +137,64 @@
 }
 
 .switch-light .switch-input:checked ~ .switch-label {
-	background: $gfff;
-	border-color: #9370DB;
+  background: $gfff;
+  border-color: #9370db;
 }
 
 .switch-light .switch-input:checked ~ .switch-handle {
-	left: 72px;
-	box-shadow: none;
-	background: #9370DB
+  left: 72px;
+  box-shadow: none;
+  background: #9370db;
 }
 
 .switch-light .switch-input:checked ~ .switch-handle:before {
-	background: rgba(255,255,255,0.7);
+  background: rgba(255, 255, 255, 0.7);
 }
 
 // Switch Yes No
 .switch-yes-no {
-	padding: 0;
-	margin: 15px 0 0;
-	background: $gfff;
-	border-radius: 0;
-	background-image: none;
+  padding: 0;
+  margin: 15px 0 0;
+  background: $gfff;
+  border-radius: 0;
+  background-image: none;
 }
 .switch-yes-no .switch-label {
-	box-shadow: none;
-	background: none;
+  box-shadow: none;
+  background: none;
 }
-.switch-yes-no .switch-label:after, .switch-yes-no .switch-label:before {
-	width: 100%;
-	height: 70%;
-	top: 5px;
-	left: 0;
-	text-align: center;
-	padding-top: 10%;
-	box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2), inset 0 0 3px rgba(0, 0, 0, 0.1);
+.switch-yes-no .switch-label:after,
+.switch-yes-no .switch-label:before {
+  width: 100%;
+  height: 70%;
+  top: 5px;
+  left: 0;
+  text-align: center;
+  padding-top: 10%;
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2), inset 0 0 3px rgba(0, 0, 0, 0.1);
 }
 .switch-yes-no .switch-label:after {
-	color: $gfff;
-	background: #32CD32;
-	backface-visibility: hidden;
-	transform: rotateY(180deg);
+  color: $gfff;
+  background: #32cd32;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
 }
 .switch-yes-no .switch-label:before {
-	background: #eceeef;
-	backface-visibility: hidden;
+  background: #eceeef;
+  backface-visibility: hidden;
 }
 .switch-yes-no .switch-handle {
-	display: none;
+  display: none;
 }
 .switch-yes-no .switch-input:checked ~ .switch-label {
-	background: $gfff;
-	border-color: #0088cc;
+  background: $gfff;
+  border-color: #0088cc;
 }
 .switch-yes-no .switch-input:checked ~ .switch-label:before {
-	transform: rotateY(180deg)
+  transform: rotateY(180deg);
 }
 .switch-yes-no .switch-input:checked ~ .switch-label:after {
-	transform: rotateY(0)
+  transform: rotateY(0);
 }
 
 // Switch Slide
@@ -221,13 +222,13 @@
 
     &::before {
       @include theme() {
-        background: t("switch-slide-before")
+        background: t("switch-slide-before");
       }
     }
 
     &::after {
       @include theme() {
-        background: t("switch-slide-after")
+        background: t("switch-slide-after");
       }
       color: $gfff;
       left: -100px;

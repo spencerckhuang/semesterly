@@ -5,7 +5,8 @@ import REACTION_MAP from "../../constants/reactions";
 import MasterSlot from "../MasterSlot";
 import EvaluationList from "../evaluation_list";
 import CourseModalSection from "../CourseModalSection";
-import SlotHoverTip from "../slot_hover_tip";
+import SlotHoverTip from "../SlotHoverTip";
+import CoursePrereq from "../CoursePrereq";
 
 import { getSectionTypeDisplayName, strPropertyCmp } from "../../util";
 import {
@@ -16,12 +17,8 @@ import {
 } from "../../constants/commonTypes";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { getSchoolSpecificInfo } from "../../constants/schools";
-import { getCourseInfoId, userInfoActions } from "../../state/slices";
-import {
-  getActiveTimetable,
-  getCurrentSemester,
-  getDenormCourseById,
-} from "../../state";
+import { userInfoActions } from "../../state/slices";
+import { getActiveTimetable, getCurrentSemester } from "../../state";
 import { getSectionTypeToSections } from "../../state/slices/entitiesSlice";
 import {
   getCourseShareLink,
@@ -71,7 +68,7 @@ const CourseModalBody = (props: CourseModalBodyProps) => {
     );
   const semester = useAppSelector((state) => getCurrentSemester(state));
   const getShareLink = (courseCode: number) => getCourseShareLink(courseCode, semester);
-  const getShareLinkFromModal = (courseCode: number) =>
+  const getShareLinkFromModal = (courseCode: string) =>
     getCourseShareLinkFromModal(courseCode, semester);
   const isComparingTimetables = useAppSelector(
     (state) => state.compareTimetable.isComparing
@@ -107,7 +104,7 @@ const CourseModalBody = (props: CourseModalBodyProps) => {
     });
 
   const handleKeyPress = useCallback(
-    (e) => {
+    (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") {
         setCurrentHoveredSection((prevSection) =>
           prevSection < sectionList.length - 1 ? prevSection + 1 : prevSection
@@ -300,7 +297,6 @@ const CourseModalBody = (props: CourseModalBodyProps) => {
 
   const evalInfo = props.course.evals;
   const relatedCourses = props.course.related_courses;
-  const { prerequisites } = props.course;
   const maxColourIndex = slotColorData.length - 1;
 
   const similarCourses =
@@ -352,44 +348,7 @@ const CourseModalBody = (props: CourseModalBodyProps) => {
             </span>
           );
         });
-  const matchedCoursesPrerequisites =
-    prerequisites === null ? null : prerequisites.match(courseRegex);
-  const newPrerequisites =
-    prerequisites === "" || prerequisites === null
-      ? "None"
-      : prerequisites.split(courseRegex).map((t, i) => {
-          if (
-            matchedCoursesPrerequisites === null ||
-            matchedCoursesPrerequisites.indexOf(t) === -1
-          ) {
-            return t;
-          }
-          if (
-            matchedCoursesPrerequisites.indexOf(t) !== -1 &&
-            Object.keys(props.course.regexed_courses).indexOf(t) !== -1
-          ) {
-            return (
-              <SlotHoverTip
-                key={t}
-                num={i}
-                code={t}
-                name={props.course.regexed_courses[t]}
-                getShareLinkFromModal={getShareLinkFromModal}
-              />
-            );
-          }
-          return (
-            <span className="textItem" key={t}>
-              {t}
-            </span>
-          );
-        });
-  const prerequisitesDisplay = (
-    <div className="modal-module prerequisites">
-      <h3 className="modal-module-header">Prerequisites</h3>
-      <p>{newPrerequisites}</p>
-    </div>
-  );
+
   const posTags =
     props.course.pos && props.course.pos.length ? (
       <div className="modal-module areas">
@@ -557,7 +516,12 @@ const CourseModalBody = (props: CourseModalBodyProps) => {
           </div>
           {!showCapacityAttention && capacityTracker}
           {showCapacityAttention && isMobile && attentioncapacityTracker}
-          {prerequisitesDisplay}
+          <CoursePrereq
+            courseRegex={courseRegex}
+            prerequisites={props.course.prerequisites}
+            regexedCourses={props.course.regexed_courses}
+            getShareLinkFromModal={getShareLinkFromModal}
+          />
           {posTags}
           {friendDisplay}
           {hasTakenDisplay}

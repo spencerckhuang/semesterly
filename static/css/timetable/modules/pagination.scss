@@ -43,7 +43,7 @@
   margin: 0 4px 0 0;
   position: relative;
   text-align: center;
-  transition: background-color .3s, border .3s, color .3s;
+  transition: background-color 0.3s, border 0.3s, color 0.3s;
   vertical-align: text-top;
   width: 20px;
 
@@ -64,9 +64,9 @@
   }
 
   span.section-bubble {
-    color: transparent
+    color: transparent;
   }
-  
+
   span {
     left: 50%;
     position: absolute;
@@ -82,7 +82,7 @@
   line-height: 30px;
   margin-right: 2px;
   text-align: center;
-  transition: background-color .3s, border .3s, color .3s;
+  transition: background-color 0.3s, border 0.3s, color 0.3s;
   width: 5px;
 }
 

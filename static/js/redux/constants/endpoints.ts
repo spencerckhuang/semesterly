@@ -78,10 +78,7 @@ export const getSchoolInfoEndpoint = (school: string) => `/school/${school}/`;
 export const getReactToCourseEndpoint = () => "/user/reactions/";
 export const getRequestShareTimetableLinkEndpoint = () => "/timetables/links/";
 export const acceptTOSEndpoint = () => "/tos/accept/";
-export function getCourseShareLinkFromModal(
-  code: Course["code"] | number,
-  semester: Semester
-) {
+export function getCourseShareLinkFromModal(code: Course["code"], semester: Semester) {
   return `/course/${encodeURIComponent(code)}/${semester.name}/${semester.year}`;
 }
 // TODO: ${window.location.href.split('/')[2]} insert above ^

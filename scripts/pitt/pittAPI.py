@@ -161,9 +161,11 @@ class CourseAPI:
                         "catalog_number": temp[1].strip(),
                         "term": temp[2].replace("\r\n\t", " "),
                         "title": temp[3].strip(),
-                        "instructor": "Not decided"
-                        if len(temp[4].strip()) == 0
-                        else temp[4].strip(),
+                        "instructor": (
+                            "Not decided"
+                            if len(temp[4].strip()) == 0
+                            else temp[4].strip()
+                        ),
                         "credits": temp[5].strip(),
                     }
                 )
@@ -174,9 +176,11 @@ class CourseAPI:
                         "catalog_number": temp[0].strip(),
                         "term": temp[1].strip().replace("\r\n\t", " "),
                         "title": temp[2].replace("\r\n\t", " "),
-                        "instructor": "Not decided"
-                        if len(temp[3].strip()) == 0
-                        else temp[3].strip(),
+                        "instructor": (
+                            "Not decided"
+                            if len(temp[3].strip()) == 0
+                            else temp[3].strip()
+                        ),
                         "credits": temp[4].strip(),
                     }
                 )

@@ -318,6 +318,53 @@
     p {
       margin-top: 2px;
     }
+
+    .prerequisites-error {
+      color: #a61900;
+    }
+
+    .prerequisites-and {
+      background-color: #33ab2e;
+      border-radius: 3px;
+      padding: 0 4px;
+    }
+
+    .prerequisites-or {
+      background-color: #38c0c2;
+      border-radius: 3px;
+      padding: 0 4px;
+    }
+
+    .prerequisites-radio-group {
+      width: 100%;
+      background: #f3f3f3;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+
+      &.dark {
+        background: #2d2e32;
+        border: 1px solid #5a5d63;
+      }
+    }
+
+    .prerequisites-radio-btn {
+      font-size: 13px;
+      text-align: center;
+      cursor: pointer;
+      width: 33.33%;
+
+      &.active {
+        background: #ddd;
+        transition: background 0.3s ease;
+
+        &.dark {
+          background: #5a5d63;
+        }
+      }
+    }
   }
 
   .credits {
@@ -544,7 +591,6 @@
   position: relative;
   transition: background-color 0.2s;
   width: 50%;
-
 
   &:nth-child(2n + 0) {
     clear: both;
