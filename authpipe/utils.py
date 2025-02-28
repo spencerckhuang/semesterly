@@ -44,7 +44,7 @@ def associate_students(strategy, details, response, user, *args, **kwargs):
     the new provider (e.g. Facebook, JHED, or Google).
     """
     try_associate_email(**kwargs)
-    try_associate_jhed(response, **kwargs)
+    try_associate_jhed_oidc(response, **kwargs)
     try_associate_token(strategy, **kwargs)
     return kwargs
 
@@ -57,10 +57,14 @@ def try_associate_email(**kwargs):
         pass
 
 
-def try_associate_jhed(response, **kwargs):
+# Look for openid field (present if logging in via OIDC)
+def try_associate_jhed_oidc(response, **kwargs):
     try:
-        jhed = response["unique_name"]
-        student = Student.objects.get(jhed=jhed)
+        jh_email = response["openid"]
+        if not jh_email or "@" not in jh_email:
+            return
+        jhed = jh_email.split("@", 1)[0]
+        student = Student.objects.get(jhed=jhed)  # need to error check for this?
         kwargs["user"] = student.user
     except BaseException:
         pass
@@ -90,8 +94,8 @@ def create_student(strategy, details, response, user, *args, **kwargs):
     hasFacebook = user.social_auth.filter(provider="facebook").exists()
     if backend_name == "facebook":
         update_student_facebook(student, social_user)
-    elif backend_name == "azuread-tenant-oauth2":
-        update_student_jhed(student, response)
+    elif backend_name == "oidc":
+        update_student_jhed_oidc(student, response)
     elif backend_name == "google-oauth2":
         update_student_google(student, social_user, hasFacebook)
     student.save()
@@ -133,6 +137,20 @@ def update_facebook_friends(student, friends):
 def update_student_jhed(student, response):
     student.jhed = response["unique_name"]
     student.preferred_name = response["name"]
+
+
+# This step here should fill in the 'email' field in the auth_user table correctly, i.e. not with @jhu.edu, but @jh.edu (using openid field in response)
+# Should also fill in the 'jhed' field in the student_student table
+def update_student_jhed_oidc(student, response):
+    student_openid = response["openid"]
+    if not student_openid or "@" not in student_openid:
+        return
+    student.jhed = student_openid.split("@", 1)[0]
+    student.preferred_name = response["given_name"]
+
+    user_obj = student.user
+    user_obj.email = student_openid
+    user_obj.save()
 
 
 def update_student_google(student, social_user, hasFacebook):

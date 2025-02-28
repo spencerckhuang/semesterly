@@ -186,6 +186,21 @@ spec:
                 secretKeyRef:
                   name: semesterly-secrets
                   key: JHU_JWT_AUTH_SECRET
+            - name: SOCIAL_AUTH_OIDC_OIDC_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: semesterly-secrets
+                  key: SOCIAL_AUTH_OIDC_OIDC_ENDPOINT
+            - name: SOCIAL_AUTH_OIDC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: semesterly-secrets
+                  key: SOCIAL_AUTH_OIDC_KEY
+            - name: SOCIAL_AUTH_OIDC_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: semesterly-secrets
+                  key: SOCIAL_AUTH_OIDC_SECRET
       volumes:
       - configMap:
           defaultMode: 420

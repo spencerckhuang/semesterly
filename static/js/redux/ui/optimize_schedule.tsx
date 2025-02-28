@@ -62,10 +62,19 @@ function getFeasibleSchedules(
       return;
     }
     const currentCourse = courses[courseIndex];
+    let hasSyncSections = false;
     currentCourse.sections.forEach((section) => {
-      if (isFeasible([...currentSchedule, ...lockedSections], section))
-        backtrack([...currentSchedule, section], courseIndex + 1);
+      if (section.offering_set.length > 0) {
+        hasSyncSections = true;
+        if (isFeasible([...currentSchedule, ...lockedSections], section)) {
+          backtrack([...currentSchedule, section], courseIndex + 1);
+        }
+      }
     });
+    if (!hasSyncSections && currentCourse.sections.length > 0) {
+      // Add first async section and continue
+      backtrack([...currentSchedule, currentCourse.sections[0]], courseIndex + 1);
+    }
   }
   backtrack(lockedSections, 0);
   return schedules;
