@@ -16,8 +16,10 @@ import sys
 
 try:
     import rollbar
+
     def dummy_function(*args, **kwargs):
         pass
+
     rollbar.send_payload = dummy_function
 except ImportError:
     pass
