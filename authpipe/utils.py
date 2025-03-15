@@ -31,6 +31,7 @@ hashids = Hashids(salt=get_secret("HASHING_SALT"))
 
 # logger = logging.getLogger(__name__)
 
+
 def check_student_token(student, token):
     """
     Validates a token: checks that it is at most 2 days old and that it
