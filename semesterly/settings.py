@@ -234,7 +234,6 @@ MIDDLEWARE = (
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "semesterly.middleware.subdomain_middleware.SubdomainMiddleware",
     "social_django.middleware.SocialAuthExceptionMiddleware",
-    "rollbar.contrib.django.middleware.RollbarNotifierMiddleware",
 )
 
 TEMPLATES = [
@@ -380,16 +379,6 @@ try:
     from .local_settings import *
 except ModuleNotFoundError:
     pass
-
-if not DEBUG:
-    ROLLBAR = {
-        "access_token": "23c5a378cd1943cfb40d5217dfb7f766",
-        "environment": "development" if DEBUG else "production",
-        "root": BASE_DIR,
-    }
-    import rollbar
-
-    rollbar.init(**ROLLBAR)
 
 if SHOW_DEBUG_TOOLBAR:
     DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda request: True}
