@@ -18,6 +18,7 @@ from django.contrib.auth.models import User
 from django.core.signing import TimestampSigner, BadSignature, SignatureExpired
 from django.db.models import F
 from hashids import Hashids
+
 # import logging
 import re
 
@@ -154,9 +155,9 @@ def try_associate_email(response, kwargs):
 
         # LOGGING CLAUSE
         # if found_users.count() > 1:
-            # logger.debug(
-            #     f"try_associate_email: Found multiple users for email: {email}. Returning the user that has most recently logged in, with id={final_user.id}."
-            # )
+        # logger.debug(
+        #     f"try_associate_email: Found multiple users for email: {email}. Returning the user that has most recently logged in, with id={final_user.id}."
+        # )
 
         kwargs["user"] = final_user
         # logger.debug("try_associate_email: successfully associated student via email.")
@@ -200,7 +201,7 @@ def try_associate_jhed_oidc(response, kwargs):
         return True
     except Exception as e:
         # logger.debug(
-            # f"try_associate_jhed_oidc: error while trying to associate via JHED: {e}"
+        # f"try_associate_jhed_oidc: error while trying to associate via JHED: {e}"
         # )
         return False
 
