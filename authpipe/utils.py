@@ -18,6 +18,8 @@ from django.contrib.auth.models import User
 from django.core.signing import TimestampSigner, BadSignature, SignatureExpired
 from django.db.models import F
 from hashids import Hashids
+import logging
+import re
 
 # import logging
 import re
@@ -28,7 +30,6 @@ from semesterly.settings import get_secret
 hashids = Hashids(salt=get_secret("HASHING_SALT"))
 
 # logger = logging.getLogger(__name__)
-
 
 def check_student_token(student, token):
     """
@@ -68,6 +69,7 @@ def associate_students(strategy, details, response, user, *args, **kwargs):
         user_updated_in_this_function = try_associate_token(strategy, kwargs)
 
     # LOGGING CLAUSE
+
     # try:
     #     logger.debug(
     #         f"associate_students: end of function, kwargs['user']={kwargs['user']}, User id={kwargs['user'].id}"
@@ -127,14 +129,17 @@ def try_associate_email(response, kwargs):
 
         email = kwargs_base.get("email")
         if email is None:
+
             # logger.debug(
             #     "try_associate_email: 'email' from kwargs_base is None. trying from 'response'..."
             # )
+
             email = response.get("email")
             if email is None:
                 raise Exception("try_associate_email: 'email' is None")
 
         # logger.debug(f"found email: {email}")
+
         found_users = User.objects.filter(email=email)
         if not found_users.exists():
             # It is possible that the 'email' found is unexpectedly in @jhu.edu format, for Hopkins students.
@@ -161,6 +166,7 @@ def try_associate_email(response, kwargs):
         # logger.debug(
         #     f"try_associate_email: error while trying to associate via email: {e}"
         # )
+
         return False
 
 
@@ -196,6 +202,7 @@ def try_associate_jhed_oidc(response, kwargs):
         # logger.debug(
         #     f"try_associate_jhed_oidc: error while trying to associate via JHED: {e}"
         # )
+
         return False
 
 
@@ -221,6 +228,7 @@ def try_associate_token(strategy, kwargs):
         final_student, final_user = get_most_recently_logged_in_student(students)
 
         # LOGGING CLAUSE
+
         # if students.count() > 1:
         #     logger.debug(
         #         f"try_associate_token: Found multiple students for token reference: {ref}. Returning the most recently logged in student with id={students.first().id}."
@@ -231,6 +239,7 @@ def try_associate_token(strategy, kwargs):
             # logger.debug(
             #     "try_associate_token: successfully associated student via token."
             # )
+
             return True
         else:
             raise Exception("try_associate_token: failed to associate via token.")

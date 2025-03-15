@@ -29,3 +29,6 @@ RUN pip3 install -r /code/requirements.txt
 # Install package.json dependencies
 RUN npm install
 RUN npm run build
+
+# To enable unbuffered logging
+ENV PYTHONUNBUFFERED=1
