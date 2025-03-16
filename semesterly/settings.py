@@ -62,9 +62,9 @@ def get_secret(key):
 
 SECRET_KEY = get_secret("SECRET_KEY")
 
-DEBUG = False
+DEBUG = True
 
-SHOW_DEBUG_TOOLBAR = False
+SHOW_DEBUG_TOOLBAR = True
 
 ALLOWED_HOSTS = ["*"]
 
