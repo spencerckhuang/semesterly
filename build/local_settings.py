@@ -1,7 +1,7 @@
 import os
 
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 # This configuration relies on environment variables for DB settings
