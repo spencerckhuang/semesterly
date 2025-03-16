@@ -64,7 +64,7 @@ SECRET_KEY = get_secret("SECRET_KEY")
 
 DEBUG = True
 
-SHOW_DEBUG_TOOLBAR = True
+SHOW_DEBUG_TOOLBAR = False
 
 ALLOWED_HOSTS = ["*"]
 
