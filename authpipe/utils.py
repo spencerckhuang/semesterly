@@ -154,7 +154,6 @@ def try_associate_email(response, kwargs):
             )
 
         kwargs["user"] = final_user
-        print(f"hello world, final_user id={final_user.id}")
         logger.debug("try_associate_email: successfully associated student via email.")
         return True
     except Exception as e:
