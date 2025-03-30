@@ -61,7 +61,7 @@ class DataUpdateSettings(models.Model):
     and configures the active semesters users allowed to see.
 
     Attributes:
-        year (IntegerField): the year the parser ingesting courses is for   
+        year (IntegerField): the year the parser ingesting courses is for
         term (CharField): the term the parser ingesting courses is for
         active (BooleanField): whether to run the parser
 
@@ -103,8 +103,7 @@ class DataUpdateSettings(models.Model):
         default=FALL,
         help_text="Select either Spring or Fall term",
     )
-    
-    
+
     def save(self, *args, **kwargs):
         if not self.pk and DataUpdateSettings.objects.exists():
             # If trying to create a new object while one exists, update the existing one
@@ -123,25 +122,27 @@ class DataUpdateSettings(models.Model):
         super().clean()
         if self.term not in [self.SPRING, self.FALL]:
             raise ValidationError({"term": "Term must be either Spring or Fall"})
-        
+
         # Validate min and max allowed years
         if self.min_allowed_year > self.max_allowed_year:
-            raise ValidationError({
-                "min_allowed_year": "Minimum allowed year cannot be greater than maximum allowed year",
-                "max_allowed_year": "Maximum allowed year cannot be less than minimum allowed year"
-            })
-        
+            raise ValidationError(
+                {
+                    "min_allowed_year": "Minimum allowed year cannot be greater than maximum allowed year",
+                    "max_allowed_year": "Maximum allowed year cannot be less than minimum allowed year",
+                }
+            )
+
         # Validate years are in 2000s
         if not (2000 <= self.min_allowed_year <= 2099):
-            raise ValidationError({
-                "min_allowed_year": "Year must be between 2000 and 2099"
-            })
-        
+            raise ValidationError(
+                {"min_allowed_year": "Year must be between 2000 and 2099"}
+            )
+
         if not (2000 <= self.max_allowed_year <= 2099):
-            raise ValidationError({
-                "max_allowed_year": "Year must be between 2000 and 2099"
-            })
-    
+            raise ValidationError(
+                {"max_allowed_year": "Year must be between 2000 and 2099"}
+            )
+
     def get_active_semesters(self):
         """
         Returns an OrderedDict of active semesters based on the model's settings.
@@ -149,13 +150,13 @@ class DataUpdateSettings(models.Model):
         Fall terms appear before Spring terms in the list.
         """
         from collections import OrderedDict
-        
+
         active_semesters = OrderedDict()
-        
+
         # Generate semesters from min to max year
         for year in range(self.min_allowed_year, self.max_allowed_year + 1):
             terms = []
-            
+
             # For each year, determine which terms should be included
             if year == self.min_allowed_year:
                 # For min year, only include terms from min_term onwards
@@ -172,10 +173,10 @@ class DataUpdateSettings(models.Model):
             else:
                 # For years in between, include both terms
                 terms = [self.FALL, self.SPRING]
-            
+
             if terms:
                 active_semesters[str(year)] = terms
-        
+
         return active_semesters
 
     class Meta:
