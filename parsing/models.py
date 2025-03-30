@@ -88,7 +88,7 @@ class DataUpdateSettings(models.Model):
     year = models.IntegerField()
     active = models.BooleanField(default=True)
 
-    # the min nad max terms user can select in the UI
+    # the min and max terms user can select in the UI
     min_allowed_year = models.IntegerField(default=2020)
     min_allowed_term = models.CharField(
         max_length=10,
