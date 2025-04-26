@@ -638,10 +638,10 @@ const SideBar = () => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-          }}> 
-          <h5 style={{ width: "60%" }}>Add Course History</h5>
-        </div>
-        <div
+          }}
+        >
+          <h5 style={{ width: "60%" }}>Course History</h5>
+          <div
             style={{
               height: "40px",
               display: "flex",
@@ -649,10 +649,22 @@ const SideBar = () => {
               gap: "5px",
               justifyContent: "center",
             }}
-          > 
+          >
             <button>Upload</button>
             <button>Check</button>
           </div>
+        </div>
+        <div> 
+          <p>
+            Upload your unofficial transcript (PDF) to add courses to your course history. 
+            Check your course history to see if you're missing any pre-requisites for your currently selected courses.
+          </p>
+        </div>
+        <div
+            style={{
+              marginTop: "10px",
+            }}> 
+        </div>
         <div
           style={{
             display: "flex",
@@ -660,12 +672,6 @@ const SideBar = () => {
             alignItems: "center",
           }}
         >
-          <div
-            style={{
-              marginTop: "10px",
-            }}> 
-          </div>
-
           <h5 style={{ width: "60%" }}>Scheduled Courses</h5>
           <div
             style={{
