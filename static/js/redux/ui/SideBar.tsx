@@ -663,8 +663,7 @@ const SideBar = () => {
               fontSize: "small",
               color: curTheme.name === "dark" ? "#A0A0A0" : "#555",
             }}>
-            Upload your unofficial transcript (PDF) to add courses to your course history. 
-            Check your course history to see if you're missing any pre-requisites for your currently selected courses.
+            Upload your unofficial transcript (PDF) to add courses to your course history. Then, check to see if you're missing any pre-requisites for your currently selected courses.
           </p>
         </div>
         <div
