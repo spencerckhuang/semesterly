@@ -514,6 +514,8 @@ const SideBar = () => {
     setCoursePlan([]);
   };
 
+  const handleUploadClick = () => {};
+
   const [isChecked, setIsChecked] = useState(false);
 
   const handleToggle = () => {
@@ -631,6 +633,25 @@ const SideBar = () => {
           marginTop: "10px",
         }}
       >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}> 
+          <h5 style={{ width: "60%" }}>Upload Course History</h5>
+          <div
+            style={{
+              height: "40px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "5px",
+              justifyContent: "center",
+            }}
+          > 
+            <button>Upload Transcript</button>
+          </div>
+        </div>
         <div
           style={{
             display: "flex",
