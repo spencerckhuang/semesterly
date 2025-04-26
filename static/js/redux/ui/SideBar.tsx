@@ -655,7 +655,14 @@ const SideBar = () => {
           </div>
         </div>
         <div> 
-          <p>
+          <p
+            style={{
+              marginTop: "5px",
+              lineHeight: "1.5",
+              userSelect: "none",
+              fontSize: "small",
+              color: curTheme.name === "dark" ? "#A0A0A0" : "#555",
+            }}>
             Upload your unofficial transcript (PDF) to add courses to your course history. 
             Check your course history to see if you're missing any pre-requisites for your currently selected courses.
           </p>
