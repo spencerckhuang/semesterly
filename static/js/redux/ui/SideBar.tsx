@@ -639,8 +639,9 @@ const SideBar = () => {
             justifyContent: "space-between",
             alignItems: "center",
           }}> 
-          <h5 style={{ width: "60%" }}>Upload Course History</h5>
-          <div
+          <h5 style={{ width: "60%" }}>Add Course History</h5>
+        </div>
+        <div
             style={{
               height: "40px",
               display: "flex",
@@ -649,9 +650,9 @@ const SideBar = () => {
               justifyContent: "center",
             }}
           > 
-            <button>Upload Transcript</button>
+            <button>Upload</button>
+            <button>Check</button>
           </div>
-        </div>
         <div
           style={{
             display: "flex",
@@ -659,6 +660,12 @@ const SideBar = () => {
             alignItems: "center",
           }}
         >
+          <div
+            style={{
+              marginTop: "10px",
+            }}> 
+          </div>
+
           <h5 style={{ width: "60%" }}>Scheduled Courses</h5>
           <div
             style={{
