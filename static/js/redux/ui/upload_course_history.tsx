@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 // Function to parse Hopkins course codes transferred in from other institutions
 // The regex captures the course code in the format "as.xxx.xxx / en.xxx.xxx / tr.xxx.xxx"
@@ -21,7 +21,7 @@ export function parseHopkinsCourse(text: string): string[] {
 // Main component for file reading and storing parsed data from transcripts
 export default function FileReaderComponent() {
     const [courseCodes, setCourseCodes] = useState<string[]>([]);
-    const fileInputRef = useRef<HTMLInputElement | null>(null);  // Ref to the hidden file input
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
   
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
