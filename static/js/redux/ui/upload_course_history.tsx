@@ -18,7 +18,7 @@ export function parseHopkinsCourse(text: string): string[] {
 }
 
 // Main component for file reading and storing parsed data from transcripts
-export default function FileReaderComponent() {
+function FileReaderComponent() {
     const [courseCodes, setCourseCodes] = useState<string[]>([]);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
   
@@ -42,21 +42,6 @@ export default function FileReaderComponent() {
       };
       reader.readAsText(file);
     };
-  
-    // Trigger the file input dialog when the button is clicked
-    const handleOpenFileDialog = () => {
-      if (fileInputRef.current) {
-        fileInputRef.current.click(); 
-      }
-    };
-  
-    const handleOpenModal = () => {
-      console.log("All Course Codes:", courseCodes);
-    };
-  
-    return (
-      <div>
-        Hello        
-      </div>
-    );
   }
+
+  export default FileReaderComponent;
