@@ -50,6 +50,7 @@ import CreateNewTimetableButton from "./CreateNewTimetableButton";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import findTopSchedules, { SchedulePolicy } from "./optimize_schedule";
+import FileReaderComponent from "./FileReaderComponent"; 
 
 /**
  * This component displays the timetable name, allows you to switch between timetables,
@@ -520,6 +521,14 @@ const SideBar = () => {
     setIsChecked((prev) => !prev); // Toggle the state
   };
 
+  const fileReaderRef = useRef(null);
+
+  const handleUploadClick = () => {
+    if (fileReaderRef.current) {
+      fileReaderRef.current.handleOpenFileDialog();  // File input dialog
+    }
+  };
+
   useEffect(() => {
     if (isCoursePlanDragging) {
       setBackgroundColorCourseConfig(isDarkMode ? "#3F4246" : "lightblue");
@@ -631,13 +640,29 @@ const SideBar = () => {
           marginTop: "10px",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+        <div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <h5 style={{ width: "60%" }}>Upload Course History</h5>
+            <div
+              style={{
+                height: "40px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "5px",
+                justifyContent: "center",
+              }}
+            >
+              <button onClick={handleUploadClick}>Upload Transcript</button>
+            </div>
+          </div>
+          <FileReaderComponent ref={fileReaderRef} />
+        </div>
           <h5 style={{ width: "60%" }}>Scheduled Courses</h5>
           <div
             style={{
