@@ -56,15 +56,7 @@ export default function FileReaderComponent() {
   
     return (
       <div>
-        <input
-          type="file"
-          accept=".txt"
-          onChange={handleFileChange}
-          ref={fileInputRef}
-          style={{ display: "none" }} // Hide the file input element
-        />
-        <button onClick={handleOpenFileDialog}>Upload Transcript</button>
-        <button onClick={handleOpenModal}>View Course History</button>
+        Hello        
       </div>
     );
   }
