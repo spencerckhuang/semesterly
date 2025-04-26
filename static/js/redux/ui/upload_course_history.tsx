@@ -17,7 +17,6 @@ export function parseHopkinsCourse(text: string): string[] {
   return matches.map(match => `${match[1]}.${match[2]}`);
 }
 
-
 // Main component for file reading and storing parsed data from transcripts
 export default function FileReaderComponent() {
     const [courseCodes, setCourseCodes] = useState<string[]>([]);
@@ -44,9 +43,10 @@ export default function FileReaderComponent() {
       reader.readAsText(file);
     };
   
+    // Trigger the file input dialog when the button is clicked
     const handleOpenFileDialog = () => {
       if (fileInputRef.current) {
-        fileInputRef.current.click(); // Trigger the file input dialog when the button is clicked
+        fileInputRef.current.click(); 
       }
     };
   
@@ -56,15 +56,15 @@ export default function FileReaderComponent() {
   
     return (
       <div>
-        <button onClick={handleOpenFileDialog}>Upload Transcript</button>
         <input
-          ref={fileInputRef}
           type="file"
-          accept="application/pdf"
-          style={{ display: 'none' }}  
-          onChange={handleFileChange}  
-          // Hide the file input element and trigger it when the button is clicked
+          accept=".txt"
+          onChange={handleFileChange}
+          ref={fileInputRef}
+          style={{ display: "none" }} // Hide the file input element
         />
+        <button onClick={handleOpenFileDialog}>Upload Transcript</button>
+        <button onClick={handleOpenModal}>View Course History</button>
       </div>
     );
   }
