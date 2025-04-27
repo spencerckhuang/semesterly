@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useRef } from "react";
 
+
 // Function to parse Hopkins course codes transferred in from other institutions
 // The regex captures the course code in the format "as.xxx.xxx / en.xxx.xxx / tr.xxx.xxx"
 export function parseTransferCourse(text: string): string[] {
@@ -18,30 +19,13 @@ export function parseHopkinsCourse(text: string): string[] {
 }
 
 // Main component for file reading and storing parsed data from transcripts
-function FileReaderComponent() {
-    const [courseCodes, setCourseCodes] = useState<string[]>([]);
-    const fileInputRef = useRef<HTMLInputElement | null>(null);
-  
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-  
-      const reader = new FileReader();
-      reader.onload = () => {
-        const fileText = reader.result as string;
+  export function parseTranscriptData(file: File): Promise<string[]> {
+    return new Promise((resolve, reject) => {
+        console.log("File:", file);
+        if (!file) {
+            reject(new Error("No file provided."));
+        resolve([]); // Placeholder for the actual implementation
         
-        // Parse the file content and store as an array of course codes
-        const parsedTransferCourses = parseTransferCourse(fileText);
-        const parsedHopkinsCourses = parseHopkinsCourse(fileText);
-        const courseCodes = [...parsedTransferCourses, ...parsedHopkinsCourses];
-        setCourseCodes(courseCodes); 
-  
-        // Clear file input
-        e.target.value = ""; 
-        console.log("File read and data stored locally.");
-      };
-      reader.readAsText(file);
-    };
+    });
+    
   }
-
-  export default FileReaderComponent;

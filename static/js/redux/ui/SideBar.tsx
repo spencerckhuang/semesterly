@@ -50,6 +50,7 @@ import CreateNewTimetableButton from "./CreateNewTimetableButton";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import findTopSchedules, { SchedulePolicy } from "./optimize_schedule";
+import parseTranscriptData from "./upload_course_history";
 
 /**
  * This component displays the timetable name, allows you to switch between timetables,
@@ -525,23 +526,8 @@ const SideBar = () => {
       const file = target.files?.[0];
   
       if (file) {
-        console.log('File selected:', file.name);
-        // send the transcript to the backend for processing
-        /*
-        const formData = new FormData();
-        formData.append('file', file);
-        // set up the request to the backend
-        const response = await fetch('/api/upload_transcript', {
-          method: 'POST',
-          body: formData,
-        });
-        if (response.ok) {
-          const data = await response.json();
-          console.log('File uploaded successfully:', data);
-        } else {
-          console.error('Error uploading file:', response.statusText);
-        }
-          */
+        //console.log('File selected:', file.name);
+        //parseTranscriptData(file);
     });
   
     // Open the file dialog
