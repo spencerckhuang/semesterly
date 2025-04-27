@@ -514,7 +514,34 @@ const SideBar = () => {
     setCoursePlan([]);
   };
 
-  const handleUploadClick = () => {};
+  const handleUploadClick = () => {    
+    // Input element for PDF file upload prompts the file upload window
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.pdf'; // Accept PDF files only
+    
+    // Add an event listener for when a file is selected
+    input.addEventListener('change', async (event) => {
+      const target = event.target as HTMLInputElement;
+      const file = target.files?.[0];
+  
+      if (file) {
+        console.log('File selected:', file.name);
+      } else {
+        console.log('No file selected');
+        dispatch(
+          alertsActions.alertCoursePlan({
+            alertType: AlertCoursePlanType.FILE_UPLOAD_ERROR, 
+          })
+        );
+      }
+    });
+  
+    // Open the file dialog
+    input.click();
+  };
+  
+  const handleCheckClick = () => {};
 
   const [isChecked, setIsChecked] = useState(false);
 
@@ -650,7 +677,7 @@ const SideBar = () => {
               justifyContent: "center",
             }}
           >
-            <button>Upload</button>
+            <button onClick={handleUploadClick}>Upload</button>
             <button>Check</button>
           </div>
         </div>

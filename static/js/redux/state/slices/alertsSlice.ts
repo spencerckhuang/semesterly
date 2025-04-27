@@ -9,6 +9,8 @@ export enum AlertCoursePlanType {
   EXCEEDS_LIMIT = 1,
   NO_FEASIBLE_SCHEDULE = 2,
   UNKNOWN = 3,
+  NO_FILE_SELECTED = 4, 
+  FILE_UPLOAD_ERROR = 5,
 }
 
 interface AlertsSliceState {
