@@ -58,3 +58,6 @@ sphinxcontrib-inlinesyntaxhighlight==0.2
 sphinxcontrib-websupport==1.2.4
 supervisor==4.2.2
 semly-webdriver-manager-fork==4.0.1
+
+pymupdf==1.21.1
+regex==2023.6.3

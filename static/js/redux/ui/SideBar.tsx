@@ -518,8 +518,7 @@ const SideBar = () => {
     // Input element for PDF file upload prompts the file upload window
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = '.pdf'; // Accept PDF files only
-    
+    input.accept = '.pdf';
     // Add an event listener for when a file is selected
     input.addEventListener('change', async (event) => {
       const target = event.target as HTMLInputElement;
@@ -527,13 +526,22 @@ const SideBar = () => {
   
       if (file) {
         console.log('File selected:', file.name);
-      } else {
-        console.log('No file selected');
-        dispatch(
-          alertsActions.alertCoursePlan({
-            alertType: AlertCoursePlanType.FILE_UPLOAD_ERROR, 
-          })
-        );
+        // send the transcript to the backend for processing
+        const formData = new FormData();
+        formData.append('file', file);
+        try {
+          const response = await fetch('/upload_pdf', { // URL for backend route
+            method: 'POST',
+            body: formData,
+          });
+          if (!response.ok) {
+            throw new Error('File upload failed');
+          }  
+          const result = await response.json();
+          console.log('Extracted text:', result.text);  // Log or use the extracted text
+        } catch (error) {
+          console.error('Error uploading file:', error);
+        }
       }
     });
   
