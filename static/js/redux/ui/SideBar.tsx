@@ -527,22 +527,21 @@ const SideBar = () => {
       if (file) {
         console.log('File selected:', file.name);
         // send the transcript to the backend for processing
+        /*
         const formData = new FormData();
         formData.append('file', file);
-        try {
-          const response = await fetch('/upload_pdf', { // URL for backend route
-            method: 'POST',
-            body: formData,
-          });
-          if (!response.ok) {
-            throw new Error('File upload failed');
-          }  
-          const result = await response.json();
-          console.log('Extracted text:', result.text);  // Log or use the extracted text
-        } catch (error) {
-          console.error('Error uploading file:', error);
+        // set up the request to the backend
+        const response = await fetch('/api/upload_transcript', {
+          method: 'POST',
+          body: formData,
+        });
+        if (response.ok) {
+          const data = await response.json();
+          console.log('File uploaded successfully:', data);
+        } else {
+          console.error('Error uploading file:', response.statusText);
         }
-      }
+          */
     });
   
     // Open the file dialog
