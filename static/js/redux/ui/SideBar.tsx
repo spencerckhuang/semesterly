@@ -50,7 +50,6 @@ import CreateNewTimetableButton from "./CreateNewTimetableButton";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import findTopSchedules, { SchedulePolicy } from "./optimize_schedule";
-import parseTranscriptData from "./upload_course_history";
 
 /**
  * This component displays the timetable name, allows you to switch between timetables,
@@ -516,25 +515,26 @@ const SideBar = () => {
   };
 
   const handleUploadClick = () => {    
-    // Input element for PDF file upload prompts the file upload window
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = '.pdf';
-    // Add an event listener for when a file is selected
+    
+    // add an event listener for when a file is selected
     input.addEventListener('change', async (event) => {
-      const target = event.target as HTMLInputElement;
-      const file = target.files?.[0];
-  
-      if (file) {
-        //console.log('File selected:', file.name);
-        //parseTranscriptData(file);
+        const target = event.target as HTMLInputElement;
+        const file = target.files?.[0];
+        if (file) {
+            console.log('File selected:', file.name);
+            // TODO
+        }
     });
-  
-    // Open the file dialog
+    // trigger the file input dialog
     input.click();
-  };
+};
   
-  const handleCheckClick = () => {};
+  const handleCheckClick = () => {
+    // TODO
+  };
 
   const [isChecked, setIsChecked] = useState(false);
 
