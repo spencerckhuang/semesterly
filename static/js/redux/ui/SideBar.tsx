@@ -36,6 +36,7 @@ import {
   loadTimetable,
   updateCourses,
   postTranscript,
+  ensureCsrfCookie,
 } from "../actions";
 import {
   Course,
@@ -516,6 +517,12 @@ const SideBar = () => {
     setCoursePlan([]);
   };
 
+  useEffect(() => {
+    ensureCsrfCookie()
+      .then(() => {})
+      .catch((err: Error) => console.error("Failed to get CSRF token:", err.message));
+  }, []);
+  
   const handleUploadClick = () => {
     const input = document.createElement("input");
     input.type = "file";

@@ -19,16 +19,24 @@ import Cookie from "js-cookie";
 import { alertsActions } from "../state/slices";
 import { postTranscriptEndpoint } from "../constants/endpoints";
 
+export const ensureCsrfCookie = () =>
+    fetch("/transcript/", {
+      method: "GET",
+      credentials: "include",
+    });  
+
 // POST a transcript to the backend for parsing
 export const postTranscript =
   (formData) =>
   (dispatch) => {
-    return fetch(postTranscriptEndpoint(), {
+    // const csrfToken = Cookie.get("csrftoken");
+    // console.log("CSRF Token:", csrfToken);
+
+    return fetch("/transcript/upload/", {
       method: "POST",
       body: formData,
       headers: {
-        "X-CSRFToken": Cookie.get("csrftoken"),
-        // browser sets Content-Type header for FormData automatically
+        "X-CSRFToken": csrfToken,
       },
       credentials: "include",
     })
@@ -38,10 +46,7 @@ export const postTranscript =
         }
         return response.json();
       })
-      .then((data) => {
-        // handle success
-        return data;
-      })
+      .then((data) => data)
       .catch((error) => {
         dispatch(alertsActions.alertUploadFailed());
         throw error;
