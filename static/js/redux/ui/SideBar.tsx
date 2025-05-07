@@ -537,9 +537,9 @@ const SideBar = () => {
       formData.append("file", file);
       try {
         const result = await dispatch(postTranscript(formData));
-        // console.log("Transcript upload success:", result);  
+        console.log("Transcript upload success:", result);  
       } catch (error) {
-        // console.error("Upload failed:", error);
+        console.error("Upload failed:", error);
         dispatch(alertsActions.alertUploadFailed());
       }
     });

@@ -29,7 +29,7 @@ export const ensureCsrfCookie = () =>
 export const postTranscript =
   (formData) =>
   (dispatch) => {
-    // const csrfToken = Cookie.get("csrftoken");
+    const csrfToken = Cookie.get("csrftoken");
     // console.log("CSRF Token:", csrfToken);
 
     return fetch("/transcript/upload/", {

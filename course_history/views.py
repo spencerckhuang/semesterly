@@ -41,6 +41,8 @@ class TranscriptUploadView(View):
         if not uploaded_file:
             return JsonResponse({"error": "No file uploaded"}, status=400)
         
+        return JsonResponse({"status": "success", "message": "File uploaded successfully"})
+        
         # Save the file temporarily
         file_path = f"transcript_parser/input/{uploaded_file.name}"
         with open(file_path, "wb") as f:
