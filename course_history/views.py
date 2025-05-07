@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.views import View
 from django.views.decorators.csrf import ensure_csrf_cookie
-import pymupdf as fitz
+import fitz
 import re
 
 @ensure_csrf_cookie
