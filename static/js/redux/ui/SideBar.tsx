@@ -43,7 +43,6 @@ import {
   Section,
   Timetable,
 } from "../constants/commonTypes";
-import UploadIssueAlert from "./ui/alerts/UploadIssueAlert";
 import { startComparingTimetables } from "../state/slices/compareTimetableSlice";
 import AvgCourseRating from "./AvgCourseRating";
 import { selectSlotColorData, selectTheme } from "../state/slices/themeSlice";
@@ -525,10 +524,8 @@ const SideBar = () => {
     input.addEventListener("change", async (event) => {
       const target = event.target as HTMLInputElement;
       const file = target.files?.[0];
-      if (!file) {
-        return
-      };
-      // console.log("File selected:", file.name);
+      if (!file) return;
+
       const formData = new FormData();
       formData.append("file", file);
       try {
@@ -541,8 +538,7 @@ const SideBar = () => {
     });
   
     input.click();
-  };
-  
+  };  
   
   const handleCheckClick = () => {
     // TODO
@@ -697,7 +693,6 @@ const SideBar = () => {
             }}>
             Upload your unofficial transcript (PDF) to add courses to your course history. Then, check to see if you're missing any pre-requisites for your currently selected courses.
           </p>
-          <UploadIssueAlert />
         </div>
         <div
             style={{
