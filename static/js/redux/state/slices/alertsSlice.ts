@@ -26,6 +26,7 @@ interface AlertsSliceState {
   alertCoursePlan: boolean;
   alertCoursePlanType: number;
   alertUploadIssue: boolean;
+  uploadIssueMessage: string;
 }
 
 const initialState: AlertsSliceState = {
@@ -42,6 +43,7 @@ const initialState: AlertsSliceState = {
   alertCoursePlan: false,
   alertCoursePlanType: 0,
   alertUploadIssue: false,
+  uploadIssueMessage: "",
   
 };
 
