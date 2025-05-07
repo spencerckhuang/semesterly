@@ -35,6 +35,7 @@ import {
   fetchCourseInfo,
   loadTimetable,
   updateCourses,
+  postTranscript,
 } from "../actions";
 import {
   Course,
@@ -50,6 +51,7 @@ import CreateNewTimetableButton from "./CreateNewTimetableButton";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import findTopSchedules, { SchedulePolicy } from "./optimize_schedule";
+
 
 /**
  * This component displays the timetable name, allows you to switch between timetables,
@@ -514,23 +516,32 @@ const SideBar = () => {
     setCoursePlan([]);
   };
 
-  const handleUploadClick = () => {    
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.pdf';
-    
-    // add an event listener for when a file is selected
-    input.addEventListener('change', async (event) => {
-        const target = event.target as HTMLInputElement;
-        const file = target.files?.[0];
-        if (file) {
-            console.log('File selected:', file.name);
-            // TODO
-        }
+  const handleUploadClick = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".pdf";
+  
+    input.addEventListener("change", async (event) => {
+      const target = event.target as HTMLInputElement;
+      const file = target.files?.[0];
+      if (!file) {
+        return
+      };
+      // console.log("File selected:", file.name);
+      const formData = new FormData();
+      formData.append("file", file);
+      try {
+        const result = await dispatch(postTranscript(formData));
+        console.log("Transcript upload success:", result);  
+      } catch (error) {
+        console.error("Upload failed:", error);
+        dispatch(alertsActions.alertUploadFailed());
+      }
     });
-    // trigger the file input dialog
+  
     input.click();
-};
+  };
+  
   
   const handleCheckClick = () => {
     // TODO
