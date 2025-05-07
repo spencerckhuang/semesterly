@@ -58,4 +58,4 @@ sphinx-rtd-theme==0.5.2
 sphinxcontrib-inlinesyntaxhighlight==0.2
 sphinxcontrib-websupport==1.2.4
 supervisor==4.2.2
-semly-w
+semly-webdriver-manager-fork==4.0.1
