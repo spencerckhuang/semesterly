@@ -44,7 +44,6 @@ export const postTranscript =
       })
       .catch((error) => {
         dispatch(alertsActions.alertUploadFailed());
-        dispatch(alertsActions.addAlert({ level: "error", message: error.message }));
         throw error;
       });
   };
