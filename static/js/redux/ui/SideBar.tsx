@@ -43,6 +43,7 @@ import {
   Section,
   Timetable,
 } from "../constants/commonTypes";
+import UploadIssueAlert from "./ui/alerts/UploadIssueAlert";
 import { startComparingTimetables } from "../state/slices/compareTimetableSlice";
 import AvgCourseRating from "./AvgCourseRating";
 import { selectSlotColorData, selectTheme } from "../state/slices/themeSlice";
@@ -696,6 +697,7 @@ const SideBar = () => {
             }}>
             Upload your unofficial transcript (PDF) to add courses to your course history. Then, check to see if you're missing any pre-requisites for your currently selected courses.
           </p>
+          <UploadIssueAlert />
         </div>
         <div
             style={{
