@@ -701,6 +701,7 @@ const SideBar = () => {
             <button onClick={handleCheckClick}>{showCourseHistory ? "Hide Course History" : "View Course History"}</button>
           </div>
         </div>
+        {showCourseHistory && (<CourseHistoryPopup onClose={() => setShowCourseHistory(false)} />)}
         <div> 
           <p
             style={{
@@ -791,7 +792,6 @@ const SideBar = () => {
           )}
         </div>
       </div>
-      {showCourseHistory && (<CourseHistoryPopup onClose={() => setShowCourseHistory(false)} />)}
     </div>
   );
 };
