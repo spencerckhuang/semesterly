@@ -36,7 +36,7 @@ class TranscriptUploadView(View):
                     courses.extend(parse_hopkins_course(text))
         except Exception as e:
             raise
-        return courses
+        return sorted(courses)
     
     def post(self, request):
         if not request.FILES:
