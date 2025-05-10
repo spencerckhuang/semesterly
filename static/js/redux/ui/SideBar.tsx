@@ -52,6 +52,7 @@ import CreateNewTimetableButton from "./CreateNewTimetableButton";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import findTopSchedules, { SchedulePolicy } from "./optimize_schedule";
+import {CourseHistoryPopup} from "./CourseHistoryPopup";
 
 
 /**
@@ -527,7 +528,7 @@ const SideBar = () => {
     const input = document.createElement("input");
     input.type = "file";
     input.accept = ".pdf";
-  
+
     input.addEventListener("change", async (event) => {
       const target = event.target as HTMLInputElement;
       const file = target.files?.[0];
@@ -535,21 +536,32 @@ const SideBar = () => {
 
       const formData = new FormData();
       formData.append("file", file);
+      
       try {
         const result = await dispatch(postTranscript(formData));
-        // console.log("Transcript upload success:", result);  
+        console.log("Transcript upload success:", result);
+        if (result?.courses) {
+          localStorage.setItem("transcriptData", JSON.stringify({
+            courses: result.courses,
+          }));
+          console.log("Transcript successfully saved to localStorage");
+        } 
       } catch (error) {
         console.error("Upload failed:", error);
         dispatch(alertsActions.alertUploadFailed());
       }
     });
-  
+
     input.click();
-  };  
+  }; 
+
+  const [showCourseHistory, setShowCourseHistory] = useState(false);
   
-  const handleCheckClick = () => {
-    // TODO
+  const handleCheckClick = (): void => {
+    setShowCourseHistory(!showCourseHistory);
   };
+// add functionality to check course history against currently selected courses in time table as
+
 
   const [isChecked, setIsChecked] = useState(false);
 
@@ -686,7 +698,7 @@ const SideBar = () => {
             }}
           >
             <button onClick={handleUploadClick}>Upload</button>
-            <button>Check</button>
+            <button onClick={handleCheckClick}>{showCourseHistory ? "Hide Course History" : "View Course History"}</button>
           </div>
         </div>
         <div> 
@@ -698,7 +710,7 @@ const SideBar = () => {
               fontSize: "small",
               color: curTheme.name === "dark" ? "#A0A0A0" : "#555",
             }}>
-            Upload your unofficial transcript (PDF) to add courses to your course history. Then, check to see if you're missing any pre-requisites for your currently selected courses.
+            Upload your unofficial transcript (PDF) to add courses to your course history. Then, click 'Check' review it and see if you're missing any pre-requisites for your currently selected courses.
           </p>
         </div>
         <div
@@ -779,6 +791,7 @@ const SideBar = () => {
           )}
         </div>
       </div>
+      {showCourseHistory && (<CourseHistoryPopup onClose={() => setShowCourseHistory(false)} />)}
     </div>
   );
 };
