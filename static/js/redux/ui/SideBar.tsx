@@ -560,8 +560,10 @@ const SideBar = () => {
   const handleCheckClick = (): void => {
     setShowCourseHistory(!showCourseHistory);
   };
-// add functionality to check course history against currently selected courses in time table as
 
+  const handleClearClick = (): void => {
+    localStorage.removeItem("transcriptData");
+  };
 
   const [isChecked, setIsChecked] = useState(false);
 
@@ -697,7 +699,18 @@ const SideBar = () => {
               justifyContent: "center",
             }}
           >
-            <button onClick={handleUploadClick}>Upload</button>
+            <div
+              style={{
+              height: "40px",
+              display: "flex",
+              flexDirection: "row",
+              gap: "5px",
+              justifyContent: "center",
+            }}
+            > 
+              <button onClick={handleUploadClick}>Upload</button>
+              <button onClick={handleClearClick}>Clear</button>
+            </div>
             <button onClick={handleCheckClick}>{showCourseHistory ? "Hide" : "View"}</button>
           </div>
         </div>
@@ -711,7 +724,7 @@ const SideBar = () => {
               fontSize: "small",
               color: curTheme.name === "dark" ? "#A0A0A0" : "#555",
             }}>
-            Upload your unofficial transcript (PDF) to add courses to your course history. Then, click 'Check' review it and see if you're missing any pre-requisites for your currently selected courses.
+            Upload your unofficial transcript (PDF) to add courses to your course history. When searching for courses, you can check if you have alerady satisfied the necessary prerequisites.
           </p>
         </div>
         <div
