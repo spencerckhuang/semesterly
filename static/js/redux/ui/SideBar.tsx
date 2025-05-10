@@ -698,7 +698,7 @@ const SideBar = () => {
             }}
           >
             <button onClick={handleUploadClick}>Upload</button>
-            <button onClick={handleCheckClick}>{showCourseHistory ? "Hide Course History" : "View Course History"}</button>
+            <button onClick={handleCheckClick}>{showCourseHistory ? "Hide" : "View"}</button>
           </div>
         </div>
         {showCourseHistory && (<CourseHistoryPopup onClose={() => setShowCourseHistory(false)} />)}
