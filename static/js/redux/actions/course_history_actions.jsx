@@ -42,6 +42,7 @@ export const postTranscript =
     })
       .then((response) => {
         if (!response.ok) {
+          console.error("Transcript upload failed:", response);
           throw new Error("Transcript upload failed");
         }
         return response.json();

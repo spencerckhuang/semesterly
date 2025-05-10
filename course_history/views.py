@@ -2,6 +2,8 @@ from django.http import JsonResponse
 from django.views import View
 from django.views.decorators.csrf import ensure_csrf_cookie
 import fitz
+import logging
+import tempfile
 import re
 
 @ensure_csrf_cookie
@@ -21,40 +23,41 @@ def parse_hopkins_course(text):
     course_ids = [f"{match[0]}.{match[1]}" for match in matches]
     return course_ids
 
-# reads in all courses from transcript and saves as a json file
-def get_course_history(path):
-    transcript = fitz.open(path)
-    courses = []
-
-    for page in transcript:
-        text = page.get_text("text")
-        courses.extend(parse_transfer_course(text))
-        courses.extend(parse_hopkins_course(text))
-
-    transcript.close()
-    return courses
-
 class TranscriptUploadView(View):
+    # reads in all courses from transcript and saves as a json file
+    def get_course_history(self, file):
+        courses = []
+        try:
+            file.seek(0)
+            with fitz.open(stream=file.read(), filetype="pdf") as transcript:
+                for page in transcript:
+                    text = page.get_text("text")
+                    courses.extend(parse_transfer_course(text))
+                    courses.extend(parse_hopkins_course(text))
+        except Exception as e:
+            raise
+        return courses
+    
     def post(self, request):
-        print("POST method was triggered")  # For debugging purposes
+        if not request.FILES:
+            return JsonResponse({"error": "No file uploaded"}, status=400)
         uploaded_file = request.FILES.get("file")
+        
+        # validate the uploaded file
         if not uploaded_file:
             return JsonResponse({"error": "No file uploaded"}, status=400)
+        if not uploaded_file.name.endswith('.pdf'):
+            return JsonResponse({"error": "File is not a PDF"}, status=400)
         
-        return JsonResponse({"status": "success", "message": "File uploaded successfully"})
-        
-        # Save the file temporarily
-        file_path = f"transcript_parser/input/{uploaded_file.name}"
-        with open(file_path, "wb") as f:
-            for chunk in uploaded_file.chunks():
-                f.write(chunk)
-
-        # Extract courses from the transcript
         try:
-            courses = get_course_history(file_path)
-
-            # Return the extracted courses as JSON
-            return JsonResponse({"status": "success", "courses": courses})
-
+            courses = self.get_course_history(uploaded_file)
+            return JsonResponse({
+            "status": "success", 
+            "message": "File processed successfully",
+            "courses": courses
+        }, status=200)
         except Exception as e:
-            return JsonResponse({"error": str(e)}, status=500)
+            return JsonResponse({
+                "error": "Internal server error",
+                "details": str(e)
+            }, status=500)
