@@ -17,10 +17,10 @@ GNU General Public License for more details.
 import fetch from "isomorphic-fetch";
 import Cookie from "js-cookie";
 import { alertsActions } from "../state/slices";
-import { postTranscriptEndpoint } from "../constants/endpoints";
+import { getTranscriptEndpoint, postTranscriptEndpoint } from "../constants/endpoints";
 
 export const ensureCsrfCookie = () =>
-    fetch("/transcript/", {
+    fetch(getTranscriptEndpoint(), {
       method: "GET",
       credentials: "include",
     });  
@@ -32,7 +32,7 @@ export const postTranscript =
     const csrfToken = Cookie.get("csrftoken");
     // console.log("CSRF Token:", csrfToken);
 
-    return fetch("/transcript/upload/", {
+    return fetch(postTranscriptEndpoint(), {
       method: "POST",
       body: formData,
       headers: {
