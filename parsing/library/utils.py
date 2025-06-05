@@ -11,7 +11,9 @@
 # GNU General Public License for more details.
 
 import collections
+import collections.abc
 import dateutil
+import dateutil.parser
 import os
 import re
 import simplejson as json
@@ -168,7 +170,7 @@ def update(d, u):
         {0: {1: 2}}
     """
     for k, v in u.items():
-        if isinstance(v, collections.Mapping):
+        if isinstance(v, collections.abc.Mapping):
             r = update(d.get(k, {}), v)
             d[k] = r
         else:
@@ -210,7 +212,9 @@ def dir_to_dict(path):
     d = {"name": os.path.basename(path)}
     if os.path.isdir(path):
         d["kind"] = "directory"
-        d["children"] = [dir_to_dict(os.path.join(path, x)) for x in os.listdir(path)]
+        d["children"] = [
+            dir_to_dict(os.path.join(path, x)) for x in os.listdir(path)
+        ]
     else:
         d["kind"] = "file"
     return d
