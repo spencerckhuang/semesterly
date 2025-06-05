@@ -194,7 +194,7 @@ def iterrify(x):
         ...     print(i)
         'hello'
     """
-    if isinstance(x, collections.Iterable) and not isinstance(x, str):
+    if isinstance(x, collections.abc.Iterable) and not isinstance(x, str):
         return x
     else:
         return (x,)
