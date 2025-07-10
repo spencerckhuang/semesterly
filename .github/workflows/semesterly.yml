@@ -31,7 +31,7 @@ jobs:
     strategy:
       matrix:
         python-version: [3.11]
-        node-version: [18.x]
+        node-version: [20.x]
 
     steps:
       - name: Adjust hosts file
@@ -58,7 +58,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "yarn"
-      - run: yarn install --frozen-lockfile
+      - run: yarn install
       - run: yarn global add chromedriver@2.46.0
       - run: yarn global add jest@20
       - run: yarn build --if-present

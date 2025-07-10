@@ -1,5 +1,5 @@
 #! should update to newer version of node base image
-FROM node:18-bookworm
+FROM node:20-bookworm
 
 # Create code dir
 RUN mkdir /code
@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y python3-pip python3-venv && \
 ADD . /code/
 
 # Create and activate virtual environment
-ENV VIRTUAL_ENV=/code/venv
+ENV VIRTUAL_ENV=/opt/venv
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
@@ -29,6 +29,8 @@ COPY ./build/run_parser.sh /code/run_parser.sh
 
 # Install package.json dependencies
 RUN yarn
+RUN yarn add sass --force
+RUN yarn install
 RUN yarn build
 
 # To enable unbuffered logging
