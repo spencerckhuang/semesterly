@@ -18,6 +18,7 @@ const webpack = require("webpack");
 const BundleTracker = require("webpack-bundle-tracker");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const sass = require("sass");
 
 const isProd = process.env.NODE_ENV === "production";
 const isDev = process.env.NODE_ENV === "development";
@@ -109,6 +110,7 @@ const config = {
               loader: "sass-loader",
               options: {
                 sourceMap: isDev,
+                implementation: sass,
               },
             },
           ],
