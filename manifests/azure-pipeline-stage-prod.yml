@@ -97,6 +97,7 @@ stages:
                     action: createSecret
                     secretName: $(imagePullSecret)
                     dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
+                    namespace: semesterly-stage
 
                 - task: KubernetesManifest@1
                   displayName: Deploy to Kubernetes cluster
@@ -111,6 +112,7 @@ stages:
                     containers: |
                       $(containerRegistry)/$(imageRepository):$(tag)
                       $(containerRegistry)/semesterly-nginx:$(tag)
+                    namespace: semesterly-stage
 
   - stage: Validation
     displayName: Validation
@@ -151,6 +153,7 @@ stages:
                     action: createSecret
                     secretName: $(imagePullSecret)
                     dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
+                    namespace: semesterly-prod
 
                 - task: KubernetesManifest@1
                   displayName: Deploy to Kubernetes cluster
@@ -165,3 +168,4 @@ stages:
                     containers: |
                       $(containerRegistry)/$(imageRepository):$(tag)
                       $(containerRegistry)/semesterly-nginx:$(tag)
+                    namespace: semesterly-prod
