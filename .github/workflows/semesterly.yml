@@ -37,9 +37,10 @@ jobs:
       - name: Adjust hosts file
         run: sudo echo "127.0.0.1 jhu.sem.ly sem.ly jhu" | sudo tee -a /etc/hosts
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -54,11 +55,19 @@ jobs:
           pip install -r requirements.txt
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          # deliberately no cache to avoid "Cache service responded with 400"
 
-      - run: npm install
+      - name: Install JS dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install --no-audit --no-fund
+          fi
+
       - run: npm -g install chromedriver
       - run: npm -g install jest@20
       - run: npm run build --if-present
