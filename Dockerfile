@@ -1,4 +1,3 @@
-#! should update to newer version of node base image
 FROM node:20-bookworm
 
 # Create code dir
@@ -27,10 +26,15 @@ COPY ./build/local_settings.py /code/semesterly/local_settings.py
 # Add parser script
 COPY ./build/run_parser.sh /code/run_parser.sh
 
-# Install package.json dependencies
-RUN yarn
+# Install package.json dependencies (Solution A: npmjs registry + timeout + retry)
+RUN yarn config set registry https://registry.npmjs.org/ \
+ && yarn config set network-timeout 600000 -g \
+ && (yarn install --non-interactive || (sleep 5 && yarn install --non-interactive))
+
+# If you intentionally add sass during build (kept as-is)
 RUN yarn add sass --force
-RUN yarn install
+
+# Build frontend assets
 RUN yarn build
 
 # To enable unbuffered logging
