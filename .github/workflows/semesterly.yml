@@ -57,8 +57,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "yarn"
-      - run: yarn install
+          # removed built-in cache to avoid cache 400 errors
+
+      # resilient install (keeps behavior, adds --frozen-lockfile + retry)
+      - run: yarn install --frozen-lockfile || (sleep 5 && yarn install --frozen-lockfile)
       - run: yarn global add chromedriver@2.46.0
       - run: yarn global add jest@20
       - run: yarn build --if-present

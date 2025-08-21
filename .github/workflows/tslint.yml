@@ -18,13 +18,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      # Stay on Node 14, but disable built-in cache to avoid "Cache service responded with 400"
       - uses: actions/setup-node@v4
         with:
-          node-version: 14
-          cache: "npm"
+          node-version: 14.21.3
+
       - name: Install Dependencies
-        run: npm install
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install --no-audit --no-fund
+          fi
+
       - name: Run Prettier
         run: npx prettier "**/*.{js,jsx,ts,tsx}" --check
+
       - name: Run ESLint
         run: npx eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0
