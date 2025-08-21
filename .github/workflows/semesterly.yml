@@ -54,10 +54,10 @@ jobs:
           pip install -r requirements.txt
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+
       - run: npm install
       - run: npm -g install chromedriver
       - run: npm -g install jest@20
