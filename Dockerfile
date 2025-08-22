@@ -1,4 +1,4 @@
-FROM node:20-bookworm
+FROM node:22.18.0-bookworm
 
 # Create code dir
 RUN mkdir /code
@@ -26,7 +26,10 @@ COPY ./build/local_settings.py /code/semesterly/local_settings.py
 # Add parser script
 COPY ./build/run_parser.sh /code/run_parser.sh
 
-# Install package.json dependencies (Solution A: npmjs registry + timeout + retry)
+# Ensure Yarn Classic (v1) is available on Node 22 and perform resilient install
+RUN corepack enable && corepack prepare yarn@1.22.22 --activate
+
+# Install package.json dependencies (npmjs registry + timeout + retry)
 RUN yarn config set registry https://registry.npmjs.org/ \
  && yarn config set network-timeout 600000 -g \
  && (yarn install --non-interactive || (sleep 5 && yarn install --non-interactive))
