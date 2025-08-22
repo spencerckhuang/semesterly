@@ -3,19 +3,14 @@ name: Semesterly CI
 
 on:
   push:
-    branches:
-      - prod
-      - develop
-      - feature/dark-mode-timetable
+    branches: [prod, develop, feature/dark-mode-timetable]
   pull_request:
-    branches:
-      - prod
-      - develop
-      - feature/dark-mode-timetable
+    branches: [prod, develop, feature/dark-mode-timetable]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     services:
       postgres:
         image: postgres
@@ -23,19 +18,21 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: postgres
-        ports:
-          - 5432:5432
-        # needed because the postgres container does not provide a healthcheck
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     strategy:
       matrix:
-        python-version: [3.8]
-        node-version: [22.x]
+        python-version: [3.11]
+        node-version: [22.x]   # or 20.x if you haven’t bumped yet
 
     steps:
       - name: Adjust hosts file
-        run: sudo echo "127.0.0.1 jhu.sem.ly sem.ly jhu" | sudo tee -a /etc/hosts
+        run: sudo sh -c 'echo "127.0.0.1 jhu.sem.ly sem.ly jhu" >> /etc/hosts'
 
       - uses: actions/checkout@v4
 
@@ -58,25 +55,30 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          # deliberately no cache to avoid intermittent cache errors
 
-      # Provide Yarn Classic (v1) on Node 22
-      - name: Enable Yarn 1 via Corepack
-        run: |
-          corepack enable
-          corepack prepare yarn@1.22.22 --activate
+      # ✅ Fix: install Chrome AND the matching ChromeDriver in one step
+      - name: Setup Chrome + ChromeDriver
+        id: chrome
+        uses: browser-actions/setup-chrome@v2
+        with:
+          install-dependencies: true
+          install-chromedriver: true
 
-      # Install JS deps WITHOUT frozen lockfile, with a simple retry
+      # If your tests look for CHROME_BIN, export it:
+      - name: Export CHROME_BIN (optional)
+        run: echo "CHROME_BIN=${{ steps.chrome.outputs.chrome-path }}" >> $GITHUB_ENV
+
       - name: Install JS dependencies
-        run: yarn install --non-interactive || (sleep 5 && yarn install --non-interactive)
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install --no-audit --no-fund
+          fi
 
-      # Modern Chrome + Chromedriver (replaces old global installs)
-      - uses: browser-actions/setup-chrome@v1
-      - uses: browser-actions/setup-chromedriver@v1
-
-      - run: yarn build --if-present
-      - run: yarn lint
-      - run: yarn test
+      - run: npm run build --if-present
+      - run: npm run lint
+      - run: npm run test
 
       - name: Run Backend Tests
         env:
