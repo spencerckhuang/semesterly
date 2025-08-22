@@ -1,40 +1,38 @@
-ARG BASE_IMAGE=jhuopensource/semesterly-base-py3
+# Default to Node 22 but still allow overriding via --build-arg in the pipeline
+ARG BASE_IMAGE=node:22.18.0-bookworm
 FROM $BASE_IMAGE
-# sgerli/horariotec-base:
+
+# Create code dir
 RUN mkdir /code
 WORKDIR /code
 
-# Just adding basics
-# ADD ./requirements.txt /code/
-# ADD ./package.json /code/
+# Ensure Python tooling is present (your previous base image had this preinstalled)
+RUN apt-get update && apt-get install -y python3-pip python3-venv && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Add everything
 ADD . /code/
 
-
-# Nginx moved out
-# COPY ./build/semesterly-nginx.conf /etc/nginx/sites-available/
-# RUN rm /etc/nginx/sites-enabled/*
-# RUN ln -s /etc/nginx/sites-available/semesterly-nginx.conf /etc/nginx/sites-enabled
-# RUN echo "daemon off;" >> /etc/nginx/nginx.conf
-
-# Use environment based config
+# Use environment-based config
 COPY ./build/local_settings.py /code/semesterly/local_settings.py
 
 # Add parser script
 COPY ./build/run_parser.sh /code/run_parser.sh
 
-RUN pip3 install -r /code/requirements.txt
+# Python deps
+RUN pip3 install --no-cache-dir -r /code/requirements.txt
 
-# Install package.json dependencies (Solution A: npmjs registry + timeouts + retry)
-RUN npm config set registry https://registry.npmjs.org/ \
- && npm config set fetch-retry-maxtimeout 600000 \
- && npm config set fetch-retry-mintimeout 20000 \
- && npm config set fetch-retries 5 \
- && ( ([ -f package-lock.json ] && npm ci --no-audit --no-fund || npm install --no-audit --no-fund) \
-      || (sleep 5 && ([ -f package-lock.json ] && npm ci --no-audit --no-fund || npm install --no-audit --no-fund)) )
+# --- Node 22 + Yarn Classic (v1) setup ---
+# Node 22 ships Corepack; use it to provision Yarn 1.x
+RUN corepack enable && corepack prepare yarn@1.22.22 --activate
 
-RUN npm run build
+# Install JS deps (npmjs registry + generous timeouts + simple retry; no frozen lockfile)
+RUN yarn config set registry https://registry.npmjs.org/ \
+ && yarn config set network-timeout 600000 -g \
+ && (yarn install --non-interactive || (sleep 5 && yarn install --non-interactive))
+
+# Build frontend assets
+RUN yarn build
 
 # To enable unbuffered logging
 ENV PYTHONUNBUFFERED=1

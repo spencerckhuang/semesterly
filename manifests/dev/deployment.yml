@@ -18,6 +18,8 @@ spec:
       labels:
         app: semesterly
     spec:
+      imagePullSecrets:
+        - name: semesterly193122b2-auth   # ensure pulls from ACR in this namespace
       containers:
       - name: nginx
         image: semesterly.azurecr.io/semesterly-nginx:Version

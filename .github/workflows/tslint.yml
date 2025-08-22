@@ -13,18 +13,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Stay on Node 14, disable built-in cache to avoid "Cache service responded with 400"
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 14.x
+          node-version: 22.x
+
+      - name: Enable Yarn 1 via Corepack
+        run: |
+          corepack enable
+          corepack prepare yarn@1.22.22 --activate
 
       - name: Install Dependencies
-        run: |
-          if [ -f package-lock.json ]; then
-            npm ci
-          else
-            npm install --no-audit --no-fund
-          fi
+        run: yarn install --non-interactive || (sleep 5 && yarn install --non-interactive)
 
       - name: Run Prettier
         run: npx prettier "**/*.{js,jsx,ts,tsx}" --check

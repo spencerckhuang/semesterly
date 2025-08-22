@@ -31,7 +31,7 @@ jobs:
     strategy:
       matrix:
         python-version: [3.8]
-        node-version: [14.x]
+        node-version: [22.x]
 
     steps:
       - name: Adjust hosts file
@@ -58,21 +58,25 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          # deliberately no cache to avoid "Cache service responded with 400"
+          # deliberately no cache to avoid intermittent cache errors
 
-      - name: Install JS dependencies
+      # Provide Yarn Classic (v1) on Node 22
+      - name: Enable Yarn 1 via Corepack
         run: |
-          if [ -f package-lock.json ]; then
-            npm ci
-          else
-            npm install --no-audit --no-fund
-          fi
+          corepack enable
+          corepack prepare yarn@1.22.22 --activate
 
-      - run: npm -g install chromedriver
-      - run: npm -g install jest@20
-      - run: npm run build --if-present
-      - run: npm run lint
-      - run: npm run test
+      # Install JS deps WITHOUT frozen lockfile, with a simple retry
+      - name: Install JS dependencies
+        run: yarn install --non-interactive || (sleep 5 && yarn install --non-interactive)
+
+      # Modern Chrome + Chromedriver (replaces old global installs)
+      - uses: browser-actions/setup-chrome@v1
+      - uses: browser-actions/setup-chromedriver@v1
+
+      - run: yarn build --if-present
+      - run: yarn lint
+      - run: yarn test
 
       - name: Run Backend Tests
         env:
