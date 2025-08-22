@@ -40,7 +40,7 @@ stages:
             inputs:
               command: build
               repository: $(imageRepository)
-              arguments: "--build-arg BASE_IMAGE=node:18-bookworm"
+              arguments: "--build-arg BASE_IMAGE=node:22.18.0-bookworm"
               dockerfile: ./Dockerfile
               containerRegistry: $(dockerRegistryServiceConnection)
               tags: |

@@ -25,19 +25,19 @@ jobs:
           POSTGRES_DB: postgres
         ports:
           - 5432:5432
-        # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     strategy:
       matrix:
         python-version: [3.11]
-        node-version: [20.x]
+        node-version: [22.x]
 
     steps:
       - name: Adjust hosts file
         run: sudo echo "127.0.0.1 jhu.sem.ly sem.ly jhu" | sudo tee -a /etc/hosts
 
       - uses: actions/checkout@v4
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
@@ -57,10 +57,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "yarn"
-      - run: yarn install
-      - run: yarn global add chromedriver@2.46.0
-      - run: yarn global add jest@20
+
+      - name: Enable Yarn 1 via Corepack
+        run: |
+          corepack enable
+          corepack prepare yarn@1.22.22 --activate
+
+      - name: Install JS dependencies
+        run: yarn install --non-interactive || (sleep 5 && yarn install --non-interactive)
+
       - run: yarn build --if-present
       - run: yarn lint
       - run: yarn test
