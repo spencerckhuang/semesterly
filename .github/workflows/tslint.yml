@@ -1,3 +1,4 @@
+# Runs the frontend linter, Prettier and ESLint
 name: TSLint
 
 on:
@@ -18,18 +19,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Move linter to Node 22 (no built-in cache)
       - uses: actions/setup-node@v4
         with:
           node-version: 22.x
 
-      - name: Install Dependencies
+      - name: Enable Yarn 1 via Corepack
         run: |
-          if [ -f package-lock.json ]; then
-            npm ci
-          else
-            npm install --no-audit --no-fund
-          fi
+          corepack enable
+          corepack prepare yarn@1.22.22 --activate
+
+      - name: Install Dependencies
+        run: yarn install --non-interactive || (sleep 5 && yarn install --non-interactive)
 
       - name: Run Prettier
         run: npx prettier "**/*.{js,jsx,ts,tsx}" --check
