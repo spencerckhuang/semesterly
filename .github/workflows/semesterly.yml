@@ -25,7 +25,6 @@ jobs:
           POSTGRES_DB: postgres
         ports:
           - 5432:5432
-        # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     strategy:
@@ -58,21 +57,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          # no built-in cache
 
-      # Ensure Yarn Classic (v1) is available on Node 22
       - name: Enable Yarn 1 via Corepack
         run: |
           corepack enable
           corepack prepare yarn@1.22.22 --activate
 
-      # Install JS deps (no --frozen-lockfile), with a simple retry for transient failures
       - name: Install JS dependencies
         run: yarn install --non-interactive || (sleep 5 && yarn install --non-interactive)
-
-      # Modern Chrome + Chromedriver (replaces old global installs)
-      - uses: browser-actions/setup-chrome@v1
-      - uses: browser-actions/setup-chromedriver@v1
 
       - run: yarn build --if-present
       - run: yarn lint
