@@ -71,9 +71,9 @@ jobs:
       - name: Install JS dependencies
         run: |
           if [ -f package-lock.json ]; then
-            npm ci
+            npm ci --legacy-peer-deps
           else
-            npm install --no-audit --no-fund
+            npm install --no-audit --no-fund --legacy-peer-deps
           fi
 
       - run: npm run build --if-present
