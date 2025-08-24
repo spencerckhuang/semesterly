@@ -19,7 +19,7 @@ spec:
         app: semesterly
     spec:
       imagePullSecrets:
-      - name: semesterly193122b2-aut
+        - name: semesterly193122b2-auth
       containers:
       - name: nginx
         image: semesterly.azurecr.io/semesterly-nginx:Version
