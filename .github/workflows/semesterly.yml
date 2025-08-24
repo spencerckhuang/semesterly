@@ -3,14 +3,19 @@ name: Semesterly CI
 
 on:
   push:
-    branches: [prod, develop, feature/dark-mode-timetable]
+    branches:
+      - prod
+      - develop
+      - feature/dark-mode-timetable
   pull_request:
-    branches: [prod, develop, feature/dark-mode-timetable]
+    branches:
+      - prod
+      - develop
+      - feature/dark-mode-timetable
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     services:
       postgres:
         image: postgres
@@ -18,21 +23,18 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: postgres
-        ports: ["5432:5432"]
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     strategy:
       matrix:
         python-version: [3.11]
-        node-version: [22.x]   # or 20.x if you haven’t bumped yet
+        node-version: [22.x]
 
     steps:
       - name: Adjust hosts file
-        run: sudo sh -c 'echo "127.0.0.1 jhu.sem.ly sem.ly jhu" >> /etc/hosts'
+        run: sudo echo "127.0.0.1 jhu.sem.ly sem.ly jhu" | sudo tee -a /etc/hosts
 
       - uses: actions/checkout@v4
 
@@ -56,29 +58,17 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      # ✅ Fix: install Chrome AND the matching ChromeDriver in one step
-      - name: Setup Chrome + ChromeDriver
-        id: chrome
-        uses: browser-actions/setup-chrome@v2
-        with:
-          install-dependencies: true
-          install-chromedriver: true
-
-      # If your tests look for CHROME_BIN, export it:
-      - name: Export CHROME_BIN (optional)
-        run: echo "CHROME_BIN=${{ steps.chrome.outputs.chrome-path }}" >> $GITHUB_ENV
+      - name: Enable Yarn 1 via Corepack
+        run: |
+          corepack enable
+          corepack prepare yarn@1.22.22 --activate
 
       - name: Install JS dependencies
-        run: |
-          if [ -f package-lock.json ]; then
-            npm ci --legacy-peer-deps
-          else
-            npm install --no-audit --no-fund --legacy-peer-deps
-          fi
+        run: yarn install --non-interactive || (sleep 5 && yarn install --non-interactive)
 
-      - run: npm run build --if-present
-      - run: npm run lint
-      - run: npm run test
+      - run: yarn build --if-present
+      - run: yarn lint
+      - run: yarn test
 
       - name: Run Backend Tests
         env:
