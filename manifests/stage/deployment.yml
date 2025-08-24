@@ -18,6 +18,8 @@ spec:
       labels:
         app: semesterly
     spec:
+      imagePullSecrets:
+        - name: semesterly193122b2-auth
       containers:
       - name: nginx
         image: semesterly.azurecr.io/semesterly-nginx:Version
@@ -97,7 +99,7 @@ spec:
       - name: gunicorn
         image: semesterly.azurecr.io/semesterly:Version
         command: ["bash"]
-        args: ["-c","python manage.py migrate; gunicorn semesterly.wsgi wsgi:application --bind=0.0.0.0:8000 --preload --workers=16 --max-requests=16384 --access-logfile - --error-logfile - --log-level info"]
+        args: ["-c","python3 manage.py migrate; gunicorn semesterly.wsgi wsgi:application --bind=0.0.0.0:8000 --preload --workers=16 --max-requests=16384 --access-logfile - --error-logfile - --log-level info"]
         workingDir: /code
         ports:
         - containerPort: 8000
