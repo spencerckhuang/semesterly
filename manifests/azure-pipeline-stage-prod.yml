@@ -18,6 +18,7 @@ variables:
   imageRepository: 'semesterly'
   containerRegistry: 'semesterly.azurecr.io'
   tag: '$(Build.BuildId)'
+  imagePullSecret: 'semesterly193122b2-auth'
 
   # Agent VM image name
   vmImageName: "ubuntu-latest"

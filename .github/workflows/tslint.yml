@@ -3,15 +3,9 @@ name: TSLint
 
 on:
   push:
-    branches:
-      - prod
-      - develop
-      - feature/dark-mode-timetable
+    branches: [prod, develop, feature/dark-mode-timetable]
   pull_request:
-    branches:
-      - prod
-      - develop
-      - feature/dark-mode-timetable
+    branches: [prod, develop, feature/dark-mode-timetable]
 
 jobs:
   lint:
