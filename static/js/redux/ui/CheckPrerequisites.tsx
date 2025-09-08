@@ -84,41 +84,54 @@ const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (props: CheckPrere
   };
 
   // Evaluate the tree against completed courses
-  const evaluateTree = (tree: any, completedCourses: string[]): string[] => {
+  const evaluateTree = (tree: any, completedCourses: string[]): [boolean, string[]] => {
     if (typeof tree === "string") {
-      // Skip operators
-      if (tree === "and" || tree === "or") return [];
-      return completedCourses.includes(tree) ? [] : [tree];
+      if (tree === "and" || tree === "or") return [true, []]; // operators themselves
+      if (completedCourses.includes(tree)) {
+        return [true, []];
+      }
+      return [false, [tree]];
     }
 
-    let missing: string[] = [];
     let i = 0;
+    let satisfied = null;
+    let missing: string[] = [];
+
     while (i < tree.length) {
       const token = tree[i];
-      if (Array.isArray(token)) {
-        missing = missing.concat(evaluateTree(token, completedCourses));
-      } else if (token === "and") {
-        const leftMissing = missing;
-        const rightMissing = evaluateTree(tree[i + 1], completedCourses);
-        missing = [...leftMissing, ...rightMissing];
+
+      if (token === "and") {
+        const [rightSat, rightMiss] = evaluateTree(tree[i + 1], completedCourses);
+        satisfied = (satisfied ?? true) && rightSat;
+        if (!rightSat) missing.push(...rightMiss);
         i++;
       } else if (token === "or") {
-        const leftMissing = missing;
-        const rightMissing = evaluateTree(tree[i + 1], completedCourses);
-        // Only include both if neither satisfied
-        if (leftMissing.length && rightMissing.length) {
-          missing = [...leftMissing, ...rightMissing];
-        } else {
+        const [rightSat, rightMiss] = evaluateTree(tree[i + 1], completedCourses);
+        if (satisfied) {
+          // already satisfied by left
+          satisfied = true;
           missing = [];
+        } else if (rightSat) {
+          satisfied = true;
+          missing = [];
+        } else {
+          satisfied = false;
+          missing = [...missing, ...rightMiss];
         }
         i++;
       } else {
-        if (!completedCourses.includes(token)) missing.push(token);
+        const [subSat, subMiss] = Array.isArray(token)
+          ? evaluateTree(token, completedCourses)
+          : evaluateTree(token, completedCourses);
+        satisfied = (satisfied ?? true) && subSat;
+        if (!subSat) missing.push(...subMiss);
       }
       i++;
     }
-    return missing;
+
+    return [satisfied ?? true, missing];
   };
+
 
   const handleCheck = () => {
     setChecked(true);
@@ -142,15 +155,12 @@ const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (props: CheckPrere
       c.toLowerCase()
     );
 
-    const missing = evaluateTree(tree, completedCourses);
+    const [satisfied, missing] = evaluateTree(tree, completedCourses);
+    // report courses in uppercase as standard
+    setMissingCourses(
+      satisfied ? [] : [...new Set(missing.map((c) => c.toUpperCase()))]
+    );
 
-    // Convert missing course codes back to uppercase and deduplicate
-    const missingUpper = missing
-      .map((c) => c.toUpperCase())
-      .filter((course, idx, arr) => arr.indexOf(course) === idx);
-
-    setMissingCourses(missingUpper);
-  };
 
   return (
     <div>
