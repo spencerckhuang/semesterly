@@ -160,6 +160,7 @@ const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (props: CheckPrere
     setMissingCourses(
       satisfied ? [] : [...new Set(missing.map((c) => c.toUpperCase()))]
     );
+  };
 
 
   return (
