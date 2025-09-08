@@ -146,7 +146,7 @@ const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (props: CheckPrere
       .filter((course, idx, arr) => arr.indexOf(course) === idx);
       
     for (const course of missingUpper) {
-      if (course === "and" || course === "or" || course === "(" || course === ")") {
+      if (course === "and" || course === "AND" || course === "or" || course === "OR" ||course === "(" || course === ")") {
         const index = missingUpper.indexOf(course);
         if (index > -1) {
           missingUpper.splice(index, 1);
