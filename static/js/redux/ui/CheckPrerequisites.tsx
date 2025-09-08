@@ -5,10 +5,11 @@ import { Course, PrereqModeStatus } from "../constants/commonTypes";
 const COURSE_ID_REGEX = /\b[a-z]{2,3}\.\d{3}\.\d{3}\b/i;
 
 interface CheckPrerequisitesProps {
-  prerequisites: Course["prerequisites"]; // raw prerequisite string (just the pre-req text)
+  description: Course["prerequisites"];
 }
 
-const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = ({ prerequisites }) => {
+const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (props: CheckPrerequisitesProps) => {
+  const { prerequisites } = props;
   const [missingCourses, setMissingCourses] = useState<string[]>([]);
 
   // Tokenize the prerequisite string into course codes and operators
@@ -77,6 +78,8 @@ const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = ({ prerequisites }
 
   const handleCheck = () => {
     if (!prerequisites) return;
+
+    //console.log("Checking prerequisites for:", prerequisites);
 
     const prereqLower = prerequisites.toLowerCase();
 
