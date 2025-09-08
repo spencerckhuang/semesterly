@@ -159,7 +159,7 @@ const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (props: CheckPrere
 
   return (
     <div>
-      <h3>Check Prerequisites</h3>
+      <h5>Check Satisfied Prerequisites</h5>
       <button onClick={handleCheck}>Check</button>
       {checked && (
         missingCourses.length === 0 ? (
