@@ -51,8 +51,7 @@ interface CheckPrerequisitesProps {
 const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (props: CheckPrerequisitesProps) => {
   const { prerequisites } = props;
   const [missingCourses, setMissingCourses] = useState<string[]>([]);
-  const [checked, setChecked] = useState(false);
-
+    const [checked, setChecked] = useState(false); 
 
   // Tokenize the prerequisite string into course codes and operators
   const tokenizePrereq = (prereqStr: string) => {
@@ -84,57 +83,41 @@ const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (props: CheckPrere
   };
 
   // Evaluate the tree against completed courses
-  const evaluateTree = (tree: any, completedCourses: string[]): [boolean, string[]] => {
+  const evaluateTree = (tree: any, completedCourses: string[]): string[] => {
     if (typeof tree === "string") {
-      if (tree === "and" || tree === "or") return [true, []]; // operators themselves
-      if (completedCourses.includes(tree)) {
-        return [true, []];
-      }
-      return [false, [tree]];
+      return completedCourses.includes(tree) ? [] : [tree];
     }
 
-    let i = 0;
-    let satisfied = null;
     let missing: string[] = [];
-
+    let i = 0;
     while (i < tree.length) {
       const token = tree[i];
-
-      if (token === "and") {
-        const [rightSat, rightMiss] = evaluateTree(tree[i + 1], completedCourses);
-        satisfied = (satisfied ?? true) && rightSat;
-        if (!rightSat) missing.push(...rightMiss);
+      if (Array.isArray(token)) {
+        missing = missing.concat(evaluateTree(token, completedCourses));
+      } else if (token === "and") {
+        const leftMissing = missing;
+        const rightMissing = evaluateTree(tree[i + 1], completedCourses);
+        missing = [...leftMissing, ...rightMissing];
         i++;
       } else if (token === "or") {
-        const [rightSat, rightMiss] = evaluateTree(tree[i + 1], completedCourses);
-        if (satisfied) {
-          // already satisfied by left
-          satisfied = true;
-          missing = [];
-        } else if (rightSat) {
-          satisfied = true;
-          missing = [];
+        const leftMissing = missing;
+        const rightMissing = evaluateTree(tree[i + 1], completedCourses);
+        // Only include both if neither satisfied
+        if (leftMissing.length && rightMissing.length) {
+          missing = [...leftMissing, ...rightMissing];
         } else {
-          satisfied = false;
-          missing = [...missing, ...rightMiss];
+          missing = [];
         }
         i++;
       } else {
-        const [subSat, subMiss] = Array.isArray(token)
-          ? evaluateTree(token, completedCourses)
-          : evaluateTree(token, completedCourses);
-        satisfied = (satisfied ?? true) && subSat;
-        if (!subSat) missing.push(...subMiss);
+        if (!completedCourses.includes(token)) missing.push(token);
       }
       i++;
     }
-
-    return [satisfied ?? true, missing];
+    return missing;
   };
 
-
   const handleCheck = () => {
-    setChecked(true);
     if (!prerequisites) return;
 
     // Clean prereqs (remove restrictions, normalize spacing)
@@ -155,19 +138,29 @@ const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (props: CheckPrere
       c.toLowerCase()
     );
 
-    const [satisfied, missing] = evaluateTree(tree, completedCourses);
-    // report courses in uppercase as standard
-    setMissingCourses(
-      satisfied ? [] : [...new Set(missing.map((c) => c.toUpperCase()))]
-    );
-  };
+    const missing = evaluateTree(tree, completedCourses);
 
+    // Convert missing course codes back to uppercase and deduplicate
+    const missingUpper = missing
+      .map((c) => c.toUpperCase())
+      .filter((course, idx, arr) => arr.indexOf(course) === idx);
+      
+    for (const course of missingUpper) {
+      if (course === "and" || course === "or" || course === "(" || course === ")") {
+        const index = missingUpper.indexOf(course);
+        if (index > -1) {
+          missingUpper.splice(index, 1);
+        }
+      }
+    }
+    setMissingCourses(missingUpper);
+    setChecked(true);
+  };
 
   return (
     <div>
-      <h5>Check Prerequisites</h5>
+      <h3>Check Prerequisites</h3>
       <button onClick={handleCheck}>Check</button>
-
       {checked && (
         missingCourses.length === 0 ? (
           <p style={{ color: "green" }}>✅ All prerequisites satisfied</p>
