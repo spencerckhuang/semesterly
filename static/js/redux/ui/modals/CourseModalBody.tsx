@@ -518,7 +518,6 @@ const CourseModalBody = (props: CourseModalBodyProps) => {
           </div>
           {!showCapacityAttention && capacityTracker}
           {showCapacityAttention && isMobile && attentioncapacityTracker}
-          <CheckPrerequisites  prerequisites={props.course.prerequisites} />
           <CoursePrereq
             courseRegex={courseRegex}
             prerequisites={props.course.prerequisites}
@@ -531,6 +530,7 @@ const CourseModalBody = (props: CourseModalBodyProps) => {
         </div>
 
         <div className="col-8-16">
+          <CheckPrerequisites  prerequisites={props.course.prerequisites} />
           {showCapacityAttention && !isMobile && attentioncapacityTracker}
           <h3 className="modal-module-header">Reactions</h3>
           <p>
