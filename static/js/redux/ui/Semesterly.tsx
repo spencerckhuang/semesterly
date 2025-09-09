@@ -71,7 +71,6 @@ const Semesterly = () => {
 
   const alertUploadIssue = useAppSelector((state) => state.alerts.alertUploadIssue);
 
-
   const isComparingTimetables = useAppSelector(
     (state) => state.compareTimetable.isComparing
   );

@@ -52,8 +52,7 @@ import CreateNewTimetableButton from "./CreateNewTimetableButton";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import findTopSchedules, { SchedulePolicy } from "./optimize_schedule";
-import {CourseHistoryPopup} from "./CourseHistoryPopup";
-
+import { CourseHistoryPopup } from "./CourseHistoryPopup";
 
 /**
  * This component displays the timetable name, allows you to switch between timetables,
@@ -523,7 +522,7 @@ const SideBar = () => {
       .then(() => {})
       .catch((err: Error) => console.error("Failed to get CSRF token:", err.message));
   }, []);
-  
+
   const handleUploadClick = () => {
     const input = document.createElement("input");
     input.type = "file";
@@ -536,16 +535,19 @@ const SideBar = () => {
 
       const formData = new FormData();
       formData.append("file", file);
-      
+
       try {
         const result = await dispatch(postTranscript(formData));
         console.log("Transcript upload success:", result);
         if (result?.courses) {
-          localStorage.setItem("transcriptData", JSON.stringify({
-            courses: result.courses,
-          }));
+          localStorage.setItem(
+            "transcriptData",
+            JSON.stringify({
+              courses: result.courses,
+            })
+          );
           console.log("Transcript successfully saved to localStorage");
-        } 
+        }
       } catch (error) {
         console.error("Upload failed:", error);
         dispatch(alertsActions.alertUploadFailed());
@@ -553,10 +555,10 @@ const SideBar = () => {
     });
 
     input.click();
-  }; 
+  };
 
   const [showCourseHistory, setShowCourseHistory] = useState(false);
-  
+
   const handleCheckClick = (): void => {
     setShowCourseHistory(!showCourseHistory);
   };
@@ -701,21 +703,25 @@ const SideBar = () => {
           >
             <div
               style={{
-              height: "40px",
-              display: "flex",
-              flexDirection: "row",
-              gap: "5px",
-              justifyContent: "center",
-            }}
-            > 
+                height: "40px",
+                display: "flex",
+                flexDirection: "row",
+                gap: "5px",
+                justifyContent: "center",
+              }}
+            >
               <button onClick={handleUploadClick}>Upload</button>
               <button onClick={handleClearClick}>Clear</button>
             </div>
-            <button onClick={handleCheckClick}>{showCourseHistory ? "Hide" : "View"}</button>
+            <button onClick={handleCheckClick}>
+              {showCourseHistory ? "Hide" : "View"}
+            </button>
           </div>
         </div>
-        {showCourseHistory && (<CourseHistoryPopup onClose={() => setShowCourseHistory(false)} />)}
-        <div> 
+        {showCourseHistory && (
+          <CourseHistoryPopup onClose={() => setShowCourseHistory(false)} />
+        )}
+        <div>
           <p
             style={{
               marginTop: "5px",
@@ -723,15 +729,18 @@ const SideBar = () => {
               userSelect: "none",
               fontSize: "small",
               color: curTheme.name === "dark" ? "#A0A0A0" : "#555",
-            }}>
-            Upload your unofficial transcript (PDF) to add courses to your course history, then click [View] to check them. When searching for courses, you can check if you have alerady satisfied the necessary prerequisites.
+            }}
+          >
+            Upload your unofficial transcript (PDF) to add courses to your course
+            history, then click [View] to check them. When searching for courses, you
+            can check if you have alerady satisfied the necessary prerequisites.
           </p>
         </div>
         <div
-            style={{
-              marginTop: "10px",
-            }}> 
-        </div>
+          style={{
+            marginTop: "10px",
+          }}
+        ></div>
         <div
           style={{
             display: "flex",

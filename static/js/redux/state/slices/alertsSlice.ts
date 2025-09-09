@@ -43,7 +43,6 @@ const initialState: AlertsSliceState = {
   alertCoursePlanType: 0,
   alertUploadIssue: false,
   uploadIssueMessage: "",
-  
 };
 
 const alertsSlice = createSlice({
@@ -111,7 +110,8 @@ const alertsSlice = createSlice({
     // failure to upload transcript
     alertUploadFailed: (state, action: PayloadAction<string | undefined>) => {
       state.alertUploadIssue = true;
-      state.uploadIssueMessage = action.payload || "File upload failed. Please try again.";
+      state.uploadIssueMessage =
+        action.payload || "File upload failed. Please try again.";
     },
     dismissAlertUploadIssue: (state) => {
       state.alertUploadIssue = false;

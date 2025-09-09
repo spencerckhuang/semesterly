@@ -48,7 +48,9 @@ interface CheckPrerequisitesProps {
   prerequisites: Course["prerequisites"];
 }
 
-const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (props: CheckPrerequisitesProps) => {
+const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (
+  props: CheckPrerequisitesProps
+) => {
   const { prerequisites } = props;
   const [missingCourses, setMissingCourses] = useState<string[]>(["PLACEHOLDER"]);
 
@@ -143,9 +145,16 @@ const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (props: CheckPrere
     const missingUpper = missing
       .map((c) => c.toUpperCase())
       .filter((course, idx, arr) => arr.indexOf(course) === idx);
-      
+
     for (const course of missingUpper) {
-      if (course === "and" || course === "AND" || course === "or" || course === "OR" ||course === "(" || course === ")") {
+      if (
+        course === "and" ||
+        course === "AND" ||
+        course === "or" ||
+        course === "OR" ||
+        course === "(" ||
+        course === ")"
+      ) {
         const index = missingUpper.indexOf(course);
         if (index > -1) {
           missingUpper.splice(index, 1);
@@ -161,27 +170,29 @@ const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (props: CheckPrere
 
   return (
     <div className="modal-module prerequisites">
-      
       <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-        <h3 className="modal-module-header" style={{ margin: 0 }}>Check Satisfied Prerequisites</h3>
+        <h3 className="modal-module-header" style={{ margin: 0 }}>
+          Check Satisfied Prerequisites
+        </h3>
         <button onClick={handleCheck}>Check</button>
       </div>
-      {
-        missingCourses.length === 0 ? (
-          <p style={{ color: "green" }}>✅ All prerequisites satisfied</p>
-        ) : missingCourses[0] === "PLACEHOLDER" ? (
-          <p style={{ color: "gray" }}>⚪Check if you've satisfied the necessary prerequisites by pressing the [Check] button</p>
-        ) : (
-          <div>
-            <p style={{ color: "red" }}>❌ Missing prerequisites:</p>
-            <ul>
-              {missingCourses.map((course, idx) => (
-                <li key={idx}>{course}</li>
-              ))}
-            </ul>
-          </div>
-        )
-      }
+      {missingCourses.length === 0 ? (
+        <p style={{ color: "green" }}>✅ All prerequisites satisfied</p>
+      ) : missingCourses[0] === "PLACEHOLDER" ? (
+        <p style={{ color: "gray" }}>
+          ⚪Check if you've satisfied the necessary prerequisites by pressing the
+          [Check] button
+        </p>
+      ) : (
+        <div>
+          <p style={{ color: "red" }}>❌ Missing prerequisites:</p>
+          <ul>
+            {missingCourses.map((course, idx) => (
+              <li key={idx}>{course}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

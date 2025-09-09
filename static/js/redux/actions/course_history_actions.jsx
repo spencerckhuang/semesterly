@@ -20,36 +20,34 @@ import { alertsActions } from "../state/slices";
 import { getTranscriptEndpoint, postTranscriptEndpoint } from "../constants/endpoints";
 
 export const ensureCsrfCookie = () =>
-    fetch(getTranscriptEndpoint(), {
-      method: "GET",
-      credentials: "include",
-    });  
+  fetch(getTranscriptEndpoint(), {
+    method: "GET",
+    credentials: "include",
+  });
 
 // POST a transcript to the backend for parsing
-export const postTranscript =
-  (formData) =>
-  (dispatch) => {
-    const csrfToken = Cookie.get("csrftoken");
-    // console.log("CSRF Token:", csrfToken);
+export const postTranscript = (formData) => (dispatch) => {
+  const csrfToken = Cookie.get("csrftoken");
+  // console.log("CSRF Token:", csrfToken);
 
-    return fetch(postTranscriptEndpoint(), {
-      method: "POST",
-      body: formData,
-      headers: {
-        "X-CSRFToken": csrfToken,
-      },
-      credentials: "include",
+  return fetch(postTranscriptEndpoint(), {
+    method: "POST",
+    body: formData,
+    headers: {
+      "X-CSRFToken": csrfToken,
+    },
+    credentials: "include",
+  })
+    .then((response) => {
+      if (!response.ok) {
+        // console.error("Transcript upload failed:", response);
+        throw new Error("Transcript upload failed");
+      }
+      return response.json();
     })
-      .then((response) => {
-        if (!response.ok) {
-          // console.error("Transcript upload failed:", response);
-          throw new Error("Transcript upload failed");
-        }
-        return response.json();
-      })
-      .then((data) => data)
-      .catch((error) => {
-        dispatch(alertsActions.alertUploadFailed());
-        throw error;
-      });
-  };
+    .then((data) => data)
+    .catch((error) => {
+      dispatch(alertsActions.alertUploadFailed());
+      throw error;
+    });
+};
