@@ -50,8 +50,7 @@ interface CheckPrerequisitesProps {
 
 const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (props: CheckPrerequisitesProps) => {
   const { prerequisites } = props;
-  const [missingCourses, setMissingCourses] = useState<string[]>([]);
-    const [checked, setChecked] = useState(false); 
+  const [missingCourses, setMissingCourses] = useState<string[]>(["PLACEHOLDER"]);
 
   // Tokenize the prerequisite string into course codes and operators
   const tokenizePrereq = (prereqStr: string) => {
@@ -154,16 +153,24 @@ const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (props: CheckPrere
       }
     }
     setMissingCourses(missingUpper);
-    setChecked(true);
+    if (missingCourses == null) {
+      setMissingCourses([]);
+    }
+    console.log("Missing prerequisites:", missingUpper);
   };
 
   return (
-    <div>
-      <h5>Check Satisfied Prerequisites</h5>
-      <button onClick={handleCheck}>Check</button>
-      {checked && (
+    <div className="modal-module prerequisites">
+      
+      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+        <h3 className="modal-module-header" style={{ margin: 0 }}>Check Satisfied Prerequisites</h3>
+        <button onClick={handleCheck}>Check</button>
+      </div>
+      {
         missingCourses.length === 0 ? (
           <p style={{ color: "green" }}>✅ All prerequisites satisfied</p>
+        ) : missingCourses[0] === "PLACEHOLDER" ? (
+          <p style={{ color: "gray" }}>⚪Check if you've satisfied the necessary prerequisites by pressing the [Check] button</p>
         ) : (
           <div>
             <p style={{ color: "red" }}>❌ Missing prerequisites:</p>
@@ -174,7 +181,7 @@ const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (props: CheckPrere
             </ul>
           </div>
         )
-      )}
+      }
     </div>
   );
 };
