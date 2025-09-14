@@ -1,6 +1,6 @@
 setuptools==65.5.1
 Pygments==2.17.0
-alabaster==0.7.10
+alabaster==0.7.14
 argparse==1.4.0
 beautifulsoup4==4.6.0
 black==24.3.0
