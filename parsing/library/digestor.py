@@ -594,7 +594,7 @@ class Vommit(DigestionStrategy):
         # Add `what` and `context` tag to diff output.
         if len(diffed) > 0:
             if isinstance(diffed, list) and len(diffed[0]) == 0:
-                diffed = {"$new": diffed[1]}
+                diffed = {"$insert": diffed[1]}
             elif isinstance(diffed, dict):
                 diffed.update({"$what": inmodel})
             diffed.update({"$context": whats})
