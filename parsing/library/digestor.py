@@ -595,7 +595,7 @@ class Vommit(DigestionStrategy):
         if len(diffed) > 0:
             if isinstance(diffed, list) and len(diffed[0]) == 0:
                 diffed = {"$insert": diffed[1]}
-            elif isinstance(diffed, dict):
+            elif isinstance(diffed, dict) and "$insert" not in diffed:
                 diffed.update({"$what": inmodel})
             diffed.update({"$context": whats})
             self.json_streamer.write(diffed)
