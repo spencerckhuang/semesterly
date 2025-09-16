@@ -89,7 +89,7 @@ release = "2.0"
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = 'en'
+language = "en"
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -163,7 +163,9 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, "semesterly", "Semester.ly Documentation", [author], 1)]
+man_pages = [
+    (master_doc, "semesterly", "Semester.ly Documentation", [author], 1)
+]
 
 
 # -- Options for Texinfo output -------------------------------------------
@@ -185,7 +187,9 @@ texinfo_documents = [
 
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {"https://docs.python.org/3/": (None, None)}
+intersphinx_mapping = {
+    "https://docs.python.org/3/": ("https://docs.python.org/3/", None)
+}
 
 html_theme = "sphinx_rtd_theme"
 
