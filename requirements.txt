@@ -23,7 +23,7 @@ fuzzywuzzy==0.15.1
 gunicorn==23.0.0
 hashids==1.2.0
 interruptingcow==0.7
-jsondiff==2.2.1
+jsondiff==1.1.1
 jsonschema==3.2.0
 lxml==5.3.0
 markdown==3.7
