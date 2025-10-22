@@ -57,10 +57,10 @@ const UserSettingsModal = () => {
   const showOverrided = useAppSelector((state) => state.userInfo.overrideShow);
   const hideOverrided = useAppSelector((state) => state.userInfo.overrideHide);
   const isUserInfoIncomplete = useAppSelector((state) =>
-    getIsUserInfoIncomplete(state)
+    getIsUserInfoIncomplete(state),
   );
   const isSigningUp = useAppSelector(
-    (state) => !state.userInfo.overrideShow && getIsUserInfoIncomplete(state)
+    (state) => !state.userInfo.overrideShow && getIsUserInfoIncomplete(state),
   );
   const isDeleted = useAppSelector((state) => state.userInfo.isDeleted);
 
@@ -392,7 +392,7 @@ const UserSettingsModal = () => {
               { value: 2026, label: 2026 },
               { value: 2027, label: 2027 },
               { value: 2028, label: 2028 },
-              { value: 2029, label: 2029 }
+              { value: 2029, label: 2029 },
             ]}
             menuShouldScrollIntoView={false}
             isSearchable
