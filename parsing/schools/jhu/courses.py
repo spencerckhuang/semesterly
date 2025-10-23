@@ -232,7 +232,9 @@ class Parser(BaseParser):
 
         # Get the last 10 years
         current_year = datetime.now().year
-        years = {str(year) for year in range(current_year - 10, current_year + 1)}
+        # include the next-from-current year as well. if those courses are not available, that semester will be filtered
+        #    out by years_and_terms_filter
+        years = {str(year) for year in range(current_year - 10, current_year + 2)}
 
         terms = {"Spring", "Fall", "Summer", "Intersession"}
 
