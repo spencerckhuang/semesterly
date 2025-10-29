@@ -9,7 +9,7 @@
 ## ⚠️ Base Testing
 Please fill in the following required testing steps with a checkbox (✅) before making this PR, or indicate why they are not necessary for this change:
 
-[ ] `docker-compose build && docker-compose up`
+[ ] `docker-compose build && docker-compose up` and the `https://jhu.sem.ly` endpoint works successfully
 
 [ ]  Semesterly CI successful
 
