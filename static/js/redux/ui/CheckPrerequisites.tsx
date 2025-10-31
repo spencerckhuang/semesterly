@@ -161,7 +161,7 @@ const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (
     if (missingCourses == null) {
       setMissingCourses([]);
     }
-    console.log("Missing prerequisites:", missingUpper);
+    // console.log("Missing prerequisites:", missingUpper);
   };
 
   return (

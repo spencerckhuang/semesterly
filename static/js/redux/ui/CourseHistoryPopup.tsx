@@ -15,7 +15,7 @@ export const CourseHistoryPopup = ({ onClose }: { onClose: () => void }) => {
         setCourses(parsedData.courses || []);
       }
     } catch (error) {
-      console.error("Failed to load transcript:", error);
+      // console.error("Failed to load transcript:", error);
     }
   }, []);
 
