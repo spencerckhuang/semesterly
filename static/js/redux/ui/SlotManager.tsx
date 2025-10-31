@@ -53,7 +53,7 @@ function getConflictStyles(slotsByDay: any) {
     // sort by start time
     daySlots.sort(
       (a: any, b: any) =>
-        convertToMinutes(a.time_start) - convertToMinutes(b.time_start),
+        convertToMinutes(a.time_start) - convertToMinutes(b.time_start)
     );
 
     // build interval tree corresponding to entire slot
@@ -99,7 +99,7 @@ function getConflictStyles(slotsByDay: any) {
           (a, b) =>
             intervals[b.id].end -
             intervals[b.id].start -
-            (intervals[a.id].end - intervals[a.id].start),
+            (intervals[a.id].end - intervals[a.id].start)
         );
         for (let j = 0; j < directConflicts.length; j++) {
           const slotId = directConflicts[j].id;
@@ -118,7 +118,7 @@ function getConflictStyles(slotsByDay: any) {
           start: s.start + 60,
           end: s.end,
           id: s.id,
-        })),
+        }))
     );
     // get depth_level
     for (let i = 0; i < infoIntervals.length; i++) {
@@ -153,22 +153,22 @@ const SlotManager = (props: { days: string[] }) => {
     getActiveDenormTimetable(state).slots.filter(
       (slot) =>
         hoveredSlot?.course.id !== slot.course.id ||
-        hoveredSlot?.section.section_type !== slot.section.section_type,
-    ),
+        hoveredSlot?.section.section_type !== slot.section.section_type
+    )
   );
 
   const isComparingTimetables = useAppSelector(
-    (state) => state.compareTimetable.isComparing,
+    (state) => state.compareTimetable.isComparing
   );
   const comparedSlots = useAppSelector(
     (state) =>
       isComparingTimetables &&
       uniqBy(
         getDenormTimetable(state, state.compareTimetable.activeTimetable).slots.concat(
-          getDenormTimetable(state, state.compareTimetable.comparedTimetable).slots,
+          getDenormTimetable(state, state.compareTimetable.comparedTimetable).slots
         ),
-        (slot) => slot.section.id,
-      ),
+        (slot) => slot.section.id
+      )
   );
   const slots = isComparingTimetables ? comparedSlots : timetableSlots;
   const gradient = useAppSelector(selectGradient);
@@ -176,21 +176,21 @@ const SlotManager = (props: { days: string[] }) => {
   const customEvents = useAppSelector((state) => state.customEvents.events);
   const searchSlot = useAppSelector((state) => state.dragSearch.slot);
   const activeTimetable = useAppSelector(
-    (state) => state.compareTimetable.activeTimetable,
+    (state) => state.compareTimetable.activeTimetable
   );
   const comparedTimetable = useAppSelector(
-    (state) => state.compareTimetable.comparedTimetable,
+    (state) => state.compareTimetable.comparedTimetable
   );
   const sectionsInBoth = getSectionsInTwoTimetables(activeTimetable, comparedTimetable);
 
   const getComparedTimetableSlotColor = (offering: Offering, courseId: number) => {
     const isOfferingInActiveTimetable = isOfferingInTimetable(
       activeTimetable,
-      offering.id,
+      offering.id
     );
     const isOfferingInComparedTimetable = isOfferingInTimetable(
       comparedTimetable,
-      offering.id,
+      offering.id
     );
     if (isOfferingInActiveTimetable && isOfferingInComparedTimetable) {
       const index = activeTimetable.slots
@@ -235,14 +235,14 @@ const SlotManager = (props: { days: string[] }) => {
           if (isComparingTimetables) {
             [colorIndex, colorData] = getComparedTimetableSlotColor(
               offering,
-              course.id,
+              course.id
             );
           } else {
             colorIndex = courseToColourIndex[course.id];
             colorData = slotColorData;
           }
           slotsByDay[offering.day].push(
-            slotToDisplayOffering(course, section, offering, colorIndex, colorData),
+            slotToDisplayOffering(course, section, offering, colorIndex, colorData)
           );
         });
     });
@@ -257,7 +257,7 @@ const SlotManager = (props: { days: string[] }) => {
               ? courseToColourIndex[course.id]
               : getNextAvailableColour(courseToColourIndex);
           slotsByDay[offering.day].push(
-            slotToDisplayOffering(course, section, offering, colourId, slotColorData),
+            slotToDisplayOffering(course, section, offering, colourId, slotColorData)
           );
         });
     }
@@ -286,20 +286,20 @@ const SlotManager = (props: { days: string[] }) => {
     return (
       typeToLocked !== undefined &&
       Object.keys(typeToLocked).some(
-        (sectionType) => section === typeToLocked[sectionType],
+        (sectionType) => section === typeToLocked[sectionType]
       )
     );
   };
 
   const socialSections = useAppSelector(
-    (state) => state.userInfo.data.social_offerings,
+    (state) => state.userInfo.data.social_offerings
   );
   const primaryDisplayAttribute = useAppSelector(
-    (state) => getSchoolSpecificInfo(state.school.school).primaryDisplay,
+    (state) => getSchoolSpecificInfo(state.school.school).primaryDisplay
   );
 
   const courseToClassmates = useAppSelector(
-    (state) => state.classmates.courseToClassmates,
+    (state) => state.classmates.courseToClassmates
   );
   const getClassmatesInSection = (courseId: number, sectionCode: string) => {
     if (!(courseId in courseToClassmates)) {
@@ -307,7 +307,7 @@ const SlotManager = (props: { days: string[] }) => {
     }
     const classmatesInCourse = courseToClassmates[courseId];
     return classmatesInCourse.current.filter((cm: any) =>
-      cm.sections.find((s: string) => s === sectionCode),
+      cm.sections.find((s: string) => s === sectionCode)
     );
   };
 

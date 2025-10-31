@@ -47,13 +47,13 @@ const courseInfoSlice = createSlice({
           action: PayloadAction<{
             id: number;
             reactions: Reaction[];
-          }>,
+          }>
         ) => {
           // populate course reaction emojis
           if (state.id !== null) {
             state.data.reactions = action.payload.reactions;
           }
-        },
+        }
       );
   },
 });

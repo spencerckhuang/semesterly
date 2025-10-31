@@ -36,7 +36,7 @@ const PrereqRadioGroup: React.FC<PrereqRadioGroupProps> = ({ active, onChange })
           >
             {prereqModeStatusToButtonName(button)}
           </div>
-        ),
+        )
       )}
     </div>
   );

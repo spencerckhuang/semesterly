@@ -136,8 +136,8 @@ class Cell extends React.Component {
   render() {
     return this.props.connectDragTarget(
       this.props.connectCreateTarget(
-        this.props.connectCreateSource(<div className="cal-cell" />),
-      ),
+        this.props.connectCreateSource(<div className="cal-cell" />)
+      )
     );
   }
 }
@@ -151,11 +151,11 @@ Cell.propTypes = {
 export default DragSource(
   DRAG_TYPES.CREATE,
   createSource,
-  collectCreateBegin,
+  collectCreateBegin
 )(
   DropTarget(
     DRAG_TYPES.CREATE,
     createTarget,
-    collectCreateDrop,
-  )(DropTarget(DRAG_TYPES.DRAG, dragTarget, collectDragDrop)(Cell)),
+    collectCreateDrop
+  )(DropTarget(DRAG_TYPES.DRAG, dragTarget, collectDragDrop)(Cell))
 );

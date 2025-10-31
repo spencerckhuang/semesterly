@@ -32,7 +32,7 @@ const CreditTicker = ({ timetableCourses, events }: CreditTickerProps) => {
   const credits =
     timetableCourses.reduce(
       (acc: number, course: Course) => acc + course.num_credits,
-      0,
+      0
     ) +
     events.reduce((acc: number, event: Event) => acc + parseFloat(event.credits), 0);
 

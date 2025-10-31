@@ -27,11 +27,11 @@ const TermsOfServiceModal = () => {
     (state) =>
       state.termsOfServiceModal.isVisible &&
       !(!state.userInfo.overrideShow && getIsUserInfoIncomplete(state)) &&
-      !state.userInfo.isVisible,
+      !state.userInfo.isVisible
   );
   const userInfo = useAppSelector((state) => state.userInfo.data);
   const description = useAppSelector(
-    (state) => state.termsOfServiceModal.latestAgreement.description,
+    (state) => state.termsOfServiceModal.latestAgreement.description
   );
   const url = useAppSelector((state) => state.termsOfServiceModal.latestAgreement.url);
   const dispatch = useAppDispatch();

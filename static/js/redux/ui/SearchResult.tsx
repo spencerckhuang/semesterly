@@ -32,7 +32,7 @@ type SearchResultProps = {
  */
 const SearchResult = (props: SearchResultProps) => {
   const campuses: any = useAppSelector(
-    (state) => getSchoolSpecificInfo(state.school.school).campuses,
+    (state) => getSchoolSpecificInfo(state.school.school).campuses
   );
   const dispatch = useAppDispatch();
 
@@ -47,7 +47,7 @@ const SearchResult = (props: SearchResultProps) => {
   const addCourseWrapper = (
     course: DenormalizedCourse,
     sec: string,
-    event: MouseEvent,
+    event: MouseEvent
   ) => {
     event.stopPropagation(); // stops modal from popping up
     event.preventDefault(); // stops search bar from blurring (losing focus)

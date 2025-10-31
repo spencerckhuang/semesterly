@@ -18,7 +18,7 @@ describe("custom events slice", () => {
   it("should be visible when show is called", () => {
     const actual = customEventsReducer(
       initialState,
-      customEventsActions.showCustomEventsModal(null),
+      customEventsActions.showCustomEventsModal(null)
     );
     expect(actual.isModalVisible).toBe(true);
   });
@@ -26,17 +26,17 @@ describe("custom events slice", () => {
   it("should be invisible when hide is called", () => {
     const hide = customEventsReducer(
       initialState,
-      customEventsActions.hideCustomEventsModal(),
+      customEventsActions.hideCustomEventsModal()
     );
     expect(hide.isModalVisible).toBe(false);
 
     const show = customEventsReducer(
       hide,
-      customEventsActions.showCustomEventsModal(null),
+      customEventsActions.showCustomEventsModal(null)
     );
     const actual = customEventsReducer(
       show,
-      customEventsActions.hideCustomEventsModal(),
+      customEventsActions.hideCustomEventsModal()
     );
     expect(actual.isModalVisible).toBe(false);
   });
@@ -44,7 +44,7 @@ describe("custom events slice", () => {
   it("should set the selected event when shown", () => {
     const actual = customEventsReducer(
       initialState,
-      customEventsActions.showCustomEventsModal(1),
+      customEventsActions.showCustomEventsModal(1)
     );
     expect(actual.selectedEventId).toBe(1);
   });
@@ -52,7 +52,7 @@ describe("custom events slice", () => {
   it("should reset the selected event when hidden", () => {
     const show = customEventsReducer(
       initialState,
-      customEventsActions.showCustomEventsModal(1),
+      customEventsActions.showCustomEventsModal(1)
     );
     const hide = customEventsReducer(show, customEventsActions.hideCustomEventsModal());
     expect(hide.selectedEventId).toBe(null);

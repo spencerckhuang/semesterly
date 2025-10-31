@@ -225,7 +225,7 @@ const CustomSlot = (props: CustomSlotProps) => {
                 props.credits.toString().endsWith(".0")
                   ? parseInt(props.credits, 10)
                   : props.credits
-              } credit${parseFloat(props.credits) !== 1 ? "s" : ""}`,
+              } credit${parseFloat(props.credits) !== 1 ? "s" : ""}`
             )}
         </div>
       </div>
@@ -235,7 +235,7 @@ const CustomSlot = (props: CustomSlotProps) => {
   return (
     <div className="fc-event-container">
       {props.connectCreateTarget(
-        props.connectDragTarget(props.connectDragSource(customSlot)),
+        props.connectDragTarget(props.connectDragSource(customSlot))
       )}
     </div>
   );
@@ -244,11 +244,11 @@ const CustomSlot = (props: CustomSlotProps) => {
 export default DropTarget(
   DRAG_TYPES.DRAG,
   dragSlotTarget,
-  collectDragDrop,
+  collectDragDrop
 )(
   DropTarget(
     DRAG_TYPES.CREATE,
     createSlotTarget,
-    collectCreateDrop,
-  )(DragSource(DRAG_TYPES.DRAG, dragSlotSource, collectDragSource)(CustomSlot)),
+    collectCreateDrop
+  )(DragSource(DRAG_TYPES.DRAG, dragSlotSource, collectDragSource)(CustomSlot))
 );

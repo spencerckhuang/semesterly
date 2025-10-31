@@ -14,8 +14,9 @@ from django.db import models
 
 # Create your models here.
 
+
 class CourseHistory(models.Model):
-    ids_list = models.TextField # list contains course history in form of class ids
+    ids_list = models.TextField  # list contains course history in form of class ids
 
     def __str__(self):
         return self.ids_list

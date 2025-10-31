@@ -41,13 +41,13 @@ const CustomEventModal = () => {
   const getSelectedEvent = () => {
     const events = useAppSelector((state) => state.customEvents.events);
     const selectedEventId = useAppSelector(
-      (state) => state.customEvents.selectedEventId,
+      (state) => state.customEvents.selectedEventId
     );
     return events.find((event) => event.id === selectedEventId);
   };
   const selectedEvent = getSelectedEvent();
   const isVisible = useAppSelector(
-    (state) => state.customEvents.isModalVisible && !!selectedEvent,
+    (state) => state.customEvents.isModalVisible && !!selectedEvent
   );
 
   useEffect(() => {
@@ -102,7 +102,7 @@ const CustomEventModal = () => {
     value: string,
     setter: (newValue: string) => void,
     validator?: (newValue: string) => boolean,
-    messageIfInvalid?: string,
+    messageIfInvalid?: string
   ) => (
     <div className="input-text-field">
       <input
@@ -197,8 +197,8 @@ const CustomEventModal = () => {
             time_end: eventEndTime,
             credits: eventCredits,
           },
-          selectedEvent.id,
-        ),
+          selectedEvent.id
+        )
       );
       dispatch(customEventsActions.hideCustomEventsModal());
     }
@@ -260,21 +260,21 @@ const CustomEventModal = () => {
             eventName,
             setEventName,
             eventNameValidator,
-            eventNameErrorMessage,
+            eventNameErrorMessage
           )}
           {createTextInput(
             "event-location",
             eventLocation,
             setEventLocation,
             eventLocationValidator,
-            eventLocationErrorMessage,
+            eventLocationErrorMessage
           )}
           {createTextInput(
             "event-color",
             eventColor,
             setEventColor,
             eventColorValidator,
-            eventColorErrorMessage,
+            eventColorErrorMessage
           )}
           {eventColorBlock}
           {createTextInput(
@@ -282,21 +282,21 @@ const CustomEventModal = () => {
             eventStartTime,
             setEventStartTime,
             eventTimeValidator,
-            eventTimeErrorMessage,
+            eventTimeErrorMessage
           )}
           {createTextInput(
             "event-end-time",
             eventEndTime,
             setEventEndTime,
             eventTimeValidator,
-            eventTimeErrorMessage,
+            eventTimeErrorMessage
           )}
           {createTextInput(
             "event-credits",
             eventCredits,
             setEventCredits,
             eventCreditsValidator,
-            eventCreditsErrorMessage,
+            eventCreditsErrorMessage
           )}
         </div>
       </div>

@@ -74,7 +74,7 @@ const userInfoSlice = createSlice({
     },
     updateSavedTimetable: (state, action: PayloadAction<Timetable>) => {
       state.data.timetables = state.data.timetables.map((t: Timetable) =>
-        t.id === action.payload.id ? action.payload : t,
+        t.id === action.payload.id ? action.payload : t
       );
     },
     setUserSettingsModalVisible: (state) => {

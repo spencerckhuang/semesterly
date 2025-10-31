@@ -129,7 +129,7 @@ export const checkStatus = (response) => {
 
 // TODO: define map somewhere or use CHOICES in Section model
 export const getSectionTypeDisplayName = function getSectionTypeDisplayName(
-  sectionTypeCode,
+  sectionTypeCode
 ) {
   switch (sectionTypeCode) {
     case "L":
@@ -152,7 +152,7 @@ export const isIncomplete = (prop) =>
 
 export const getNextAvailableColour = (courseToColourIndex) =>
   range(lightSlotColor.length).find(
-    (i) => !Object.values(courseToColourIndex).some((x) => x === i),
+    (i) => !Object.values(courseToColourIndex).some((x) => x === i)
   );
 
 export const generateCustomEventId = () =>
@@ -163,7 +163,7 @@ export const slotToDisplayOffering = (
   section,
   offering,
   colourId,
-  colorData,
+  colorData
 ) => ({
   ...offering,
   colourId,

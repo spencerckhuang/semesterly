@@ -28,7 +28,7 @@ const TimetableNameInput = () => {
   // select redux state, same as mapStateToProps
   const isLoggedIn = useSelector((state: RootState) => state.userInfo.data.isLoggedIn);
   const { activeTimetable, upToDate } = useSelector(
-    (state: RootState) => state.savingTimetable,
+    (state: RootState) => state.savingTimetable
   );
 
   // get actionCreators needed
@@ -53,7 +53,7 @@ const TimetableNameInput = () => {
         inputRef.current?.blur();
       }
     },
-    [inputRef],
+    [inputRef]
   );
 
   useEffect(() => {

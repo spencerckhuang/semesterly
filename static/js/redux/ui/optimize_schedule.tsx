@@ -17,9 +17,9 @@ function isFeasible(schedule: Section[], newSection: Section): boolean {
           newTime.time_end > existingTime.time_start &&
           // Check if time overlaps for half-semester courses
           newTime.date_start <= existingTime.date_end &&
-          newTime.date_end >= existingTime.date_start,
-      ),
-    ),
+          newTime.date_end >= existingTime.date_start
+      )
+    )
   );
 }
 
@@ -52,7 +52,7 @@ function calculateTotalGaps(schedule: Section[]): number {
 
 function getFeasibleSchedules(
   courses: DenormalizedCourse[],
-  lockedSections: Section[],
+  lockedSections: Section[]
 ): Section[][] {
   const schedules: Section[][] = [];
   // backtracking to not explore branches of tree that is alreadt infeasible
@@ -82,7 +82,7 @@ function getFeasibleSchedules(
 
 function calculateEarlyClassAmounts(
   schedule: Section[],
-  earlyThreshold: number,
+  earlyThreshold: number
 ): number {
   let amount = 0;
   schedule.forEach((section) => {
@@ -115,7 +115,7 @@ function findTopSchedules(
   courses: DenormalizedCourse[],
   lockedSections: Section[],
   policy: SchedulePolicy = SchedulePolicy.MINIMAL_GAPS,
-  topN = 1, // number of schedules we want to return
+  topN = 1 // number of schedules we want to return
 ): Array<{ schedule: Section[] }> {
   let rankedSchedules; // output schedule
 

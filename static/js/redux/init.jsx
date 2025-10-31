@@ -103,16 +103,16 @@ const setup = () => (dispatch) => {
     setupTimetables(
       initData.currentUser.timetables,
       initData.allSemesters,
-      initData.oldSemesters,
-    ),
+      initData.oldSemesters
+    )
   );
 
   if (initData.featureFlow.name === null) {
     dispatch(
       handleAgreement(
         initData.currentUser,
-        Date.parse(initData.latestAgreement.timeUpdated),
-      ),
+        Date.parse(initData.latestAgreement.timeUpdated)
+      )
     );
   }
 
@@ -129,5 +129,5 @@ render(
       <SemesterlyWithErrorBoundary />
     </DndProvider>
   </Provider>,
-  document.getElementsByClassName("page")[0],
+  document.getElementsByClassName("page")[0]
 );

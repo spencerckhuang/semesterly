@@ -37,8 +37,8 @@ const FindNewFriends = () => {
       setRequestSent(
         responseJson.reduce(
           (acc: string[], user: User) => ({ ...acc, [user.userId]: true }),
-          {},
-        ),
+          {}
+        )
       );
     };
     fetchFriendRequestsSent();

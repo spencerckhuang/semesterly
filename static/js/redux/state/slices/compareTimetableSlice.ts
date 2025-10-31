@@ -43,7 +43,7 @@ const compareTimetableSlice = createSlice({
         activeTimetable: Timetable;
         comparedTimetable: Timetable;
         theme: Theme;
-      }>,
+      }>
     ) => {
       state.isComparing = true;
       state.activeTimetable = action.payload.activeTimetable;
@@ -67,29 +67,29 @@ const compareTimetableSlice = createSlice({
 function updateGradients(
   state: Draft<Draft<CompareTimetableSliceState>>,
   colors: CompareTimetableColors,
-  curTheme: ThemeName,
+  curTheme: ThemeName
 ) {
   const numCommon = getSectionsInTwoTimetables(
     state.activeTimetable,
-    state.comparedTimetable,
+    state.comparedTimetable
   ).length;
   const activeGradient = buildGradient(
     colors.activeStart,
     colors.activeEnd,
     calcGradientRange(state.activeTimetable.slots.length - numCommon),
-    curTheme,
+    curTheme
   );
   const comparedGradient = buildGradient(
     colors.comparedStart,
     colors.comparedEnd,
     calcGradientRange(state.comparedTimetable.slots.length - numCommon),
-    curTheme,
+    curTheme
   );
   const commonGradient = buildGradient(
     colors.commonStart,
     colors.commonEnd,
     calcGradientRange(numCommon),
-    curTheme,
+    curTheme
   );
   state.gradient.active = activeGradient;
   state.gradient.compared = comparedGradient;

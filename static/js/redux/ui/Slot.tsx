@@ -87,7 +87,7 @@ type SlotProps = {
  */
 const Slot = (props: SlotProps) => {
   const isComparingTimetables = useAppSelector(
-    (state) => state.compareTimetable.isComparing,
+    (state) => state.compareTimetable.isComparing
   );
   const [hovered, setHovered] = useState(false);
 
@@ -248,8 +248,8 @@ const Slot = (props: SlotProps) => {
             <span>{props.location}</span>
           </div>
         </div>
-      </div>,
-    ),
+      </div>
+    )
   );
 
   return (
@@ -262,5 +262,5 @@ const Slot = (props: SlotProps) => {
 export default DropTarget(
   DRAG_TYPES.CREATE,
   createSlotTarget,
-  collectCreateDrop,
+  collectCreateDrop
 )(DropTarget(DRAG_TYPES.DRAG, dragSlotTarget, collectDragDrop)(Slot));

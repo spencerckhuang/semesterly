@@ -86,7 +86,7 @@ class Pagination extends React.Component {
           index={i}
           active={this.props.active === i}
           setActive={this.props.setActive}
-        />,
+        />
       );
     }
 

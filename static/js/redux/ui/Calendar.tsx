@@ -166,7 +166,7 @@ const Calendar = (props: CalendarProps) => {
           time={`${i}:00`}
           displayTime={`${hour}:00`}
           customEventModeOn={customEventModeOn}
-        />,
+        />
       );
       rows.push(
         <Row
@@ -174,7 +174,7 @@ const Calendar = (props: CalendarProps) => {
           isLoggedIn={props.isLoggedIn}
           time={`${i}:30`}
           customEventModeOn={customEventModeOn}
-        />,
+        />
       );
     }
     return rows;
@@ -290,7 +290,7 @@ const Calendar = (props: CalendarProps) => {
             className={classnames(
               "fa",
               { "fa-share-alt": !props.isFetchingShareLink },
-              { "fa-spin fa-circle-o-notch": props.isFetchingShareLink },
+              { "fa-spin fa-circle-o-notch": props.isFetchingShareLink }
             )}
             onClick={showShareLink}
           />
@@ -342,7 +342,7 @@ const Calendar = (props: CalendarProps) => {
   );
 
   const isComparingTimetables = useAppSelector(
-    (state) => state.compareTimetable.isComparing,
+    (state) => state.compareTimetable.isComparing
   );
   const toolbar = isComparingTimetables ? (
     <>

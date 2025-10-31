@@ -25,7 +25,7 @@ export const classmatesArray = PropTypes.arrayOf(
     last_name: PropTypes.string,
     img_url: PropTypes.string,
     sections: PropTypes.arrayOf(PropTypes.string), // section codes
-  }),
+  })
 );
 
 export const classmates = PropTypes.shape({

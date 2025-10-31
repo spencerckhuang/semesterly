@@ -6,7 +6,7 @@ import { alertsActions } from "../../state/slices";
 const UploadIssueAlert = () => {
   const dispatch = useAppDispatch();
   const { alertUploadIssue, uploadIssueMessage } = useAppSelector(
-    (state) => state.alerts,
+    (state) => state.alerts
   );
 
   useEffect(() => {

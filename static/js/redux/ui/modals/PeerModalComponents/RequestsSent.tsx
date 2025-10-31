@@ -24,7 +24,7 @@ const RequestsSent = () => {
   const withdrawFriendRequest = async (friendRequestId: number) => {
     await fetch(getRejectFriendRequestEndpoint(friendRequestId));
     setFriendRequests((currFriendRequests) =>
-      currFriendRequests.filter((fr) => fr.friendRequestId !== friendRequestId),
+      currFriendRequests.filter((fr) => fr.friendRequestId !== friendRequestId)
     );
   };
 

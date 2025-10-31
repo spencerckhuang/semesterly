@@ -48,7 +48,7 @@ const savePreferencesLoggedIn = (dispatch: AppDispatch, state: RootState) => {
       ...activeTimetable,
       has_conflict: preferences.tryWithConflicts,
       show_weekend: preferences.showWeekend,
-    }),
+    })
   );
 };
 
@@ -76,11 +76,11 @@ const preferencesSlice = createSlice({
           action: PayloadAction<{
             timetable: Timetable;
             upToDate: boolean;
-          }>,
+          }>
         ) => {
           state.tryWithConflicts = action.payload.timetable.has_conflict;
           state.showWeekend = action.payload.timetable.show_weekend;
-        },
+        }
       )
       .addCase(setShowWeekend, (state, action: PayloadAction<boolean>) => {
         state.showWeekend = action.payload;

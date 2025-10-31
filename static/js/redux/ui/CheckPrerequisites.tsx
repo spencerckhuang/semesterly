@@ -36,7 +36,7 @@ const cleanPrerequisiteString = (prerequisiteString: string): string => {
   const parts = cleaned.split(";");
 
   const cleanParts = parts.filter(
-    (part) => !isCreditRestriction(part) && !isEnrollmentRestriction(part),
+    (part) => !isCreditRestriction(part) && !isEnrollmentRestriction(part)
   );
 
   return cleanParts.join(" ");
@@ -47,7 +47,7 @@ interface CheckPrerequisitesProps {
 }
 
 const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (
-  props: CheckPrerequisitesProps,
+  props: CheckPrerequisitesProps
 ) => {
   const { prerequisites } = props;
   const [missingCourses, setMissingCourses] = useState<string[]>(["PLACEHOLDER"]);
@@ -132,7 +132,7 @@ const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (
 
     const transcriptData = JSON.parse(localStorage.getItem("transcriptData") || "{}");
     const completedCourses: string[] = (transcriptData.courses || []).map((c: string) =>
-      c.toLowerCase(),
+      c.toLowerCase()
     );
 
     const missing = evaluateTree(tree, completedCourses);

@@ -11,7 +11,7 @@ function renderWithRedux(
     preloadedState,
     store = configureStore({ reducer: reducers, preloadedState }),
     ...renderOptions
-  } = {},
+  } = {}
 ) {
   function Wrapper({ children }) {
     return <Provider store={store}>{children}</Provider>;

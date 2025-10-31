@@ -31,7 +31,7 @@ export function getNewSlotValues(
   timeStart: string,
   timeEnd: string,
   newStartHour: number,
-  day: string,
+  day: string
 ) {
   const duration = convertToMinutes(timeEnd) - convertToMinutes(timeStart);
   const newEndMinutes = newStartHour * 30 + duration;

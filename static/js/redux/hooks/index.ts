@@ -17,7 +17,7 @@ export const useActions = () => {
       ...sliceAction.userInfoActions,
       ...sliceAction.alertsActions,
     },
-    dispatch,
+    dispatch
   );
 };
 

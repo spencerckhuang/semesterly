@@ -6,9 +6,11 @@ import logging
 import tempfile
 import re
 
+
 @ensure_csrf_cookie
 def csrf_cookie_view(request):
-    return JsonResponse({'detail': 'CSRF cookie set'})
+    return JsonResponse({"detail": "CSRF cookie set"})
+
 
 # structure: "name" + "as.xxx.xxx / en.xxx.xxx / tr.xxx.xxx"
 def parse_transfer_course(text):
@@ -16,12 +18,14 @@ def parse_transfer_course(text):
     course_ids = [f"{match[0]}" for match in matches]
     return course_ids
 
+
 # structure: "en / as" + "dept" + "xxx.xxx"
 def parse_hopkins_course(text):
     regex = r"(EN|AS)\n*.*\n.*\s(\d{3}\.\d{3})"
     matches = re.findall(regex, text)
     course_ids = [f"{match[0]}.{match[1]}" for match in matches]
     return course_ids
+
 
 class TranscriptUploadView(View):
     # reads in all courses from transcript and saves as a json file
@@ -37,27 +41,29 @@ class TranscriptUploadView(View):
         except Exception as e:
             raise
         return sorted(courses)
-    
+
     def post(self, request):
         if not request.FILES:
             return JsonResponse({"error": "No file uploaded"}, status=400)
         uploaded_file = request.FILES.get("file")
-        
+
         # validate the uploaded file
         if not uploaded_file:
             return JsonResponse({"error": "No file uploaded"}, status=400)
-        if not uploaded_file.name.endswith('.pdf'):
+        if not uploaded_file.name.endswith(".pdf"):
             return JsonResponse({"error": "File is not a PDF"}, status=400)
-        
+
         try:
             courses = self.get_course_history(uploaded_file)
-            return JsonResponse({
-            "status": "success", 
-            "message": "File processed successfully",
-            "courses": courses
-        }, status=200)
+            return JsonResponse(
+                {
+                    "status": "success",
+                    "message": "File processed successfully",
+                    "courses": courses,
+                },
+                status=200,
+            )
         except Exception as e:
-            return JsonResponse({
-                "error": "Internal server error",
-                "details": str(e)
-            }, status=500)
+            return JsonResponse(
+                {"error": "Internal server error", "details": str(e)}, status=500
+            )

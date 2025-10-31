@@ -46,7 +46,7 @@ const CourseModalBody = (props: CourseModalBodyProps) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < mobileWidth);
 
   const isFetchingClassmates = useAppSelector(
-    (state) => state.courseInfo.isFetchingClassmates,
+    (state) => state.courseInfo.isFetchingClassmates
   );
   const classmates = useAppSelector((state) => state.courseInfo.classmates);
   const sectionTypeToSections = getSectionTypeToSections(props.course);
@@ -59,24 +59,24 @@ const CourseModalBody = (props: CourseModalBodyProps) => {
       return false;
     }
     return Object.keys(courseSections[courseId]).some(
-      (type) => courseSections[courseId][type] === section,
+      (type) => courseSections[courseId][type] === section
     );
   };
   const activeTimetable = useAppSelector((state) => getActiveTimetable(state));
   const isSectionOnActiveTimetable = (courseId: number, sectionId: number) =>
     activeTimetable.slots.some(
-      (slot) => slot.course === courseId && slot.section === sectionId,
+      (slot) => slot.course === courseId && slot.section === sectionId
     );
   const semester = useAppSelector((state) => getCurrentSemester(state));
   const getShareLink = (courseCode: number) => getCourseShareLink(courseCode, semester);
   const getShareLinkFromModal = (courseCode: string) =>
     getCourseShareLinkFromModal(courseCode, semester);
   const isComparingTimetables = useAppSelector(
-    (state) => state.compareTimetable.isComparing,
+    (state) => state.compareTimetable.isComparing
   );
 
   const schoolSpecificInfo = useAppSelector((state) =>
-    getSchoolSpecificInfo(state.school.school),
+    getSchoolSpecificInfo(state.school.school)
   );
 
   useEffect(() => {
@@ -108,19 +108,19 @@ const CourseModalBody = (props: CourseModalBodyProps) => {
     (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") {
         setCurrentHoveredSection((prevSection) =>
-          prevSection < sectionList.length - 1 ? prevSection + 1 : prevSection,
+          prevSection < sectionList.length - 1 ? prevSection + 1 : prevSection
         );
       } else if (e.key === "ArrowLeft") {
         setCurrentHoveredSection((prevSection) =>
-          prevSection >= 0 ? prevSection - 1 : prevSection,
+          prevSection >= 0 ? prevSection - 1 : prevSection
         );
       } else if (e.key === "Enter") {
         if (currentHoveredSection >= 0 && currentHoveredSection < sectionList.length) {
           dispatch(
             addOrRemoveCourse(
               props.course?.id,
-              sectionList[currentHoveredSection].meeting_section,
-            ),
+              sectionList[currentHoveredSection].meeting_section
+            )
           );
           props.hideModal();
         }
@@ -129,7 +129,7 @@ const CourseModalBody = (props: CourseModalBodyProps) => {
         props.hideModal();
       }
     },
-    [currentHoveredSection],
+    [currentHoveredSection]
   );
 
   // detects change in currentHoveredSection and (for now) just logs the hovered index
@@ -139,7 +139,7 @@ const CourseModalBody = (props: CourseModalBodyProps) => {
         timetablesActions.hoverSection({
           course: props.course,
           section: sectionList[currentHoveredSection],
-        }),
+        })
       );
       setCurrentHoveredSectionObj(sectionList[currentHoveredSection]);
     } else {

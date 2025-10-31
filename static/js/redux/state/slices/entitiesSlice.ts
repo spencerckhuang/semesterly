@@ -51,19 +51,19 @@ const entitiesSlice = createSlice({
           action: PayloadAction<{
             id: number;
             reactions: Reaction[];
-          }>,
+          }>
         ) => {
           state.courses[action.payload.id].reactions = action.payload.reactions;
-        },
+        }
       )
       .addCase(receiveAdvancedSearchResults, (state, action) =>
-        merge({}, state, action.payload.courses.entities),
+        merge({}, state, action.payload.courses.entities)
       )
       .addCase(receiveSearchResults, (state, action) =>
-        merge({}, state, action.payload.courses.entities),
+        merge({}, state, action.payload.courses.entities)
       )
       .addMatcher(isAnyOf(setCourseInfo, receiveCourses), (state, action) =>
-        merge({}, state, action.payload.entities),
+        merge({}, state, action.payload.entities)
       );
   },
 });
@@ -130,7 +130,7 @@ export const getCoursesFromSlots = (state: EntitiesSliceState, slots: Slot[]) =>
 
 export const getDenormTimetable = (
   state: EntitiesSliceState,
-  timetable: Timetable,
+  timetable: Timetable
 ) => ({
   ...timetable,
   slots: timetable.slots.map((slot) => getDenormSlot(state, slot)),
@@ -138,7 +138,7 @@ export const getDenormTimetable = (
 
 export const getTimetableCourses = (
   state: EntitiesSliceState,
-  timetable: Timetable,
+  timetable: Timetable
 ) => {
   const courseIds = uniq(timetable.slots.map((slot) => slot.course));
   return courseIds.map((courseId) => getCourseById(state, courseId));
@@ -146,7 +146,7 @@ export const getTimetableCourses = (
 
 export const getTimetableDenormCourses = (
   state: EntitiesSliceState,
-  timetable: Timetable,
+  timetable: Timetable
 ) => {
   const courseIds = uniq(timetable.slots.map((slot) => slot.course));
   return courseIds.map((courseId) => getDenormCourseById(state, courseId));
