@@ -89,7 +89,7 @@ class SocialProfile extends React.Component {
         className={classNames(
           "social",
           { "logged-in": this.props.userInfo.isLoggedIn },
-          "no-print"
+          "no-print",
         )}
       >
         {social}

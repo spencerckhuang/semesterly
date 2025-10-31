@@ -40,12 +40,12 @@ const mapStateToProps = (state) => {
         return false;
       }
       return Object.keys(courseSections[courseId]).some(
-        (type) => courseSections[courseId][type] === section
+        (type) => courseSections[courseId][type] === section,
       );
     },
     isSectionOnActiveTimetable: (course, section) =>
       activeTimetable.slots.some(
-        (slot) => slot.course === course.id && slot.section === section.id
+        (slot) => slot.course === course.id && slot.section === section.id,
       ),
   };
 };

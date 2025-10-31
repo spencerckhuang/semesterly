@@ -29,7 +29,7 @@ const RequestsReceived = () => {
         : getRejectFriendRequestEndpoint(friendRequestId);
     await fetch(endpoint);
     setFriendRequests((currentFriendRequests) =>
-      currentFriendRequests.filter((fr) => fr.friendRequestId !== friendRequestId)
+      currentFriendRequests.filter((fr) => fr.friendRequestId !== friendRequestId),
     );
   };
 

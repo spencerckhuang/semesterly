@@ -25,10 +25,10 @@ import Modal from "./Modal";
 const SaveCalendarModal = () => {
   const isVisible = useAppSelector((state) => state.saveCalendarModal.isVisible);
   const isDownloading = useAppSelector(
-    (state) => state.saveCalendarModal.isDownloading
+    (state) => state.saveCalendarModal.isDownloading,
   );
   const hasDownloaded = useAppSelector(
-    (state) => state.saveCalendarModal.hasDownloaded
+    (state) => state.saveCalendarModal.hasDownloaded,
   );
   const dispatch = useAppDispatch();
 

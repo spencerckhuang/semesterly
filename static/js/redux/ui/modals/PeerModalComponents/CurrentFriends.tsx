@@ -24,7 +24,7 @@ const CurrentFriends = () => {
   const removeFriend = async (userId: string) => {
     await fetch(getRemoveFriendEndpoint(userId));
     setFriends((prevFriends) =>
-      prevFriends.filter((friend) => friend.userId !== userId)
+      prevFriends.filter((friend) => friend.userId !== userId),
     );
   };
 

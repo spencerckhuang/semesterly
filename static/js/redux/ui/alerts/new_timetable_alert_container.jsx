@@ -30,7 +30,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const NewTimetableAlertContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(NewTimetableAlert);
 
 export default NewTimetableAlertContainer;

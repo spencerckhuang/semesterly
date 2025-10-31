@@ -31,7 +31,7 @@ function SideScroller(props: SideScrollerProps) {
       navs.push(
         <span key={i} className={`nav-item${cls}`} onClick={() => setActiveSlide(i)}>
           {props.navItems[i]}
-        </span>
+        </span>,
       );
     }
     navItems = <div className="scroll-nav">{navs}</div>;

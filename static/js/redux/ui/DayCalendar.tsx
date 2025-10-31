@@ -115,7 +115,7 @@ const DayCalendar = (props: DayCalendarProps) => {
 
   const getTimelineStyle = () => {
     const diff = Math.abs(
-      new Date().valueOf() - new Date().setHours(0, 0, 0).valueOf()
+      new Date().valueOf() - new Date().setHours(0, 0, 0).valueOf(),
     );
     const mins = Math.ceil(diff / 1000 / 60);
     const top = (mins / 15.0) * 13;
@@ -134,7 +134,7 @@ const DayCalendar = (props: DayCalendarProps) => {
           isLoggedIn={props.isLoggedIn}
           key={i}
           days={[DAYS[currentDay]]}
-        />
+        />,
       );
       rows.push(
         <Row
@@ -142,7 +142,7 @@ const DayCalendar = (props: DayCalendarProps) => {
           isLoggedIn={props.isLoggedIn}
           key={i + 0.5}
           days={[DAYS[currentDay]]}
-        />
+        />,
       );
     }
 
@@ -170,7 +170,7 @@ const DayCalendar = (props: DayCalendarProps) => {
         className={classnames(
           "fa",
           { "fa-share-alt": !props.isFetchingShareLink },
-          { "fa-spin fa-circle-o-notch": props.isFetchingShareLink }
+          { "fa-spin fa-circle-o-notch": props.isFetchingShareLink },
         )}
       />
     </button>

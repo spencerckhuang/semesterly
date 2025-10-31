@@ -16,7 +16,7 @@ const NewsModal = () => {
 
   const { isVisible } = useAppSelector((state) => state.newsModal);
   const isSigningUp = useAppSelector(
-    (state) => !state.userInfo.overrideShow && getIsUserInfoIncomplete(state)
+    (state) => !state.userInfo.overrideShow && getIsUserInfoIncomplete(state),
   );
   const [newsTitle, setNewsTitle] = useState("");
   const [newsBody, setNewsBody] = useState("");

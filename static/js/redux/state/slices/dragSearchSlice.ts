@@ -23,7 +23,7 @@ export const dragSearchSlice = createSlice({
       action: PayloadAction<{
         time_start: string;
         time_end: string;
-      }>
+      }>,
     ) => {
       if (state.slot) {
         state.slot.time_start = action.payload.time_start;

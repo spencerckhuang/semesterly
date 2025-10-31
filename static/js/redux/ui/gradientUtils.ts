@@ -87,7 +87,7 @@ export const buildGradient = (
   start: string,
   end: string,
   rng: number,
-  curTheme: ThemeName
+  curTheme: ThemeName,
 ) => {
   if (rng < 2) {
     return [gradientToSlotColorData(start, curTheme)];

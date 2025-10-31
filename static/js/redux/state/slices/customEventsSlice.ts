@@ -29,7 +29,7 @@ const customEventsSlice = createSlice({
     },
     replacePreviewEvent: (
       state,
-      action: PayloadAction<{ oldId: number; newId: number }>
+      action: PayloadAction<{ oldId: number; newId: number }>,
     ) => {
       const { oldId, newId } = action.payload;
       const index = state.events.findIndex((event) => event.id === oldId);
@@ -44,7 +44,7 @@ const customEventsSlice = createSlice({
         const updatedEvent = Object.assign(
           {},
           state.events[tEventIndex],
-          action.payload
+          action.payload,
         );
         state.events[tEventIndex] = updatedEvent;
       }
@@ -70,10 +70,10 @@ const customEventsSlice = createSlice({
         action: PayloadAction<{
           timetable: Timetable;
           upToDate: boolean;
-        }>
+        }>,
       ) => {
         state.events = action.payload.timetable.events;
-      }
+      },
     );
   },
 });

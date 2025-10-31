@@ -31,7 +31,7 @@ const ConflictAlert = () => {
     () => () => {
       dispatch(alertsActions.dismissAlertConflict());
     },
-    []
+    [],
   );
 
   const handleClick = () => {

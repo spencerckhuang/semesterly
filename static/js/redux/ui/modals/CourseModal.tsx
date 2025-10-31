@@ -26,21 +26,21 @@ const CourseModal = () => {
   const isVisible = useAppSelector((state) => state.courseInfo.id !== null);
 
   const course = useAppSelector((state) =>
-    getCourseInfoId(state) ? getDenormCourseById(state, getCourseInfoId(state)) : null
+    getCourseInfoId(state) ? getDenormCourseById(state, getCourseInfoId(state)) : null,
   );
   const isFetching = useAppSelector((state) => state.courseInfo.isFetching);
   const isFetchingClassmates = useAppSelector((state) => state.courseInfo.classmates);
   const hasHoveredResult = useAppSelector((state) => getHoveredSlots(state) !== null);
   const courseSections = useAppSelector((state) => state.courseSections.objects);
   const inRoster = useAppSelector(
-    (state) => courseSections[state.courseInfo.id] !== undefined
+    (state) => courseSections[state.courseInfo.id] !== undefined,
   );
   const semester = useAppSelector((state) => getCurrentSemester(state));
   const getShareLink = (courseCode: string) => getCourseShareLink(courseCode, semester);
   const getShareLinkFromModal = (courseCode: string) =>
     getCourseShareLinkFromModal(courseCode, semester);
   const isComparingTimetables = useAppSelector(
-    (state) => state.compareTimetable.isComparing
+    (state) => state.compareTimetable.isComparing,
   );
 
   const dispatch = useAppDispatch();

@@ -25,6 +25,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 const OptimizeScheduleAlertContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(OptimizeScheduleAlert);
 export default OptimizeScheduleAlertContainer;

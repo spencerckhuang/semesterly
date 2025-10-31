@@ -46,7 +46,7 @@ const getAbbreviatedSemesterName = (semester: Semester) =>
  */
 const SearchBar = () => {
   const advancedSearchModalIsVisible = useAppSelector(
-    (state) => state.advancedSearch.isVisible
+    (state) => state.advancedSearch.isVisible,
   );
   const semester = useAppSelector((state) => getCurrentSemester(state));
   const allSemesters = useAppSelector((state) => state.semester.all);
@@ -135,7 +135,7 @@ const SearchBar = () => {
         }
       }
     },
-    [advancedSearchModalIsVisible, searchResults, hoveredPosition]
+    [advancedSearchModalIsVisible, searchResults, hoveredPosition],
   );
 
   useEffect(() => {

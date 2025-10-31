@@ -67,7 +67,7 @@ const CoursePrereq: React.FC<CoursePrereqProps> = ({
   const processPrereqRecursive = (
     parts: string[],
     start: number,
-    depth: number
+    depth: number,
   ): [React.ReactNode, number] => {
     const nodes: React.ReactNode[] = [];
     let i = start;

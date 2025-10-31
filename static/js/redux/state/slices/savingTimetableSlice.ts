@@ -48,12 +48,12 @@ const savingTimetableSlice = createSlice({
           action: PayloadAction<{
             timetable: Timetable;
             upToDate: boolean;
-          }>
+          }>,
         ) => {
           state.activeTimetable = action.payload.timetable;
           state.saving = false;
           state.upToDate = action.payload.upToDate;
-        }
+        },
       )
       .addCase(alertTimeTableExists, (state) => {
         state.saving = false;

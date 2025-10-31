@@ -30,7 +30,7 @@ const DeleteTimetableAlert = () => {
     () => () => {
       dispatch(alertsActions.dismissDeleteTimetable());
     },
-    []
+    [],
   );
 
   const handleConfirm = () => {

@@ -92,7 +92,7 @@ const AdvancedSearchModal = () => {
 
   // selectors
   const { isVisible, isFetching, active } = useAppSelector(
-    (state) => state.advancedSearch
+    (state) => state.advancedSearch,
   );
   const advancedSearchResults = useAppSelector(getDenormAdvancedSearchResults);
   const courseSections = useAppSelector((state) => state.courseSections.objects);
@@ -102,7 +102,7 @@ const AdvancedSearchModal = () => {
   const semester = useAppSelector(getCurrentSemester);
   const semesterName = `${semester.name} ${semester.year}`;
   const schoolSpecificInfo = useAppSelector((state) =>
-    getSchoolSpecificInfo(state.school.school)
+    getSchoolSpecificInfo(state.school.school),
   );
   const hasHoveredResult = useAppSelector((state) => getHoveredSlots(state) != null);
   const getShareLink = (courseCode: string) =>
@@ -113,7 +113,7 @@ const AdvancedSearchModal = () => {
   const dragSearchSlotExists = useAppSelector((state) => state.dragSearch.slot != null);
   const dragSearchSlot = useAppSelector((state) => state.dragSearch.slot);
   const dragSearchSlotFinalized = useAppSelector(
-    (state) => state.dragSearch.slotFinalized
+    (state) => state.dragSearch.slotFinalized,
   );
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -180,8 +180,8 @@ const AdvancedSearchModal = () => {
           times: convertFilterTimeValues(filterData.times),
           levels: filterData.levels,
         },
-        pageToFetch
-      )
+        pageToFetch,
+      ),
     );
     setCurPage(pageToFetch);
   };
@@ -374,7 +374,7 @@ const AdvancedSearchModal = () => {
           onClickOut={hideAllFilters}
           schoolSpecificInfo={schoolSpecificInfo}
         />
-      )
+      ),
   );
 
   const selectedFilterSections = filterTypes.map((filterType) => {
@@ -387,7 +387,7 @@ const AdvancedSearchModal = () => {
       .concat()
       .sort(
         (a: string, b: string) =>
-          availableFilters.indexOf(a) - availableFilters.indexOf(b)
+          availableFilters.indexOf(a) - availableFilters.indexOf(b),
       );
     const selectedItems = sortedFilters.map((name: string) => (
       <SelectedFilter

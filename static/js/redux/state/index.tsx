@@ -113,7 +113,7 @@ export const getCoursesFromSlots = (state: RootState, slots: Slot[]) =>
 export const getFirstTTStartHour = createSelector(
   // @ts-ignore
   [getActiveDenormTimetable],
-  fromEntities.getFirstTTStartHour
+  fromEntities.getFirstTTStartHour,
 );
 
 export const getHoveredSlots = (state: RootState) =>
@@ -134,12 +134,12 @@ export const getSearchResult = (state: RootState, index: number) =>
 
 export const getSearchResults = (state: RootState) =>
   getSearchResultIds(state).map((resultId: number) =>
-    getDenormCourseById(state, resultId)
+    getDenormCourseById(state, resultId),
   );
 
 export const getDenormAdvancedSearchResults = (state: RootState) =>
   getAdvancedSearchResultIds(state.advancedSearch).map((id: number) =>
-    getDenormCourseById(state, id)
+    getDenormCourseById(state, id),
   );
 
 // modal selectors

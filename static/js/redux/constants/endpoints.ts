@@ -23,7 +23,7 @@ export const getCourseSearchEndpoint = (
   query: string,
   semester: string,
   page = 1,
-  limit = 6
+  limit = 6,
 ) => `/search/${semester}/${query}/?page=${page}&limit=${limit}`;
 export const getTimetablesEndpoint = () => "/timetables/";
 export const getLoadSavedTimetablesEndpoint = (semester: Semester) =>
@@ -37,7 +37,7 @@ export const getTimetablePreferencesEndpoint = (id: Timetable["id"]) =>
 export const getSaveSettingsEndpoint = () => "/user/settings/";
 export const getClassmatesEndpoint = (
   semester: Semester,
-  courses: Array<Slot["course"]>
+  courses: Array<Slot["course"]>,
 ) =>
   `/user/classmates/${semester.name}/${semester.year}?${$.param({
     course_ids: courses,
@@ -45,11 +45,11 @@ export const getClassmatesEndpoint = (
 export const getClassmatesInCourseEndpoint = (
   school: string,
   semester: string,
-  courseId: Course["id"]
+  courseId: Course["id"],
 ) => `/course_classmates/${school}/${semester}/id/${courseId}/`;
 export const getMostClassmatesCountEndpoint = (
   semester: Semester,
-  courses: Array<Slot["course"]>
+  courses: Array<Slot["course"]>,
 ) =>
   `/user/classmates/${semester.name}/${semester.year}?${$.param({
     course_ids: courses,
@@ -68,10 +68,10 @@ export const getSendFriendRequestEndpoint = (userId: User["userId"]) =>
 export const getFriendRequestsSentEndpoint = () => `/friends/requests_sent`;
 export const getFriendRequestsReceivedEndpoint = () => `friends/requests_received`;
 export const getAcceptFriendRequestEndpoint = (
-  friendRequestId: FriendRequest["friendRequestId"]
+  friendRequestId: FriendRequest["friendRequestId"],
 ) => `/friends/accept_request/${friendRequestId}`;
 export const getRejectFriendRequestEndpoint = (
-  friendRequestId: FriendRequest["friendRequestId"] | string
+  friendRequestId: FriendRequest["friendRequestId"] | string,
 ) => `/friends/reject_request/${friendRequestId}`;
 
 export const getSchoolInfoEndpoint = (school: string) => `/school/${school}/`;

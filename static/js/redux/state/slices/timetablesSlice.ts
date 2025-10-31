@@ -61,7 +61,7 @@ const timetablesSlice = createSlice({
       action: PayloadAction<{
         course: Course | DenormalizedCourse;
         section: Section;
-      }>
+      }>,
     ) => {
       state.hovered = {
         course: action.payload.course,
@@ -75,7 +75,7 @@ const timetablesSlice = createSlice({
     },
     updateLastCourseAdded: (
       state,
-      action: PayloadAction<{ courseId: number; section: string }>
+      action: PayloadAction<{ courseId: number; section: string }>,
     ) => {
       state.lastCourseAdded = action.payload;
     },

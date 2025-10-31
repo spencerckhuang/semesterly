@@ -68,20 +68,20 @@ const SideBar = () => {
     (state) =>
       useMemo(
         () => getCoursesFromSlots(state, timetable.slots),
-        [state, timetable.slots]
-      ) // Only change when slots or state changes
+        [state, timetable.slots],
+      ), // Only change when slots or state changes
   );
   const semester = useAppSelector(getCurrentSemester);
   const savedTimetablesState = useAppSelector(
-    (state) => state.userInfo.data.timetables
+    (state) => state.userInfo.data.timetables,
   );
   const courseToColourIndex = useAppSelector((state) => state.ui.courseToColourIndex);
   const courseToClassmates = useAppSelector(
-    (state) => state.classmates.courseToClassmates
+    (state) => state.classmates.courseToClassmates,
   );
   const avgRating = useAppSelector(() => timetable.avg_rating);
   const activeTimetable = useAppSelector(
-    (state) => state.savingTimetable.activeTimetable
+    (state) => state.savingTimetable.activeTimetable,
   );
 
   const MAXIMUM_COURSE_PLAN = 15; // max number of courses allowed in course plan
@@ -126,12 +126,12 @@ const SideBar = () => {
       timetable.slots
         .map((slot) => {
           const course = mandatoryCourses.find(
-            (mandatoryCourse) => mandatoryCourse.id === slot.course
+            (mandatoryCourse) => mandatoryCourse.id === slot.course,
           );
           if (!course) return null;
 
           const section = course.sections.find(
-            (courseSection) => courseSection.id === slot.section
+            (courseSection) => courseSection.id === slot.section,
           );
           return section
             ? {
@@ -143,7 +143,7 @@ const SideBar = () => {
             : null;
         })
         .filter((section) => section !== null),
-    [timetable.slots, mandatoryCourses]
+    [timetable.slots, mandatoryCourses],
   );
 
   // hook that updates master slot courses
@@ -154,7 +154,7 @@ const SideBar = () => {
       true,
       true,
       true,
-      "masterSlotCourses"
+      "masterSlotCourses",
     );
   }, [masterSlotCourses]);
 
@@ -166,7 +166,7 @@ const SideBar = () => {
       true,
       false,
       false, // set delete button for course plan
-      "coursePlan"
+      "coursePlan",
     );
   }, [coursePlan]);
 
@@ -190,13 +190,13 @@ const SideBar = () => {
     // in case of deletion of a course, make sure it's properly deleted from course plan and master slot
     setCoursePlan((prevCoursePlan) =>
       prevCoursePlan.filter((course) =>
-        mandatoryCourses.some((mandatoryCourse) => mandatoryCourse.id === course.id)
-      )
+        mandatoryCourses.some((mandatoryCourse) => mandatoryCourse.id === course.id),
+      ),
     );
     setMasterSlotCourses((prevMasteSlots) =>
       prevMasteSlots.filter((course) =>
-        mandatoryCourses.some((mandatoryCourse) => mandatoryCourse.id === course.id)
-      )
+        mandatoryCourses.some((mandatoryCourse) => mandatoryCourse.id === course.id),
+      ),
     );
   }, [mandatoryCourses]);
 
@@ -207,13 +207,13 @@ const SideBar = () => {
     showDrag: boolean,
     showLink: boolean,
     showRemove: boolean,
-    target: string
+    target: string,
   ) => {
     const updatedMasterSlotList: number[] = [];
     const newMasterSlots = courses.map((course) => {
       // Check if the course is in mandatoryCourses
       const isMandatory = mandatoryCourses.some(
-        (mandatoryCourse) => mandatoryCourse.id === course.id
+        (mandatoryCourse) => mandatoryCourse.id === course.id,
       );
 
       if (isMandatory) {
@@ -224,7 +224,7 @@ const SideBar = () => {
 
         const professors = course.sections.map((section) => section.instructors);
         const sectionId = timetable.slots.find(
-          (slot) => slot.course === course.id
+          (slot) => slot.course === course.id,
         )?.section;
 
         // Add course ID to master slot list
@@ -282,7 +282,7 @@ const SideBar = () => {
   };
 
   const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
+    navigator.userAgent,
   );
   const isPortrait = window.matchMedia("(orientation: portrait)").matches;
   const isMobile = mobile && window.innerWidth < 767 && isPortrait;
@@ -299,7 +299,7 @@ const SideBar = () => {
               onClick={(event) =>
                 stopPropagation(
                   () => dispatch(alertsActions.alertDeleteTimetable(t)),
-                  event
+                  event,
                 )
               }
               className="row-button"
@@ -334,7 +334,7 @@ const SideBar = () => {
                       activeTimetable,
                       comparedTimetable: t,
                       theme: curTheme,
-                    })
+                    }),
                   );
                   event.stopPropagation();
                 }}
@@ -378,7 +378,7 @@ const SideBar = () => {
         dispatch(addOrRemoveCourse(masterSlotList[hoveredCourse]));
       }
     },
-    [hoveredCourse, masterSlotListLength]
+    [hoveredCourse, masterSlotListLength],
   );
 
   // Attaches/unattaches event listener to document
@@ -421,7 +421,7 @@ const SideBar = () => {
       setCoursePlan((prevPlan) => [...prevPlan, draggedCourse]);
       // Remove the dragged course from the other list
       const updatedCourses = masterSlotCourses.filter(
-        (course) => course.id !== draggedCourse.id
+        (course) => course.id !== draggedCourse.id,
       );
       setMasterSlotCourses(updatedCourses);
       setIsMasterCourseDragging(false);
@@ -430,7 +430,7 @@ const SideBar = () => {
       setMasterSlotCourses((prevCourses) => [...prevCourses, draggedCourse]);
       // Remove the dragged course from the other list
       const updatedCourses = coursePlan.filter(
-        (course) => course.id !== draggedCourse.id
+        (course) => course.id !== draggedCourse.id,
       );
       setCoursePlan(updatedCourses);
       setIsCoursePlanDragging(false);
@@ -464,7 +464,7 @@ const SideBar = () => {
   );
 
   const addCourseIDToCourseList = (
-    courses: DenormalizedCourse[]
+    courses: DenormalizedCourse[],
   ): DenormalizedCourse[] =>
     courses.map((course) => ({
       ...course,
@@ -486,7 +486,7 @@ const SideBar = () => {
     const updatedCoursePlan = addCourseIDToCourseList(coursePlan);
 
     const lockedSections = currentSections.filter((section) =>
-      masterSlotCourses.some((course) => course.id === section.course_id)
+      masterSlotCourses.some((course) => course.id === section.course_id),
     );
 
     const policy = isChecked
@@ -498,7 +498,7 @@ const SideBar = () => {
       dispatch(
         alertsActions.alertCoursePlan({
           alertType: AlertCoursePlanType.NO_FEASIBLE_SCHEDULE,
-        })
+        }),
       );
       return;
     }
@@ -544,7 +544,7 @@ const SideBar = () => {
             "transcriptData",
             JSON.stringify({
               courses: result.courses,
-            })
+            }),
           );
           console.log("Transcript successfully saved to localStorage");
         }
@@ -740,7 +740,7 @@ const SideBar = () => {
           style={{
             marginTop: "10px",
           }}
-         />
+        />
         <div
           style={{
             display: "flex",

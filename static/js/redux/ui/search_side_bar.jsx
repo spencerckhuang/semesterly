@@ -42,11 +42,11 @@ class SearchSideBar extends React.Component {
         section={section.meeting_section}
         locked={this.props.isSectionLocked(
           this.props.hoveredResult.id,
-          section.meeting_section
+          section.meeting_section,
         )}
         isOnActiveTimetable={this.props.isSectionOnActiveTimetable(
           this.props.hoveredResult,
-          section
+          section,
         )}
         hoverSection={() =>
           this.props.hoverSection({ course: this.props.hoveredResult, section })
