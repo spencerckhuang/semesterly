@@ -40,6 +40,7 @@ python-social-auth==0.3.6
 pytz==2025.2
 pywebpush==2.1.0
 PyJWT[crypto]>=2.10.0
+PyMuPDF==1.26.4
 PyYAML==6.0.3
 regex==2025.9.18
 requests==2.32.5
