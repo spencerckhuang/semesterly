@@ -21,13 +21,9 @@ const ENROLLMENT_RESTRICTION_PATTERNS: RegExp[] = [
 ];
 
 // Helpers to detect restrictions
-const isCreditRestriction = (text: string): boolean => {
-  return CREDIT_RESTRICTION_PATTERNS.some((pattern) => pattern.test(text));
-};
+const isCreditRestriction = (text: string): boolean => CREDIT_RESTRICTION_PATTERNS.some((pattern) => pattern.test(text));
 
-const isEnrollmentRestriction = (text: string): boolean => {
-  return ENROLLMENT_RESTRICTION_PATTERNS.some((pattern) => pattern.test(text));
-};
+const isEnrollmentRestriction = (text: string): boolean => ENROLLMENT_RESTRICTION_PATTERNS.some((pattern) => pattern.test(text));
 
 // Clean a prereq string (remove restrictions, normalize spacing)
 const cleanPrerequisiteString = (prerequisiteString: string): string => {
@@ -110,9 +106,7 @@ const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (
           missing = [];
         }
         i++;
-      } else {
-        if (!completedCourses.includes(token)) missing.push(token);
-      }
+      } else if (!completedCourses.includes(token)) missing.push(token);
       i++;
     }
     return missing;

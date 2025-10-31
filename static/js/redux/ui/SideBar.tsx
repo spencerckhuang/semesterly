@@ -740,7 +740,7 @@ const SideBar = () => {
           style={{
             marginTop: "10px",
           }}
-        ></div>
+         />
         <div
           style={{
             display: "flex",
