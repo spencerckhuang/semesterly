@@ -520,7 +520,7 @@ const SideBar = () => {
   useEffect(() => {
     ensureCsrfCookie()
       .then(() => {})
-      .catch((err: Error) => {} );
+      .catch((err: Error) => {});
   }, []);
 
   const handleUploadClick = () => {

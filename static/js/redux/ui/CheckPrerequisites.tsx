@@ -45,9 +45,7 @@ interface CheckPrerequisitesProps {
   prerequisites: Course["prerequisites"];
 }
 
-const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = ({
-  prerequisites,
-}) => {
+const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = ({ prerequisites }) => {
   const [missingCourses, setMissingCourses] = useState<string[]>(["PLACEHOLDER"]);
 
   // Tokenize the prerequisite string into course codes and operators
@@ -150,7 +148,8 @@ const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = ({
   } else if (missingCourses[0] === "PLACEHOLDER") {
     content = (
       <p style={{ color: "gray" }}>
-        ⚪Check if you&apos;ve satisfied the necessary prerequisites by pressing the [Check] button
+        ⚪Check if you&apos;ve satisfied the necessary prerequisites by pressing the
+        [Check] button
       </p>
     );
   } else {
