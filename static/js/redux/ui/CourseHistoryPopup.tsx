@@ -4,7 +4,11 @@ interface TranscriptData {
   courses: string[];
 }
 
-export const CourseHistoryPopup = ({ onClose }: { onClose: () => void }) => {
+interface CourseHistoryPopupProps {
+  onClose: () => void;
+}
+
+const CourseHistoryPopup: React.FC<CourseHistoryPopupProps> = ({ onClose }) => {
   const [courses, setCourses] = useState<string[]>([]);
 
   useEffect(() => {
@@ -33,9 +37,9 @@ export const CourseHistoryPopup = ({ onClose }: { onClose: () => void }) => {
       <div className="bg-white p-6 rounded-lg max-w-md w-full max-h-[80vh] shadow-xl relative">
         {courses.length > 0 ? (
           <ul className="space-y-2">
-            {courses.map((course, index) => (
+            {courses.map((course) => (
               <li
-                key={index}
+                key={course}
                 className="p-2 border-b border-gray-100"
                 style={{
                   color: "lightgray",
@@ -65,3 +69,5 @@ export const CourseHistoryPopup = ({ onClose }: { onClose: () => void }) => {
     </div>
   );
 };
+
+export default CourseHistoryPopup;

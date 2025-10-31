@@ -538,7 +538,7 @@ const SideBar = () => {
 
       try {
         const result = await dispatch(postTranscript(formData));
-        //console.log("Transcript upload success:", result);
+        // console.log("Transcript upload success:", result);
         if (result?.courses) {
           localStorage.setItem(
             "transcriptData",
@@ -546,10 +546,10 @@ const SideBar = () => {
               courses: result.courses,
             })
           );
-          //console.log("Transcript successfully saved to localStorage");
+          // console.log("Transcript successfully saved to localStorage");
         }
       } catch (error) {
-        //console.error("Upload failed:", error);
+        // console.error("Upload failed:", error);
         dispatch(alertsActions.alertUploadFailed());
       }
     });

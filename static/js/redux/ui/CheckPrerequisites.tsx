@@ -30,8 +30,7 @@ const isEnrollmentRestriction = (text: string): boolean =>
 // Clean a prereq string (remove restrictions, normalize spacing)
 const cleanPrerequisiteString = (prerequisiteString: string): string => {
   let cleaned = prerequisiteString.toLowerCase();
-  cleaned = cleaned.replace(/\s+/g, " ");
-  cleaned = cleaned.replace(/\n+/g, " ").trim();
+  cleaned = cleaned.replace(/\s+/g, " ").replace(/\n+/g, " ").trim();
 
   const parts = cleaned.split(";");
 
@@ -46,10 +45,9 @@ interface CheckPrerequisitesProps {
   prerequisites: Course["prerequisites"];
 }
 
-const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (
-  props: CheckPrerequisitesProps
-) => {
-  const { prerequisites } = props;
+const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = ({
+  prerequisites,
+}) => {
   const [missingCourses, setMissingCourses] = useState<string[]>(["PLACEHOLDER"]);
 
   // Tokenize the prerequisite string into course codes and operators
@@ -101,14 +99,15 @@ const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (
       } else if (token === "or") {
         const leftMissing = missing;
         const rightMissing = evaluateTree(tree[i + 1], completedCourses);
-        // Only include both if neither satisfied
         if (leftMissing.length && rightMissing.length) {
           missing = [...leftMissing, ...rightMissing];
         } else {
           missing = [];
         }
         i++;
-      } else if (!completedCourses.includes(token)) missing.push(token);
+      } else if (!completedCourses.includes(token)) {
+        missing.push(token);
+      }
       i++;
     }
     return missing;
@@ -117,10 +116,8 @@ const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (
   const handleCheck = () => {
     if (!prerequisites) return;
 
-    // Clean prereqs (remove restrictions, normalize spacing)
     const prereqLower = cleanPrerequisiteString(prerequisites);
 
-    // Extract all course IDs to ensure we only process valid courses
     const matchedCourses = prereqLower.match(COURSE_ID_REGEX);
     if (!matchedCourses || matchedCourses.length === 0) {
       setMissingCourses([]);
@@ -137,32 +134,37 @@ const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (
 
     const missing = evaluateTree(tree, completedCourses);
 
-    // Convert missing course codes back to uppercase and deduplicate
-    const missingUpper = missing
+    // Convert missing course codes back to uppercase, deduplicate, and filter operators
+    const filteredMissing = missing
       .map((c) => c.toUpperCase())
-      .filter((course, idx, arr) => arr.indexOf(course) === idx);
+      .filter((course, idx, arr) => arr.indexOf(course) === idx)
+      .filter((course) => !["AND", "OR", "(", ")"].includes(course));
 
-    for (const course of missingUpper) {
-      if (
-        course === "and" ||
-        course === "AND" ||
-        course === "or" ||
-        course === "OR" ||
-        course === "(" ||
-        course === ")"
-      ) {
-        const index = missingUpper.indexOf(course);
-        if (index > -1) {
-          missingUpper.splice(index, 1);
-        }
-      }
-    }
-    setMissingCourses(missingUpper);
-    if (missingCourses == null) {
-      setMissingCourses([]);
-    }
-    // console.log("Missing prerequisites:", missingUpper);
+    setMissingCourses(filteredMissing.length ? filteredMissing : []);
   };
+
+  // Prepare JSX content to avoid nested ternary
+  let content;
+  if (missingCourses.length === 0) {
+    content = <p style={{ color: "green" }}>✅ All prerequisites satisfied</p>;
+  } else if (missingCourses[0] === "PLACEHOLDER") {
+    content = (
+      <p style={{ color: "gray" }}>
+        ⚪Check if you&apos;ve satisfied the necessary prerequisites by pressing the [Check] button
+      </p>
+    );
+  } else {
+    content = (
+      <div>
+        <p style={{ color: "red" }}>❌ Missing prerequisites:</p>
+        <ul>
+          {missingCourses.map((course) => (
+            <li key={course}>{course}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
 
   return (
     <div className="modal-module prerequisites">
@@ -172,23 +174,7 @@ const CheckPrerequisites: React.FC<CheckPrerequisitesProps> = (
         </h3>
         <button onClick={handleCheck}>Check</button>
       </div>
-      {missingCourses.length === 0 ? (
-        <p style={{ color: "green" }}>✅ All prerequisites satisfied</p>
-      ) : missingCourses[0] === "PLACEHOLDER" ? (
-        <p style={{ color: "gray" }}>
-          ⚪Check if you've satisfied the necessary prerequisites by pressing the
-          [Check] button
-        </p>
-      ) : (
-        <div>
-          <p style={{ color: "red" }}>❌ Missing prerequisites:</p>
-          <ul>
-            {missingCourses.map((course, idx) => (
-              <li key={idx}>{course}</li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {content}
     </div>
   );
 };
