@@ -1,7 +1,10 @@
 services:
   db:
-    image: postgres:12.1
-    container_name: semesterly-db
+    image: postgres:14
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     ports:
       - "5432:5432"
 
@@ -10,9 +13,9 @@ services:
     container_name: semesterly-web
     environment:
       - NODE_ENV=development
-      - PYTHONUNBUFFERED=0
+      - PYTHONUNBUFFERED=1
     build: .
-    command: bash -c "python manage.py migrate; npm run watch & python /code/manage.py runserver 0.0.0.0:8000"
+    command: bash -c "python3 manage.py migrate; yarn watch & python3 /code/manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
       - /code/node_modules
@@ -26,7 +29,10 @@ services:
     image: jhuopensource/semesterly-caddy
     container_name: semesterly-localssl
     logging:
-      driver: none
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     volumes:
       - ./build/caddy/Caddyfile:/etc/Caddyfile
     ports:

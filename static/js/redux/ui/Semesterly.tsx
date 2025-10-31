@@ -253,7 +253,7 @@ const Semesterly = () => {
                 <a href="/privacypolicy">Privacy</a>
               </li>
               <li className="footer-button" role="presentation">
-                <a href="mailto:semesterly@jhu.edu?Subject=Semesterly">Contact us</a>
+                <a href="https://forms.gle/4LgQAw7ySfEmnCX29">Contact us</a>
               </li>
               <li className="footer-button" role="presentation">
                 <a
