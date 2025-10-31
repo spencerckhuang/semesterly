@@ -30,7 +30,6 @@ import { addOrRemoveCourse, fetchCourseInfo, react, saveSettings } from "../../a
 import { signupModalActions } from "../../state/slices/signupModalSlice";
 import { selectSlotColorData } from "../../state/slices/themeSlice";
 
-
 type CourseModalBodyProps = {
   course: DenormalizedCourse | null;
   hideModal: Function;
