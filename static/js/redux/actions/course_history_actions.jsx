@@ -47,6 +47,7 @@ export const postTranscript = (formData) => (dispatch) => {
     })
     .then((data) => data)
     .catch((error) => {
+      console.log(`error: ${error}`)
       dispatch(alertsActions.alertUploadFailed());
       throw error;
     });

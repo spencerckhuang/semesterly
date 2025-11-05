@@ -266,6 +266,7 @@ TEMPLATES = [
     }
 ]
 
+CSRF_TRUSTED_ORIGINS = ["https://jhu.sem.ly"]
 
 SESSION_COOKIE_SAMESITE = None
 
