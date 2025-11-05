@@ -86,9 +86,11 @@ def accept_tos(request):
     student.save()
     return HttpResponse(status=204)
 
+
 def logout_view(request):
     logout(request)
     return redirect("/")
+
 
 class UserView(RedirectToSignupMixin, APIView):
     """Handles the accessing and mutating of user information and preferences."""
