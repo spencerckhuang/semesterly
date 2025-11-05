@@ -162,7 +162,9 @@ const UserSettingsModal = () => {
         method: "POST",
         credentials: "include",
         headers: { "X-CSRFToken": Cookie.get("csrftoken") },
-      }).then(() => (window.location.href = "/"));
+      }).then(() => {
+        window.location.href = "/";
+      });
     }
   }, [isDeleted]);
 
