@@ -268,7 +268,7 @@ const Semesterly = () => {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://discord.gg/HmnwdbehBh"
+                  href="https://discord.gg/5444sdzjZZ"
                 >
                   Discord
                 </a>
